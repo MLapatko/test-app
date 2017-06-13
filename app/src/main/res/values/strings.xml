@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">2doc</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
+    /*footer*/
+    <string name="footer_label"> О проекте</string>
+    <string name="footer_information">
+        Основная цель сервиса - упростить
+        процесс записи пациентам на приём к
+        выбранному специалисту и сделать работу
+        врачей и клиник более прозрачной для
+        потребителей.
+    </string>
+    <string name="footer_about">
+        Бастрый сервис по поиску врачей\n
+        © 2017, 2doc.by
+    </string>
+</resources>
