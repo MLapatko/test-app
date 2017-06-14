@@ -1,5 +1,6 @@
 package by.lovata.a2doc;
 
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
@@ -34,18 +35,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        drawer.setItem
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ForMedcentersFragment mainScreenFragment = new ForMedcentersFragment();
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction()
-                .replace(R.id.frame_layout_main_screen, mainScreenFragment)
-                .commit();
+        if (savedInstanceState == null) {
+            setFragment(new MainScreenFragment());
+        }
+
     }
 
     @Override
@@ -83,21 +82,31 @@ public class MainActivity extends AppCompatActivity
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
+
+        Fragment fragment = null;
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_share) {
+        if (id == R.id.nav_home) {
+            fragment = new MainScreenFragment();
+        } else if (id == R.id.nav_about) {
+            fragment = new AboutFragment();
+        } else if (id == R.id.nav_formedcenter) {
+            fragment = new ForMedcentersFragment();
+        } else if (id == R.id.nav_call) {
 
         }
+
+        setFragment(fragment);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    void setFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.frame_layout_main_screen, fragment)
+                .commit();
     }
 }
