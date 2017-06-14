@@ -1,19 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-<<<<<<< HEAD
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
-
     /*footer*/
     <color name="footer_color">#B9EDFA</color>
-=======
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#448CCB</color>
     <color name="colorAccent">#2CAFE3</color>
-
-    /*footer*/
-    <color name="footer_color">#B9EDFA</color>
 
     /*global_instruction*/
     <color name="global_instruction_color">#2AACE2</color>
@@ -21,12 +12,7 @@
     <color name="accent_material_light_2">#00f5f5</color>
     <color name="accent_material_light_3">#2cafe3</color>
 
-<<<<<<< HEAD
->>>>>>> master
-=======
     /*main_screen*/
     <color name="main_screen_color">#B9EDFA</color>
     <color name="main_screen_color_dark">#2AACE2</color>
-
->>>>>>> master
 </resources>

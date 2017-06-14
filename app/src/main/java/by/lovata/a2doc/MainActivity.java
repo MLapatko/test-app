@@ -1,17 +1,11 @@
 package by.lovata.a2doc;
 
-<<<<<<< HEAD
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-=======
 import android.app.FragmentManager;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
->>>>>>> master
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -23,16 +17,10 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-=======
 import by.lovata.a2doc.aboutScreen.AboutFragment;
 import by.lovata.a2doc.for_medcenters.ForMedcentersFragment;
->>>>>>> master
 import by.lovata.a2doc.mainScreen.MainScreenFragment;
 
->>>>>>> master
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -43,37 +31,21 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
+        drawer.setItem
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
-        MainScreenFragment mainScreenFragment = new MainScreenFragment();
-=======
         ForMedcentersFragment mainScreenFragment = new ForMedcentersFragment();
->>>>>>> master
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout_main_screen, mainScreenFragment)
                 .commit();
-
->>>>>>> master
     }
 
     @Override
