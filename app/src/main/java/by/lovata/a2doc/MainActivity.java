@@ -17,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import by.lovata.a2doc.aboutScreen.AboutFragment;
+import by.lovata.a2doc.for_medcenters.ForMedcentersFragment;
 import by.lovata.a2doc.mainScreen.MainScreenFragment;
 
 public class MainActivity extends AppCompatActivity
@@ -47,7 +49,7 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        MainScreenFragment mainScreenFragment = new MainScreenFragment();
+        ForMedcentersFragment mainScreenFragment = new ForMedcentersFragment();
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout_main_screen, mainScreenFragment)
@@ -99,11 +101,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 
