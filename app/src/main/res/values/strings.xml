@@ -9,14 +9,62 @@
     /*footer*/
     <string name="footer_label"> О проекте</string>
     <string name="footer_information">
+<<<<<<< HEAD
         Основная цель сервиса - упростить
         процесс записи пациентам на приём к
         выбранному специалисту и сделать работу
         врачей и клиник более прозрачной для
+=======
+        Основная цель сервиса - упростить процесс записи пациентам на приём к
+        выбранному специалисту и сделать работу врачей и клиник более прозрачной для
+>>>>>>> master
         потребителей.
     </string>
     <string name="footer_about">
         Бастрый сервис по поиску врачей\n
         © 2017, 2doc.by
     </string>
+<<<<<<< HEAD
+=======
+
+    /*global_instruction*/
+    <string name="global_instruction_label_one">Выбираете врача</string>
+    <string name="global_instruction_information_one">
+        Сравнивайте и выбирайте врача исходя из его опыта, рейтинга и местоположения
+    </string>
+
+    <string name="global_instruction_label_two">Запишитесь на приём</string>
+    <string name="global_instruction_information_two">
+        Выбирайте удобный для вас день и время, специалист медцентра
+        свяжется с вами.
+    </string>
+
+    <string name="global_instruction_label_three">Посетите медцентр</string>
+    <string name="global_instruction_information_three">
+        Приходите в назначенное время в медицинский центр и
+        получайте нужную услугу.
+    </string>
+
+    /*advantages*/
+    <string name="advantages_label_timetable">Запись на удобное для вас время</string>
+    <string name="advantages_information_timetable">
+        На сайте только актуальное расписание врачей, что позволяет
+        нам избежать любых накладок.
+    </string>
+
+    <string name="advantages_label_review">Настоящие отзывы</string>
+    <string name="advantages_information_review">
+        Все отзывы проверяются телефонным разговором
+        с пациентом.
+    </string>
+
+    <string name="advantages_label_free">Бесплатно</string>
+    <string name="advantages_information_free">
+        Сервис 2doc является абсолютно бесплатным
+        для все пациентов.
+    </string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+>>>>>>> master
 </resources>

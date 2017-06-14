@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/global_instruction_color">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="15dp"
+            android:src="@drawable/number_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/global_instruction_label_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/global_instruction_information_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_margin="15dp"
+            android:src="@drawable/doctor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="15dp"
+            android:src="@drawable/number_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/global_instruction_label_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/global_instruction_information_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_margin="15dp"
+            android:src="@drawable/laptop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_margin="15dp"
+            android:src="@drawable/number_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <LinearLayout
+            android:layout_marginBottom="15dp"
+            android:layout_marginTop="15dp"
+            android:orientation="vertical"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:text="@string/global_instruction_label_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="@string/global_instruction_information_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_margin="15dp"
+            android:src="@drawable/hospital"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
