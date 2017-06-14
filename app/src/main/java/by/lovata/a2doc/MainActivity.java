@@ -24,7 +24,12 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+import by.lovata.a2doc.aboutScreen.AboutFragment;
+import by.lovata.a2doc.for_medcenters.ForMedcentersFragment;
+>>>>>>> master
 import by.lovata.a2doc.mainScreen.MainScreenFragment;
 
 >>>>>>> master
@@ -57,8 +62,12 @@ public class MainActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         MainScreenFragment mainScreenFragment = new MainScreenFragment();
+=======
+        ForMedcentersFragment mainScreenFragment = new ForMedcentersFragment();
+>>>>>>> master
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout_main_screen, mainScreenFragment)
@@ -111,11 +120,7 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_slideshow) {
 
-        } else if (id == R.id.nav_manage) {
-
         } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
 
         }
 

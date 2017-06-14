@@ -21,5 +21,12 @@
     <color name="accent_material_light_2">#00f5f5</color>
     <color name="accent_material_light_3">#2cafe3</color>
 
+<<<<<<< HEAD
+>>>>>>> master
+=======
+    /*main_screen*/
+    <color name="main_screen_color">#B9EDFA</color>
+    <color name="main_screen_color_dark">#2AACE2</color>
+
 >>>>>>> master
 </resources>
