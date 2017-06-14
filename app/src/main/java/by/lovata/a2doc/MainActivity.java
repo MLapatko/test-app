@@ -17,6 +17,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +31,7 @@ public class MainActivity extends AppCompatActivity
 
     public static final String NAME_PREFERANCE = "2doc_pref";
     public static final String SEARCH_MODE = "SEARCH_MODE";
+    public static final String CITY_SELECTED = "CITY_SELECTED";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,24 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        Spinner spinner_cities = (Spinner) findViewById(R.id.spinner_cities);
+        spinner_cities.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                SharedPreferences sharedPreferences = getSharedPreferences(NAME_PREFERANCE, MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(MainActivity.CITY_SELECTED, getResources().getStringArray(R.array.cities)[position]);
+                editor.apply();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         if (savedInstanceState == null) {
+            initSettings();
             setFragment(new MainScreenFragment());
         }
 
@@ -135,6 +155,25 @@ public class MainActivity extends AppCompatActivity
         fragmentManager.beginTransaction()
                 .replace(R.id.frame_layout_main_screen, fragment)
                 .commit();
+    }
+
+    void initSettings() {
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME_PREFERANCE, MODE_PRIVATE);
+
+        String search_mode = sharedPreferences.getString(MainActivity.SEARCH_MODE, "");
+        if (search_mode.equals("")) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(MainActivity.SEARCH_MODE, "hide");
+            editor.apply();
+        }
+
+        String city_selected = sharedPreferences.getString(MainActivity.CITY_SELECTED, "");
+        if (city_selected.equals("")) {
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(MainActivity.CITY_SELECTED, getResources().getStringArray(R.array.cities)[0]);
+            editor.apply();
+        }
+
     }
 
 }
