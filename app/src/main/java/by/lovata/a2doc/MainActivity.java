@@ -2,6 +2,7 @@ package by.lovata.a2doc;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import by.lovata.a2doc.aboutScreen.AboutFragment;
 import by.lovata.a2doc.for_medcenters.ForMedcentersFragment;
@@ -24,6 +26,9 @@ import by.lovata.a2doc.mainScreen.MainScreenFragment;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static final String NAME_PREFERANCE = "2doc_pref";
+    public static final String SEARCH_MODE = "SEARCH_MODE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,20 +64,31 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
 
     @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem menuItem = menu.findItem(R.id.toolbar_search);
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME_PREFERANCE, MODE_PRIVATE);
+
+        String search_mode = sharedPreferences.getString(MainActivity.SEARCH_MODE, "");
+
+        if (search_mode.equals("show")) {
+            if (!menuItem.isVisible()) menuItem.setVisible(true);
+        } else if (search_mode.equals("hide")) {
+            if (menuItem.isVisible()) menuItem.setVisible(false);
+        }
+
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.toolbar_search) {
             return true;
         }
 
@@ -84,19 +100,30 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         Fragment fragment = null;
+
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME_PREFERANCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
         int id = item.getItemId();
 
         if (id == R.id.nav_home) {
             fragment = new MainScreenFragment();
+            editor.putString(MainActivity.SEARCH_MODE, "hide");
         } else if (id == R.id.nav_about) {
             fragment = new AboutFragment();
+            editor.putString(MainActivity.SEARCH_MODE, "show");
         } else if (id == R.id.nav_formedcenter) {
             fragment = new ForMedcentersFragment();
+            editor.putString(MainActivity.SEARCH_MODE, "show");
         } else if (id == R.id.nav_call) {
 
         }
 
-        setFragment(fragment);
+        editor.apply();
+        if (!item.isChecked()) {
+            setFragment(fragment);
+        }
+        invalidateOptionsMenu();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -109,4 +136,5 @@ public class MainActivity extends AppCompatActivity
                 .replace(R.id.frame_layout_main_screen, fragment)
                 .commit();
     }
+
 }
