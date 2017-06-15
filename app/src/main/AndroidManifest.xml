@@ -23,6 +23,7 @@
             </intent-filter>
         </activity>
         <activity
+<<<<<<< HEAD
             android:parentActivityName=".MainActivity"
             android:theme="@style/twodocTheme_actionbar_for_list"
             android:name=".screenSearch.ListProfessionActivity" />
@@ -30,6 +31,17 @@
             android:parentActivityName=".MainActivity"
             android:theme="@style/twodocTheme_actionbar"
             android:name=".doctorsListScreen.DoctorsListActivity" />
+=======
+            android:name=".filterScreen.FilterActivity"
+            android:label="@string/filter_activity_label"
+            android:theme="@style/MyMaterialTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+>>>>>>> develop
     </application>
 
 </manifest>

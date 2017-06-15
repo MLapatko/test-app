@@ -1,16 +1,21 @@
 package by.lovata.a2doc;
 
+<<<<<<< HEAD
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+=======
+import android.content.Intent;
+>>>>>>> develop
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +24,11 @@ import by.lovata.a2doc.screenCities.TabCitiesFragment;
 import by.lovata.a2doc.screenQuestion.TabQuestionFragment;
 import by.lovata.a2doc.screenSearch.TabSearchFragment;
 
+=======
+import by.lovata.a2doc.filterScreen.FilterActivity;
+import by.lovata.a2doc.tabScreens.SlidingTabLayout;
+import by.lovata.a2doc.tabScreens.ViewPagerAdapter;
+>>>>>>> develop
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        /* setContentView(R.layout.activity_main);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -69,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
             super(manager);
         }
 
+<<<<<<< HEAD
         @Override
         public Fragment getItem(int position) {
             return mFragmentList.get(position);
@@ -82,6 +93,12 @@ public class MainActivity extends AppCompatActivity {
         public void addFragment(Fragment fragment, String title) {
             mFragmentList.add(fragment);
         }
+=======
+        tabs.setViewPager(pager); */
+
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
+>>>>>>> develop
 
         @Override
         public CharSequence getPageTitle(int position) {
