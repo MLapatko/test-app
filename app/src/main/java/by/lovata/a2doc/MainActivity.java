@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import by.lovata.a2doc.aboutScreen.AboutFragment;
+import by.lovata.a2doc.doctorsListScreen.DoctorsListFragment;
 import by.lovata.a2doc.for_medcenters.ForMedcentersFragment;
 import by.lovata.a2doc.mainScreen.MainScreenFragment;
 
@@ -105,6 +106,15 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        SharedPreferences sharedPreferences = getSharedPreferences(NAME_PREFERANCE, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(MainActivity.SEARCH_MODE, "hide");
+        editor.apply();
+    }
+
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
 
@@ -133,17 +143,19 @@ public class MainActivity extends AppCompatActivity
             fragment = new AboutFragment();
             editor.putString(MainActivity.SEARCH_MODE, "show");
         } else if (id == R.id.nav_formedcenter) {
-            fragment = new ForMedcentersFragment();
+            //fragment = new ForMedcentersFragment();
+            fragment = new DoctorsListFragment();
             editor.putString(MainActivity.SEARCH_MODE, "show");
         } else if (id == R.id.nav_call) {
 
         }
 
-        editor.apply();
+
         if (!item.isChecked()) {
+            editor.apply();
             setFragment(fragment);
+            invalidateOptionsMenu();
         }
-        invalidateOptionsMenu();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
