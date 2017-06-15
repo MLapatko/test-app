@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="by.lovata.a2doc.aboutScreen.AboutFragment">
+    tools:context="by.lovata.a2doc.aboutScreen.TabAboutFragment">
 
     <LinearLayout
         android:orientation="vertical"
