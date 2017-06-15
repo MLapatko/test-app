@@ -19,7 +19,7 @@
         android:id="@+id/search_fragment_btn_search"
         android:text="@string/search_screen_btn_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"/>
 
     <LinearLayout
         android:layout_weight="3"
