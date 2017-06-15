@@ -1,12 +1,12 @@
 package by.lovata.a2doc;
 
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
 
+import by.lovata.a2doc.filterScreen.FilterActivity;
 import by.lovata.a2doc.tabScreens.SlidingTabLayout;
 import by.lovata.a2doc.tabScreens.ViewPagerAdapter;
 
@@ -22,7 +22,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        /* setContentView(R.layout.activity_main);
 
 
         toolbar = (Toolbar) findViewById(R.id.tool_bar);
@@ -44,9 +44,10 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        tabs.setViewPager(pager);
+        tabs.setViewPager(pager); */
 
-
+        Intent intent = new Intent(this, FilterActivity.class);
+        startActivity(intent);
 
     }
 

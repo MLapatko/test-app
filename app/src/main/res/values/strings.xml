@@ -170,6 +170,14 @@
         затраты на IT – решения и автоматизацию процессов.
     </string>
 
+    <string name="filter_activity_label">
+        Filter
+    </string>
+
+    <string name="filterCheckBox1">Для детей</string>
+    <string name="filterCheckBox2">Рядом с метро</string>
+    <string name="filterApplyButton">Подобрать</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     >>>>>>> master
