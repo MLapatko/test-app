@@ -2,8 +2,10 @@
 <resources>
     /*footer*/
     <color name="footer_color">#B9EDFA</color>
+
     <color name="colorPrimary">#ffffff</color>
     <color name="colorPrimaryDark">#448CCB</color>
+    <color name="textColorPrimary">#2CAFE3</color>
     <color name="colorAccent">#2CAFE3</color>
 
     /*global_instruction*/

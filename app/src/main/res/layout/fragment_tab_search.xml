@@ -15,6 +15,8 @@
     <Button
         android:layout_margin="20dp"
         android:layout_weight="1"
+        android:background="@drawable/button_selector"
+        android:textColor="@color/colorPrimary"
         android:layout_gravity="center_vertical"
         android:id="@+id/search_fragment_btn_search"
         android:text="@string/search_screen_btn_search"
