@@ -30,10 +30,6 @@ public class ListProfessionActivity extends ListActivity {
                 android.R.layout.simple_list_item_1,
                 catNamesArray);
         setListAdapter(mAdapter);
-        ActionBar actionBar = getActionBar();
-        actionBar.setTitle("");
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
     }
 
     @Override

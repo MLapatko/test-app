@@ -18,7 +18,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_home_black_24dp"
         app:layout_anchor="@id/recyclerview_doctor"
         app:layout_behavior="by.lovata.a2doc.doctorsListScreen.ScrollButtonFilter"/>
 
