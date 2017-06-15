@@ -22,8 +22,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".screenSearch.ListProfessionActivity" />
-        <activity android:name=".doctorsListScreen.DoctorsListActivity"></activity>
+        <activity
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/twodocTheme_actionbar_for_list"
+            android:name=".screenSearch.ListProfessionActivity" />
+        <activity
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/twodocTheme_actionbar"
+            android:name=".doctorsListScreen.DoctorsListActivity" />
     </application>
 
 </manifest>
