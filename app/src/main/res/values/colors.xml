@@ -1,11 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    /*Sliding tabs*/
-    <color name="tabsScrollColor">#004D40</color>
-    <color name="ColorPrimary">#004D40</color>
-    <color name="ColorPrimaryDark">#004D40</color>
-
     /*footer*/
     <color name="footer_color">#B9EDFA</color>
     <color name="colorPrimary">#FFFFFF</color>
@@ -21,4 +15,12 @@
     /*main_screen*/
     <color name="main_screen_color">#B9EDFA</color>
     <color name="main_screen_color_dark">#2AACE2</color>
+
+    /*filter_screen/*
+    <color name="filterColorPrimary">#125688</color>
+    <color name="filterColorPrimaryDark">#125688</color>
+    <color name="filterTextColorPrimary">#FFFFFF</color>
+    <color name="filterWindowBackground">#FFFFFF</color>
+    <color name="filterNavigationBarColor">#000000</color>
+    <color name="filterColorAccent">#c8e8ff</color>
 </resources>

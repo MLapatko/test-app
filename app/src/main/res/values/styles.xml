@@ -26,4 +26,21 @@
         <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
     </style>
 
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+    </style>
+
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/filterColorPrimary</item>
+        <item name="colorPrimaryDark">@color/filterColorPrimaryDark</item>
+        <item name="colorAccent">@color/filterColorAccent</item>
+    </style>
+
+    //checkbox
+    <style name="FilterCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
+
 </resources>
