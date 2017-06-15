@@ -4,6 +4,17 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
+    <string name="logo">2doc</string>
+    <string name="phone">+375 29 119 10 88</string>
+
+    /*search_screen*/
+    <string name="search_screen_label">Нужен хороший врач?</string>
+    <string name="search_screen_btn_search">Выбор специалиста</string>
+    <string name="search_screen_label_phone">
+        Мы ответим на все вопросы
+    </string>
+
+
     /*toolbar*/
     <string name="toolbar_search">Search</string>
     <string-array name="cities">
