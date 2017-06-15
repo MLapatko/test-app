@@ -26,7 +26,6 @@
         <item name="android:textColorPrimary">@color/colorPrimaryDark</item>
     </style>
 
-<<<<<<< HEAD
     <style name="twodocTheme_actionbar_for_list" parent="android:Theme.Material.Light" >
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -38,7 +37,7 @@
         <item name="colorPrimary">@color/colorPrimaryDark</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-=======
+    </style>
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
     </style>
 
@@ -54,7 +53,6 @@
     <style name="FilterCheckBox" parent="Theme.AppCompat.Light">
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlActivated">@color/colorPrimaryDark</item>
->>>>>>> develop
     </style>
 
 </resources>
