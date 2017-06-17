@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="by.lovata.a2doc.screenSearch.TabSearchFragment">
+    tools:context="by.lovata.a2doc.screenStart.screenSearch.TabSearchFragment">
 
     <TextView
         android:gravity="center"
@@ -26,12 +26,13 @@
     <LinearLayout
         android:layout_weight="3"
         android:gravity="bottom|center_horizontal"
+        android:id="@+id/call_phone"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <ImageView
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/ic_phone_in_talk_24dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
