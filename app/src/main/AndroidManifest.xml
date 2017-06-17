@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".MainActivity"
+            android:name=".screenStart.MainActivity"
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,21 +21,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".filterScreen.FilterActivity" />
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".screenSearch.ListProfessionActivity" />
+            android:name=".screenStart.screenSearch.ListProfessionActivity"
+            android:parentActivityName=".screenStart.MainActivity" />
         <activity
-            android:parentActivityName=".MainActivity"
-            android:name=".doctorsListScreen.DoctorsListActivity" />
+            android:name=".screenViewDoctor.ViewDoctorActivity"
+            android:parentActivityName=".screenStart.MainActivity" />
         <activity
-            android:name=".filterScreen.FilterActivity"
-            android:label="@string/filter_activity_label">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+            android:name=".screenRecordDoctor.RecordDoctorActivity"
+            android:parentActivityName=".screenViewDoctor.ViewDoctorActivity" />
+        <activity
+            android:name=".screenDoctor.DoctorActivity"
+            android:parentActivityName=".screenViewDoctor.ViewDoctorActivity" />
     </application>
 
 </manifest>

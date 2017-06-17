@@ -6,6 +6,7 @@
 
     <string name="logo">2doc</string>
     <string name="phone">+375 29 119 10 88</string>
+    <string name="phone_call">+375291191088</string>
 
     /*search_screen*/
     <string name="search_screen_label">Нужен хороший врач?</string>
@@ -14,15 +15,28 @@
         Мы ответим на все вопросы
     </string>
 
-
-    /*toolbar*/
-    <string name="toolbar_search">Search</string>
-    <string-array name="cities">
+    /*cities_screen*/
+    <string-array name="cities_screen_cities">
         <item>Минск</item>
         <item>Борисов</item>
         <item>Жодино</item>
         <item>Орша</item>
     </string-array>
+
+    /*menu*/
+    <string name="view_change_list">Карта</string>
+    <string name="view_change_map">Список</string>
+
+    <string name="menu_filter">Фильтр</string>
+    <string name="menu_sort">Сортировка</string>
+
+    <string-array name="menu_sort_items">
+        <item>По умолчанию</item>
+        <item>По возрастанию цены</item>
+        <item>По убыванию цены</item>
+        <item>По опыту</item>
+    </string-array>
+
 
     /*footer*/
     <string name="footer_label"> О проекте</string>
