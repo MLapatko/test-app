@@ -1,5 +1,6 @@
 package by.lovata.a2doc;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Handler;
@@ -43,42 +44,49 @@ public class LogoActivity extends AppCompatActivity {
                 SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                String s_cities = loadCities();
-                Set<String> cities = parseCities(s_cities);
+                String s_cities = loadFromJSON(R.raw.cities);
+                Set<String> cities = parseFromJSON(s_cities, "cities");
                 editor.putStringSet(MainActivity.CITY_ARRAY, cities);
 
+                String s_specialities = loadFromJSON(R.raw.specialities);
+                Set<String> specialities = parseFromJSON(s_specialities, "specialities");
+                editor.putStringSet(MainActivity.SPECIALITIES_ARRAY, specialities);
 
+                editor.apply();
 
-                //editor.apply();
-
-                //startActivity(new Intent(LogoActivity.this, MainActivity.class));
+                startActivity(new Intent(LogoActivity.this, MainActivity.class));
+                finish();
             }
         });
     }
 
-    private Set<String> parseCities(String s_cities) {
-        Set<String> cities_set = new HashSet<>();
+
+    private Set<String> parseFromJSON(String s_JSON, String type) {
+        Set<String> item_set = new HashSet<>();
         JSONObject dataJsonObj = null;
 
         try {
-            dataJsonObj = new JSONObject(s_cities);
-            JSONArray cities = dataJsonObj.getJSONArray("cities");
+            dataJsonObj = new JSONObject(s_JSON);
+            JSONArray items = dataJsonObj.getJSONArray(type);
 
-            for (int i = 0; i < cities.length(); i++) {
-                String city = cities.getString(i);
-                cities_set.add(city);
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+
+                String city_name = item.getString("name");
+                item_set.add(city_name);
             }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return cities_set;
+        return item_set;
     }
 
-    private String loadCities(){
+    private String loadFromJSON(int choice_id){
 
         Resources r = getResources();
-        InputStream is = r.openRawResource(R.raw.cities);
+        InputStream is = r.openRawResource(choice_id);
         String myText = null;
         try {
             myText = convertStreamToString(is);
