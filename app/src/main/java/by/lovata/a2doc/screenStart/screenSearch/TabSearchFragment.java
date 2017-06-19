@@ -9,7 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
+import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 
 public class TabSearchFragment extends Fragment {
@@ -29,6 +31,9 @@ public class TabSearchFragment extends Fragment {
 
         View view_call_phone = (View) root_view.findViewById(R.id.call_phone);
         view_call_phone.setOnClickListener(clickListener_view_call_phone);
+
+        TextView phone = (TextView) root_view.findViewById(R.id.phone);
+        phone.setText(LogoActivity.phone);
 
         return root_view;
     }

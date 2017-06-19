@@ -1,0 +1,25 @@
+{
+  "doctors":
+  [
+    {
+      "id": "1",
+      "img": "https://2doc.by/storage/app/media/neovit/cropped-images/otz11-221x254-0-0-0-0-1475763637.jpg",
+      "fullname": "Баевская Татьяна Вацлововна",
+      "speciality": "врач акушер-генеколог",
+      "price": "Первичный приём:\n35.00",
+      "count_services": "Оказывает еще 1 услуга",
+      "gps": "\"Неовит\", ул. Долгобродская, 6 корпус 1",
+      "count_reviews": "6 отз."
+    },
+    {
+      "id": "2",
+      "img": "https://2doc.by/storage/app/media/arsValeo/cropped-images/krukovskaja-72-2-342-490-1490695341.jpg",
+      "fullname": "Круковская Анна Вячеславовна",
+      "speciality": "врач акушер-генеколог",
+      "price": "Первичный приём:\nот 32.00",
+      "count_services": "Оказывает еще 6 услуг",
+      "gps": "Медицинский центр \"Арс Валео\", ул. Герцена, 8",
+      "count_reviews": "3 отз."
+    }
+  ]
+}

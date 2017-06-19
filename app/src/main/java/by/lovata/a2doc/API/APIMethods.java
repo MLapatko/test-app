@@ -48,6 +48,20 @@ public class APIMethods {
         return item_map;
     }
 
+    public String parsePhoneFromJSON(String s_JSON, String type) {
+        String phone = null;
+        JSONObject dataJsonObj;
+
+        try {
+            dataJsonObj = new JSONObject(s_JSON);
+            phone = dataJsonObj.getString(type);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return phone;
+    }
+
     public Set<String> parseFromJSON(String s_JSON, String type) {
         Set<String> item_set = new HashSet<>();
         JSONObject dataJsonObj = null;
@@ -70,7 +84,7 @@ public class APIMethods {
         return item_set;
     }
 
-    public String loadCitiesFromJSON(int choice_id){
+    public String loadStandartFromJSON(int choice_id){
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(choice_id);

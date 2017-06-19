@@ -29,6 +29,7 @@ import by.lovata.a2doc.screenStart.MainActivity;
 public class LogoActivity extends AppCompatActivity {
 
     public static Map<Integer, String> cities;
+    public static String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,7 +47,10 @@ public class LogoActivity extends AppCompatActivity {
 
                 APIMethods apiMethods = new APIMethods(LogoActivity.this);
 
-                String s_cities = apiMethods.loadCitiesFromJSON(R.raw.cities);
+                String s_phone = apiMethods.loadStandartFromJSON(R.raw.phone);
+                phone = apiMethods.parsePhoneFromJSON(s_phone, "phone");
+
+                String s_cities = apiMethods.loadStandartFromJSON(R.raw.cities);
                 cities = apiMethods.parseCitiesFromJSON(s_cities, "cities");
 
                 SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
