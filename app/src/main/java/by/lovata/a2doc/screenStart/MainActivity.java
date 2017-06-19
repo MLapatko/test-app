@@ -19,6 +19,10 @@ public class MainActivity extends AppCompatActivity {
     public static final String NAME_PREFERENCES = "TwoDocBY";
     public static final String CITY_SELECT = "CITY";
 
+    public static final String CITY_ARRAY = "CITY_ARRAY";
+    public static final String SPECIALITIES_ARRAY = "SPECIALITIES_ARRAY";
+
+
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private int[] tabIcons = {

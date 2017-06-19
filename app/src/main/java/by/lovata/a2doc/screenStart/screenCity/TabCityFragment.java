@@ -12,6 +12,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 
@@ -23,7 +27,7 @@ import static by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity.LIST_MODE_VIEW
  */
 public class TabCityFragment extends Fragment {
 
-    String[] city;
+    String[] cities;
 
 
     public TabCityFragment() {
@@ -35,15 +39,17 @@ public class TabCityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View view_root = inflater.inflate(R.layout.fragment_tab_cities, container, false);
 
-        city = getResources().getStringArray(R.array.cities_screen_cities);
-
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
+
+        Set<String> set_cities = sharedPreferences.getStringSet(MainActivity.CITY_ARRAY, new HashSet<String>());
+        cities = set_cities.toArray(new String[set_cities.size()]);
+
         int city_item = sharedPreferences.getInt(MainActivity.CITY_SELECT, 0);
-        if (city.length <= city_item) city_item = 0;
+        if (cities.length <= city_item) city_item = 0;
 
         ListView lst_city = (ListView)view_root.findViewById(R.id.list_city);
         lst_city.setAdapter(new ArrayAdapter<String>(getActivity(),
-                android.R.layout.select_dialog_singlechoice, city));
+                android.R.layout.select_dialog_singlechoice, cities));
         lst_city.setItemChecked(city_item, true);
         lst_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
