@@ -1,6 +1,7 @@
 package by.lovata.a2doc.screenViewDoctor.screenMapDoctor;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.location.Address;
@@ -13,10 +14,13 @@ import android.view.ViewGroup;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
+import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
+import by.lovata.a2doc.screenViewDoctor.InterfaceDoctors;
 import ru.yandex.yandexmapkit.MapController;
 import ru.yandex.yandexmapkit.MapView;
 import ru.yandex.yandexmapkit.utils.GeoPoint;
@@ -26,6 +30,8 @@ import ru.yandex.yandexmapkit.utils.GeoPoint;
  */
 public class MapDoctorFragment extends Fragment {
 
+    DoctorInfo[] doctorsInfo;
+    InterfaceDoctors doctorsInterface;
 
     public MapDoctorFragment() {
         // Required empty public constructor
@@ -35,7 +41,9 @@ public class MapDoctorFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
+        doctorsInfo = doctorsInterface.getDoctors();
+
         View view = inflater.inflate(R.layout.fragment_map_doctor, container, false);
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(
                 MainActivity.NAME_PREFERENCES, Context.MODE_PRIVATE);
@@ -48,9 +56,10 @@ public class MapDoctorFragment extends Fragment {
         // Перемещаем карту на заданные координаты
         Geocoder geocoder = new Geocoder(getActivity());
         try {
+            Map<Integer, String> cities = LogoActivity.getCities();
             List<Address> addresses = geocoder.getFromLocationName(
-                    LogoActivity.cities.get(sharedPreferences.getInt(
-                            MainActivity.CITY_SELECT, 0) + 1), 1);
+                    cities.get(sharedPreferences.getInt(
+                            MainActivity.CITY_SELECT, 0)), 1);
             GeoPoint point = new GeoPoint(addresses.get(0).getLatitude(), addresses.get(0)
                     .getLongitude());
             mMapController.setPositionAnimationTo(point);
@@ -61,5 +70,12 @@ public class MapDoctorFragment extends Fragment {
 
         return view;
     }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.doctorsInterface = (InterfaceDoctors) activity;
+    }
+
 
 }

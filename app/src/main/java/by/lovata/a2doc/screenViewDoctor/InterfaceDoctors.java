@@ -1,6 +1,5 @@
 package by.lovata.a2doc.screenViewDoctor;
 
-
-public interface Doctorsinterface {
+public interface InterfaceDoctors {
     public DoctorInfo[] getDoctors();
 }

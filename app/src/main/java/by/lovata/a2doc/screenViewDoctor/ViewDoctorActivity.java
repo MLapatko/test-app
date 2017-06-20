@@ -1,16 +1,13 @@
 package by.lovata.a2doc.screenViewDoctor;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
@@ -20,7 +17,7 @@ import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuSortFragment;
 import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.MapDoctorFragment;
 
-public class ViewDoctorActivity extends AppCompatActivity implements Doctorsinterface {
+public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDoctors {
 
     public static final String NAME_MODE_VIEW = "MODE_VIEW";
     public static final String LIST_MODE_VIEW = "LIST_MODE_VIEW";

@@ -18,7 +18,7 @@ import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 
 class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
-    private DoctorInfo[] array_dorcors;
+    private DoctorInfo[] array_doctors;
     private Listener listener;
     public static interface Listener {
         public void onClickRecord(int position);
@@ -26,7 +26,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     }
 
     DoctorsAdapter(DoctorInfo[] doctors) {
-        this.array_dorcors = doctors;
+        this.array_doctors = doctors;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -60,23 +60,23 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         image_doctor.setOnClickListener(clickDoctor);
 
         TextView full_name_doctor = (TextView) cardView.findViewById(R.id.fio_card_doctor);
-        full_name_doctor.setText(array_dorcors[position].full_name);
+        full_name_doctor.setText(array_doctors[position].full_name);
         full_name_doctor.setOnClickListener(clickDoctor);
 
         TextView speciality_doctor = (TextView) cardView.findViewById(R.id.speciality_card_doctor);
-        speciality_doctor.setText(array_dorcors[position].speciality);
+        speciality_doctor.setText(array_doctors[position].speciality);
 
         TextView price_doctor = (TextView) cardView.findViewById(R.id.price_of_consultation_card_doctor);
-        price_doctor.setText(array_dorcors[position].price_of_consultation);
+        price_doctor.setText(array_doctors[position].price_of_consultation);
 
         TextView service_doctor = (TextView) cardView.findViewById(R.id.services_card_doctor);
-        service_doctor.setText(array_dorcors[position].service);
+        service_doctor.setText(array_doctors[position].service);
 
         TextView gps_doctor = (TextView) cardView.findViewById(R.id.gps_card_doctor);
-        gps_doctor.setText(array_dorcors[position].gps);
+        gps_doctor.setText(array_doctors[position].gps);
 
         TextView review_doctor = (TextView) cardView.findViewById(R.id.review_card_doctor);
-        review_doctor.setText(array_dorcors[position].review);
+        review_doctor.setText(array_doctors[position].review);
 
         Button btn_record_doctor = (Button) cardView.findViewById(R.id.btn_card_doctor);
         btn_record_doctor.setOnClickListener(clickRecord);
@@ -85,8 +85,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount(){
-        Log.w("MYLOG","GETITEMCOUNT");
-        return array_dorcors.length;
+        return array_doctors.length;
     }
 
     private class ClickDoctor implements View.OnClickListener {

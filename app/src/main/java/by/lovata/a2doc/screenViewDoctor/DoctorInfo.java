@@ -33,16 +33,6 @@ public class DoctorInfo implements Parcelable{
     }
 
     public DoctorInfo(Parcel in) {
-        this.id = id;
-        this.url_img = url_img;
-        this.full_name = full_name;
-        this.speciality = speciality;
-        this.price_of_consultation = price_of_consultation;
-        this.service = service;
-        this.review = review;
-        this.gps = gps;
-        this.lat = lat;
-        this.lng = lng;
     }
 
     @Override
