@@ -6,10 +6,13 @@ import android.app.FragmentTransaction;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.widget.Toast;
 
+import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.ListDoctorFragment;
@@ -17,11 +20,18 @@ import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuSortFragment;
 import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.MapDoctorFragment;
 
-public class ViewDoctorActivity extends AppCompatActivity {
+public class ViewDoctorActivity extends AppCompatActivity implements Doctorsinterface {
 
     public static final String NAME_MODE_VIEW = "MODE_VIEW";
     public static final String LIST_MODE_VIEW = "LIST_MODE_VIEW";
     public static final String MAP_MODE_VIEW = "MAP_MODE_VIEW";
+
+    public static final String ID_SPECIALITY_SELECTED = "ID_SPECIALITY_SELECTED";
+    public static final String PARCEL_DOCTORSINFO = "PARCEL_DOCTORSINFO";
+
+    int id_spiciality;
+
+    DoctorInfo[] doctorsInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,14 +39,24 @@ public class ViewDoctorActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_doctor);
 
         if (savedInstanceState == null) {
+            id_spiciality = getIntent().getIntExtra(ID_SPECIALITY_SELECTED, 0);
+
+            APIMethods apiMethods = new APIMethods(this);
+            String s_doctorsInfo = apiMethods.loadDoctorsInfoFromJSON(R.raw.doctors, id_spiciality);
+            doctorsInfo = apiMethods.parseDoctorsInfoFromJSON(s_doctorsInfo, "doctors");
+
             SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(NAME_MODE_VIEW, LIST_MODE_VIEW);
             editor.apply();
+
             Fragment fragment = new ListDoctorFragment();
             FragmentTransaction fragmentManager = getFragmentManager().beginTransaction();
             fragmentManager.replace(R.id.contain_view_doctor, fragment);
             fragmentManager.commit();
+        } else {
+            id_spiciality = savedInstanceState.getInt(ID_SPECIALITY_SELECTED, 0);
+            doctorsInfo = (DoctorInfo[]) savedInstanceState.getParcelableArray(PARCEL_DOCTORSINFO);
         }
     }
 
@@ -86,6 +106,13 @@ public class ViewDoctorActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(ID_SPECIALITY_SELECTED, id_spiciality);
+        outState.putParcelableArray(PARCEL_DOCTORSINFO, doctorsInfo);
+    }
+
     private void clickViewChange(MenuItem menuItem) {
         String title = menuItem.getTitle().toString();
         String title_list = getResources().getString(R.string.view_change_list);
@@ -117,5 +144,11 @@ public class ViewDoctorActivity extends AppCompatActivity {
 
         fragmentManager.replace(R.id.contain_view_doctor, fragment);
         fragmentManager.commit();
+    }
+
+
+    @Override
+    public DoctorInfo[] getDoctors() {
+        return doctorsInfo;
     }
 }

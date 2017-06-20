@@ -28,7 +28,9 @@ import by.lovata.a2doc.screenStart.MainActivity;
 
 public class LogoActivity extends AppCompatActivity {
 
-    public static Map<Integer, String> cities;
+    private static Map<Integer, String> cities;
+    private static Map<Integer, String> specialities;
+    private static String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,24 +48,41 @@ public class LogoActivity extends AppCompatActivity {
 
                 APIMethods apiMethods = new APIMethods(LogoActivity.this);
 
-                String s_cities = apiMethods.loadCitiesFromJSON(R.raw.cities);
+                String s_phone = apiMethods.loadStandartFromJSON(R.raw.phone);
+                phone = apiMethods.parsePhoneFromJSON(s_phone, "phone");
+
+                String s_cities = apiMethods.loadStandartFromJSON(R.raw.cities);
                 cities = apiMethods.parseCitiesFromJSON(s_cities, "cities");
 
                 SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, 1);
+                Integer[] id_cityArray;
+                id_cityArray = cities.keySet().toArray(new Integer[cities.size()]);
+                int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, id_cityArray[0]);
 
                 String s_specialities = apiMethods.loadSpecialitiesFromJSON(R.raw.specialities, id_city);
-                Set<String> specialities = apiMethods.parseFromJSON(s_specialities, "specialities");
-                editor.putStringSet(MainActivity.SPECIALITIES_ARRAY, specialities);
-
-                editor.apply();
+                specialities = apiMethods.parseSpecialitiesFromJSON(s_specialities, "specialities");
 
                 startActivity(new Intent(LogoActivity.this, MainActivity.class));
                 finish();
             }
         });
+    }
+
+    public static void setSpecialities(Map<Integer, String> specialities) {
+        LogoActivity.specialities = specialities;
+    }
+
+    public static Map<Integer, String> getCities() {
+        return cities;
+    }
+
+    public static Map<Integer, String> getSpecialities() {
+        return specialities;
+    }
+
+    public static String getPhone() {
+        return phone;
     }
 
 }
