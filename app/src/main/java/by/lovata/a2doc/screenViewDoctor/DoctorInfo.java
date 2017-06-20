@@ -14,12 +14,12 @@ public class DoctorInfo implements Parcelable{
     public String service;
     public String review;
     public String gps;
-    public long lat;
-    public long lng;
+    public double lat;
+    public double lng;
 
     public DoctorInfo(int id, String url_img, String full_name, String speciality,
                 String price_of_consultation, String service, String gps,
-                String review, long lat, long lng) {
+                String review, double lat, double lng) {
         this.id = id;
         this.url_img = url_img;
         this.full_name = full_name;
