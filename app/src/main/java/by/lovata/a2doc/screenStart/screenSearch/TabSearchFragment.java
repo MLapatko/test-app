@@ -33,7 +33,7 @@ public class TabSearchFragment extends Fragment {
         view_call_phone.setOnClickListener(clickListener_view_call_phone);
 
         TextView phone = (TextView) root_view.findViewById(R.id.phone);
-        phone.setText(LogoActivity.phone);
+        phone.setText(LogoActivity.getPhone());
 
         return root_view;
     }

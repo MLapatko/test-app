@@ -8,11 +8,16 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
+import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
@@ -20,17 +25,18 @@ import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 public class ListProfessionActivity extends AppCompatActivity {
 
     String[] specialities;
+    Integer[] key_specialities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_profession);
 
-        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
-
-        Set<String> set_specialities = sharedPreferences.getStringSet(MainActivity.SPECIALITIES_ARRAY, new HashSet<String>());
+        Collection<String> set_specialities = LogoActivity.getSpecialities().values();
         specialities = set_specialities.toArray(new String[set_specialities.size()]);
-        Arrays.sort(specialities);
+
+        Set<Integer> set_key_specialities = LogoActivity.getSpecialities().keySet();
+        key_specialities = set_key_specialities.toArray(new Integer[set_key_specialities.size()]);
 
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
                 R.layout.speciality_item,
@@ -45,6 +51,7 @@ public class ListProfessionActivity extends AppCompatActivity {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             Intent intent = new Intent(ListProfessionActivity.this, ViewDoctorActivity.class);
+            intent.putExtra(ViewDoctorActivity.ID_SPECIALITY_SELECTED, key_specialities[position]);
             startActivity(intent);
             finish();
         }
