@@ -1,12 +1,14 @@
 package by.lovata.a2doc.screenViewDoctor.screenListDoctor;
 
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.app.Fragment;
-import android.support.design.widget.FloatingActionButton;
+import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,12 +18,16 @@ import java.util.ArrayList;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
+import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
+import by.lovata.a2doc.screenViewDoctor.Doctorsinterface;
 
 /**
  * A simple {@link Fragment} subclass.
  */
 public class ListDoctorFragment extends Fragment {
 
+    DoctorInfo[] doctorsInfo;
+    Doctorsinterface doctorsinterface;
 
     public ListDoctorFragment() {
         // Required empty public constructor
@@ -33,29 +39,8 @@ public class ListDoctorFragment extends Fragment {
                              Bundle savedInstanceState) {
         View root_view = inflater.inflate(R.layout.fragment_list_doctor, container, false);
 
-        ArrayList<DoctorInfo> arrayList = new ArrayList<>();
-        arrayList.add(new DoctorInfo(R.mipmap.ic_launcher, "Красовский Дмитрий Михайлович",
-                "Окулист", "Консультация окулиста\nот 20.00 до 30.00",
-                "Оказывает еще 5 услуг", "Частная практика, ул. Одинцова 97, пом 76",
-                "5 отз."));
-        arrayList.add(new DoctorInfo(R.mipmap.ic_launcher, "Красовский Дмитрий Михайлович",
-                "Окулист", "Консультация окулиста\nот 20.00 до 30.00",
-                "Оказывает еще 5 услуг", "Частная практика, ул. Одинцова 97, пом 76",
-                "5 отз."));
-        arrayList.add(new DoctorInfo(R.mipmap.ic_launcher, "Красовский Дмитрий Михайлович",
-                "Окулист", "Консультация окулиста\nот 20.00 до 30.00",
-                "Оказывает еще 5 услуг", "Частная практика, ул. Одинцова 97, пом 76",
-                "5 отз."));
-        arrayList.add(new DoctorInfo(R.mipmap.ic_launcher, "Красовский Дмитрий Михайлович",
-                "Окулист", "Консультация окулиста\nот 20.00 до 30.00",
-                "Оказывает еще 5 услуг", "Частная практика, ул. Одинцова 97, пом 76",
-                "5 отз."));
-        arrayList.add(new DoctorInfo(R.mipmap.ic_launcher, "Красовский Дмитрий Михайлович",
-                "Окулист", "Консультация окулиста\nот 20.00 до 30.00",
-                "Оказывает еще 5 услуг", "Частная практика, ул. Одинцова 97, пом 76",
-                "5 отз."));
-
-        DoctorsAdapter doctorAdapter = new DoctorsAdapter(arrayList);
+        doctorsInfo = doctorsinterface.getDoctors();
+        DoctorsAdapter doctorAdapter = new DoctorsAdapter(doctorsInfo);
         doctorAdapter.setListener(new ClickOnCard());
 
         RecyclerView recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerview_doctor);
@@ -64,6 +49,17 @@ public class ListDoctorFragment extends Fragment {
         recyclerView.setAdapter(doctorAdapter);
 
         return root_view;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.doctorsinterface = (Doctorsinterface) activity;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
     }
 
     class ClickOnCard implements DoctorsAdapter.Listener {
