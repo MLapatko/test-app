@@ -21,9 +21,10 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
@@ -42,11 +43,11 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
     GoogleMap gMap;
     Geocoder geocoder;
     SharedPreferences sharedPreferences;
+    Set<LatLng> markerLocation;    // HashMap of marker identifier and its location as a string
 
     public MapDoctorFragment() {
         // Required empty public constructor
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,8 +82,8 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        // Add a marker in Sydney, Australia, and move the camera.
         geocoder = new Geocoder(getActivity(), Locale.US);
+        markerLocation = new HashSet<>();
         try {
             List<Address> addressList = geocoder.getFromLocationName(LogoActivity.getCities()
                     .get(sharedPreferences.getInt(MainActivity.CITY_SELECT, 0)), 1);
@@ -90,9 +91,9 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
                     addressList.get(0).getLongitude());
             CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(city)      // Sets the center of the map to location user
-                    .zoom(12)          // Sets the zoom
-                    .bearing(0)       // Sets the orientation of the camera to east
-                    .tilt(40)          // Sets the tilt of the camera to 30 degrees
+                    .zoom(10)          // Sets the zoom
+                    .bearing(0)        // Sets the orientation of the camera to east
+                    .tilt(0)           // Sets the tilt of the camera to 40 degrees
                     .build();          // Creates a CameraPosition from the builder
 
             String doctorName;
@@ -101,13 +102,19 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
                 doctorName = doctorInfo.full_name;
                 gMap.addMarker(new MarkerOptions()
                         .position(new LatLng(doctorInfo.lat, doctorInfo.lng))
-                        .title(doctorName));
+                        .title(doctorName)).setTag(doctorInfo);
             }
+
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             gMap.setInfoWindowAdapter(new DoctorInfoWindowAdapter(getActivity().getLayoutInflater()));
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    // Return whether marker with same location is already on map
+    private boolean mapAlreadyHasMarkerForLocation(LatLng location) {
+        return (markerLocation.contains(location));
     }
 }
