@@ -4,11 +4,9 @@
     android:layout_height="match_parent"
     tools:context="by.lovata.a2doc.screenViewDoctor.screenMapDoctor.MapDoctorFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <ru.yandex.yandexmapkit.MapView
-        android:id="@+id/map"
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:apiKey="1234567890" />
+    <com.google.android.gms.maps.MapView
+        android:id="@+id/mapView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
 
 </FrameLayout>

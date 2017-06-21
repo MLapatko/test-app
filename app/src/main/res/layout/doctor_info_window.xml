@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/doctor_info_image"
+        android:src="@drawable/ic_menu_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" 
+        android:contentDescription="bla bla"/>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/info_window_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="asdasdasdasd"/>
+
+        <TextView
+            android:id="@+id/info_window_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dasdasd"/>
+
+    </LinearLayout>
+
+</LinearLayout>
