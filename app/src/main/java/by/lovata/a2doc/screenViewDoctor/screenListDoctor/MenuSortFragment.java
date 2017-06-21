@@ -23,11 +23,11 @@ import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 public class MenuSortFragment extends DialogFragment {
 
     String[] menu_sort_items;
-    int position_item_selected = 0;
-
 
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
+
+        int position_item_selected = getArguments().getInt(ViewDoctorActivity.ID_SORT_SELECTED);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -48,8 +48,8 @@ public class MenuSortFragment extends DialogFragment {
         lst_sort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                position_item_selected = position;
-                alertDialog.dismiss();
+                ((ViewDoctorActivity) getActivity()).setId_sort(position);
+                alertDialog.cancel();
             }
         });
         return alertDialog;

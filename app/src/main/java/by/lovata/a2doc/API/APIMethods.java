@@ -86,8 +86,8 @@ public class APIMethods {
                 String count_services = item.getString("count_services");
                 String gps = item.getString("gps");
                 String count_reviews = item.getString("count_reviews");
-                long lat = item.getLong("lat");
-                long lng = item.getLong("lng");
+                double lat = item.getDouble("lat");
+                double lng = item.getDouble("lng");
                 item_set[i] = new DoctorInfo(id, img, fullname, speciality,
                         price, count_services, gps, count_reviews, lat, lng);
             }

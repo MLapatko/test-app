@@ -24,9 +24,11 @@ public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDo
     public static final String MAP_MODE_VIEW = "MAP_MODE_VIEW";
 
     public static final String ID_SPECIALITY_SELECTED = "ID_SPECIALITY_SELECTED";
+    public static final String ID_SORT_SELECTED = "ID_SORT_SELECTED";
     public static final String PARCEL_DOCTORSINFO = "PARCEL_DOCTORSINFO";
 
     int id_spiciality;
+    int id_sort;
 
     DoctorInfo[] doctorsInfo;
 
@@ -37,6 +39,7 @@ public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDo
 
         if (savedInstanceState == null) {
             id_spiciality = getIntent().getIntExtra(ID_SPECIALITY_SELECTED, 0);
+            id_sort = 0;
 
             APIMethods apiMethods = new APIMethods(this);
             String s_doctorsInfo = apiMethods.loadDoctorsInfoFromJSON(R.raw.doctors, id_spiciality);
@@ -53,6 +56,7 @@ public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDo
             fragmentManager.commit();
         } else {
             id_spiciality = savedInstanceState.getInt(ID_SPECIALITY_SELECTED, 0);
+            id_sort = savedInstanceState.getInt(ID_SORT_SELECTED, 0);
             doctorsInfo = (DoctorInfo[]) savedInstanceState.getParcelableArray(PARCEL_DOCTORSINFO);
         }
     }
@@ -96,6 +100,9 @@ public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDo
                 return true;
             case R.id.menu_sort:
                 MenuSortFragment dialog_sort = new MenuSortFragment();
+                Bundle bundle = new Bundle();
+                bundle.putInt(ID_SORT_SELECTED, id_sort);
+                dialog_sort.setArguments(bundle);
                 dialog_sort.show(getSupportFragmentManager(), "sort");
                 return true;
             default:
@@ -103,10 +110,20 @@ public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDo
         }
     }
 
+    public void setId_sort(int position) {
+        id_sort = position;
+        synchronizedDoctors();
+    }
+
+    private void synchronizedDoctors(){
+
+    }
+
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(ID_SPECIALITY_SELECTED, id_spiciality);
+        outState.putInt(ID_SORT_SELECTED, id_sort);
         outState.putParcelableArray(PARCEL_DOCTORSINFO, doctorsInfo);
     }
 
@@ -142,7 +159,6 @@ public class ViewDoctorActivity extends AppCompatActivity implements InterfaceDo
         fragmentManager.replace(R.id.contain_view_doctor, fragment);
         fragmentManager.commit();
     }
-
 
     @Override
     public DoctorInfo[] getDoctors() {
