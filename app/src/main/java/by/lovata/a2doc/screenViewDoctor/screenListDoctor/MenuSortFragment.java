@@ -27,7 +27,7 @@ public class MenuSortFragment extends DialogFragment {
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        int position_item_selected = getArguments().getInt(ViewDoctorActivity.ID_SORT_SELECTED);
+        int position_item_selected = getArguments().getInt(ListDoctorFragment.ID_SORT_SELECTED);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 
@@ -48,7 +48,7 @@ public class MenuSortFragment extends DialogFragment {
         lst_sort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((ViewDoctorActivity) getActivity()).setId_sort(position);
+                ((ListDoctorFragment) getParentFragment()).setId_sort(position);
                 alertDialog.cancel();
             }
         });

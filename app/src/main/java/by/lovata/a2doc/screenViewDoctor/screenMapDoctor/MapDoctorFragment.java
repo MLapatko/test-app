@@ -6,8 +6,11 @@ import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -18,7 +21,6 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.io.IOException;
 import java.util.HashSet;
@@ -30,7 +32,8 @@ import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
-import by.lovata.a2doc.screenViewDoctor.InterfaceDoctors;
+import by.lovata.a2doc.screenViewDoctor.InformationInterface;
+import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -38,7 +41,7 @@ import by.lovata.a2doc.screenViewDoctor.InterfaceDoctors;
 public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
 
     DoctorInfo[] doctorsInfo;
-    InterfaceDoctors doctorsInterface;
+    InformationInterface informationInterface;
     MapView mMapView;
     GoogleMap gMap;
     Geocoder geocoder;
@@ -53,7 +56,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        doctorsInfo = doctorsInterface.getDoctors();
+        doctorsInfo = informationInterface.getDoctors();
 
         View view = inflater.inflate(R.layout.fragment_map_doctor, container, false);
         mMapView = (MapView) view.findViewById(R.id.mapView);
@@ -70,13 +73,16 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
         }
 
         mMapView.getMapAsync(this);
+
+        setHasOptionsMenu(true);
+
         return view;
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.doctorsInterface = (InterfaceDoctors) activity;
+        this.informationInterface = (InformationInterface) activity;
     }
 
     @Override
@@ -100,9 +106,9 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
 
             for(DoctorInfo doctorInfo : doctorsInfo) {
                 doctorName = doctorInfo.full_name;
-                gMap.addMarker(new MarkerOptions()
-                        .position(new LatLng(doctorInfo.lat, doctorInfo.lng))
-                        .title(doctorName)).setTag(doctorInfo);
+//                gMap.addMarker(new MarkerOptions()
+//                        .position(new LatLng(doctorInfo.lat, doctorInfo.lng))
+//                        .title(doctorName)).setTag(doctorInfo);
             }
 
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -117,4 +123,28 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
     private boolean mapAlreadyHasMarkerForLocation(LatLng location) {
         return (markerLocation.contains(location));
     }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.view_filter, menu);
+
+        MenuItem view_change = menu.findItem(R.id.view_change);
+        view_change.setTitle(getResources().getString(R.string.view_change_map));
+        view_change.setIcon(R.drawable.ic_format_align_justify_24dp);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.menu_filter:
+                MenuFilterFragment dialog_filter = new MenuFilterFragment();
+                dialog_filter.show(getChildFragmentManager(), "filter");
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
 }

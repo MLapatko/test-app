@@ -4,32 +4,35 @@ package by.lovata.a2doc.screenViewDoctor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Map;
+
 public class DoctorInfo implements Parcelable{
 
     public int id;
+    public int[] id_organization;
     public String url_img;
     public String full_name;
     public String speciality;
-    public String price_of_consultation;
-    public String service;
-    public String review;
-    public String gps;
-    public double lat;
-    public double lng;
+    public Map<Integer, Integer> service_list;
+    public int count_reviews;
+    public int experience;
+    public boolean merto;
+    public boolean baby;
 
-    public DoctorInfo(int id, String url_img, String full_name, String speciality,
-                String price_of_consultation, String service, String gps,
-                String review, double lat, double lng) {
+    public DoctorInfo(int id, int[] id_organization, String url_img, String full_name,
+                      String speciality, Map<Integer, Integer> service_list,
+                      int count_reviews, int experience,
+                      boolean merto, boolean baby) {
         this.id = id;
+        this.id_organization = id_organization;
         this.url_img = url_img;
         this.full_name = full_name;
         this.speciality = speciality;
-        this.price_of_consultation = price_of_consultation;
-        this.service = service;
-        this.review = review;
-        this.gps = gps;
-        this.lat = lat;
-        this.lng = lng;
+        this.service_list = service_list;
+        this.count_reviews = count_reviews;
+        this.experience = experience;
+        this.merto = merto;
+        this.baby = baby;
     }
 
     public DoctorInfo(Parcel in) {

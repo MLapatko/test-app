@@ -13,9 +13,11 @@ import android.widget.TextView;
 
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenStart.MainActivity;
 
 public class TabSearchFragment extends Fragment {
 
+    private String phone;
 
     public TabSearchFragment() {
     }
@@ -32,8 +34,9 @@ public class TabSearchFragment extends Fragment {
         View view_call_phone = (View) root_view.findViewById(R.id.call_phone);
         view_call_phone.setOnClickListener(clickListener_view_call_phone);
 
-        TextView phone = (TextView) root_view.findViewById(R.id.phone);
-        phone.setText(LogoActivity.getPhone());
+        phone = getArguments().getString(MainActivity.PHONE);
+        TextView phone_call = (TextView) root_view.findViewById(R.id.phone);
+        phone_call.setText(phone);
 
         return root_view;
     }
@@ -42,8 +45,8 @@ public class TabSearchFragment extends Fragment {
     View.OnClickListener clickListener_view_call_phone = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            String phone = "tel:" + getResources().getString(R.string.phone_call);
-            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(phone));
+            String phone_Uri = "tel:" + phone;
+            Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse(phone_Uri));
             startActivity(intent);
         }
     };

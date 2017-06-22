@@ -17,8 +17,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Dictionary;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -30,7 +33,6 @@ public class LogoActivity extends AppCompatActivity {
 
     private static Map<Integer, String> cities;
     private static Map<Integer, String> specialities;
-    private static String phone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +50,21 @@ public class LogoActivity extends AppCompatActivity {
 
                 APIMethods apiMethods = new APIMethods(LogoActivity.this);
 
-                String s_phone = apiMethods.loadStandartFromJSON(R.raw.phone);
-                phone = apiMethods.parsePhoneFromJSON(s_phone, "phone");
+                String phone = apiMethods.getPhoneFromJSON();
 
-                String s_cities = apiMethods.loadStandartFromJSON(R.raw.cities);
-                cities = apiMethods.parseCitiesFromJSON(s_cities, "cities");
+                cities = apiMethods.getCitiesFromJSON();
 
                 SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
+                List<Integer> cities_id = new ArrayList<>(cities.keySet());
+                int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, cities_id.get(0));
+                setCitySelectId(id_city);
 
-                Integer[] id_cityArray;
-                id_cityArray = cities.keySet().toArray(new Integer[cities.size()]);
-                int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, id_cityArray[0]);
+                specialities = apiMethods.getSpecialitiesFromJSON(id_city);
 
-                String s_specialities = apiMethods.loadSpecialitiesFromJSON(R.raw.specialities, id_city);
-                specialities = apiMethods.parseSpecialitiesFromJSON(s_specialities, "specialities");
+                Intent intent = new Intent(LogoActivity.this, MainActivity.class);
+                intent.putExtra(MainActivity.PHONE, phone);
+                startActivity(intent);
 
-                startActivity(new Intent(LogoActivity.this, MainActivity.class));
                 finish();
             }
         });
@@ -81,8 +82,11 @@ public class LogoActivity extends AppCompatActivity {
         return specialities;
     }
 
-    public static String getPhone() {
-        return phone;
+    private boolean setCitySelectId(int id_city_select) {
+        SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(MainActivity.CITY_SELECT, id_city_select);
+        return editor.commit();
     }
 
 }
