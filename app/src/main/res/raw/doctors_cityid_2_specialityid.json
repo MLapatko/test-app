@@ -1,0 +1,75 @@
+{
+  "doctors":
+  [
+    {
+      "id": "4",
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/Anastasiya Olegovna-136-0-558-799-1479907032.jpg",
+      "fullname": "Михейкина Ирина Ивановна",
+      "speciality": "врач - косметолог",
+      "service_list":
+      [
+        {
+          "id": "5",
+          "price": "15"
+        },
+        {
+          "id": "6",
+          "price": "20"
+        },
+        {
+          "id": "7",
+          "price": "25"
+        }
+      ],
+      "count_reviews": "1",
+      "experience": "3",
+      "merto": "false",
+      "baby": "false"
+    },
+    {
+      "id": "5",
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/mavricheva-119-0-557-799-1479906730.jpg",
+      "fullname": "Мавричева Наталья Анатольевна",
+      "speciality": "врач - косметолог",
+      "service_list":
+      [
+        {
+          "id": "5",
+          "price": "8"
+        },
+        {
+          "id": "8",
+          "price": "27"
+        }
+      ],
+      "count_reviews": "2",
+      "experience": "1",
+      "merto": "false",
+      "baby": "true"
+    },
+    {
+      "id": "6",
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/KORONA/cropped-images/micheikina-38-1-213-306-1483698158.png",
+      "fullname": "Гайдаленок Анастасия Олеговна",
+      "speciality": "врач - косметолог",
+      "service_list":
+      [
+        {
+          "id": "5",
+          "price": "11"
+        },
+        {
+          "id": "6",
+          "price": "21"
+        }
+      ],
+      "count_reviews": "0",
+      "experience": "99",
+      "merto": "false",
+      "baby": "true"
+    }
+  ]
+}

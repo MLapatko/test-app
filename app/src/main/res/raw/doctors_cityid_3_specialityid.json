@@ -1,0 +1,75 @@
+{
+  "doctors":
+  [
+    {
+      "id": "7",
+      "id_organization": ["5"],
+      "img": "https://2doc.by/storage/app/media/MoiLogoped/cropped-images/imgonline-com-ua-Compressed-dFdC7Fch4Gi-152-209-407-583-1492430652.jpg",
+      "fullname": "Томашевский Артем Викторович",
+      "speciality": "врач - специалист в области массажа",
+      "service_list":
+      [
+        {
+          "id": "9",
+          "price": "15"
+        },
+        {
+          "id": "10",
+          "price": "20"
+        },
+        {
+          "id": "11",
+          "price": "25"
+        }
+      ],
+      "count_reviews": "6",
+      "experience": "3",
+      "merto": "false",
+      "baby": "true"
+    },
+    {
+      "id": "8",
+      "id_organization": ["5"],
+      "img": "https://2doc.by/storage/app/media/artmed/cropped-images/Desyatnichenko-47-37-292-418-1485435211.jpg",
+      "fullname": "Десятниченко Андрей Константинович",
+      "speciality": "врач - специалист в области массажа",
+      "service_list":
+      [
+        {
+          "id": "9",
+          "price": "8"
+        },
+        {
+          "id": "10",
+          "price": "27"
+        }
+      ],
+      "count_reviews": "5",
+      "experience": "9",
+      "merto": "false",
+      "baby": "false"
+    },
+    {
+      "id": "9",
+      "id_organization": ["6"],
+      "img": "https://2doc.by/storage/app/media/cropped-images/ot_celulitai_0001-82-32-192-275-1496153938.jpg",
+      "fullname": "Гушляк Александр Дмитриевич",
+      "speciality": "врач - специалист в области массажа",
+      "service_list":
+      [
+        {
+          "id": "9",
+          "price": "11"
+        },
+        {
+          "id": "10",
+          "price": "21"
+        }
+      ],
+      "count_reviews": "0",
+      "experience": "22",
+      "merto": "true",
+      "baby": "true"
+    }
+  ]
+}

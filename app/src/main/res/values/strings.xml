@@ -24,8 +24,8 @@
     </string-array>
 
     /*menu*/
-    <string name="view_change_list">Карта</string>
-    <string name="view_change_map">Список</string>
+    <string name="view_change_list">Список</string>
+    <string name="view_change_map">Карта</string>
 
     <string name="menu_filter">Фильтр</string>
     <string name="menu_sort">Сортировка</string>

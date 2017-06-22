@@ -32,12 +32,7 @@ public class ListProfessionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_profession);
 
-        Collection<String> set_specialities = LogoActivity.getSpecialities().values();
-        specialities = set_specialities.toArray(new String[set_specialities.size()]);
-
-        Set<Integer> set_key_specialities = LogoActivity.getSpecialities().keySet();
-        key_specialities = set_key_specialities.toArray(new Integer[set_key_specialities.size()]);
-
+        initializeData();
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
                 R.layout.speciality_item,
                 specialities);
@@ -53,8 +48,17 @@ public class ListProfessionActivity extends AppCompatActivity {
             Intent intent = new Intent(ListProfessionActivity.this, ViewDoctorActivity.class);
             intent.putExtra(ViewDoctorActivity.ID_SPECIALITY_SELECTED, key_specialities[position]);
             startActivity(intent);
+
             finish();
         }
     };
+
+    private void initializeData() {
+        Collection<String> set_specialities = LogoActivity.getSpecialities().values();
+        specialities = set_specialities.toArray(new String[set_specialities.size()]);
+
+        Set<Integer> set_key_specialities = LogoActivity.getSpecialities().keySet();
+        key_specialities = set_key_specialities.toArray(new Integer[set_key_specialities.size()]);
+    }
 
 }

@@ -3,6 +3,7 @@ package by.lovata.a2doc.screenStart;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
@@ -18,13 +19,12 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String NAME_PREFERENCES = "TwoDocBY";
     public static final String CITY_SELECT = "CITY";
-
-    public static final String CITY_ARRAY = "CITY_ARRAY";
-    public static final String SPECIALITIES_ARRAY = "SPECIALITIES_ARRAY";
+    public static final String PHONE = "PHONE";
 
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private String phone;
     private int[] tabIcons = {
             R.drawable.ic_search_24dp,
             R.drawable.ic_info_24dp,
@@ -37,6 +37,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        phone = getIntent().getStringExtra(PHONE);
+
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
 
@@ -47,7 +49,14 @@ public class MainActivity extends AppCompatActivity {
 
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new TabSearchFragment(), "ONE");
+        Fragment fragment = null;
+
+        fragment = new TabSearchFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(PHONE, phone);
+        fragment.setArguments(bundle);
+
+        adapter.addFragment(fragment, "ONE");
         adapter.addFragment(new TabAboutFragment(), "TWO");
         adapter.addFragment(new TabQuestionFragment(), "THREE");
         adapter.addFragment(new TabCityFragment(), "FOUR");

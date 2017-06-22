@@ -25,7 +25,6 @@ import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 
 import static android.content.Context.MODE_PRIVATE;
-import static by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity.LIST_MODE_VIEW;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,45 +45,59 @@ public class TabCityFragment extends Fragment {
         View view_root = inflater.inflate(R.layout.fragment_tab_cities, container, false);
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
+        initializeData();
 
-        Collection<String> set_cities = LogoActivity.getCities().values();
-        cities = set_cities.toArray(new String[set_cities.size()]);
+        int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, key_cities[0]);
+        int position = getPosition(id_city);
 
-        Set<Integer> set_key_cities = LogoActivity.getCities().keySet();
-        key_cities = set_key_cities.toArray(new Integer[set_key_cities.size()]);
-
-        int city_item = sharedPreferences.getInt(MainActivity.CITY_SELECT, key_cities[0]);
-        int position = 0;
-        for (int key: key_cities) {
-            if (key == city_item) {
-                break;
-            }
-            position++;
-        }
 
         ListView lst_city = (ListView)view_root.findViewById(R.id.list_city);
         lst_city.setAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.select_dialog_singlechoice, cities));
         lst_city.setItemChecked(position, true);
-        lst_city.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                int id_city_select = key_cities[position];
-                SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putInt(MainActivity.CITY_SELECT, id_city_select);
-                editor.apply();
-
-                APIMethods apiMethods = new APIMethods(getActivity());
-
-                String s_specialities = apiMethods.loadSpecialitiesFromJSON(R.raw.specialities, id_city_select);
-                LogoActivity.setSpecialities(apiMethods.parseSpecialitiesFromJSON(s_specialities, "specialities"));
-            }
-        });
+        lst_city.setOnItemClickListener(onItemClickListener_city_select);
 
         return view_root;
     }
 
+    AdapterView.OnItemClickListener onItemClickListener_city_select = new AdapterView.OnItemClickListener() {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            int id_city_select = key_cities[position];
+            setCitySelectId(id_city_select);
 
+            APIMethods apiMethods = new APIMethods(getActivity());
+
+            LogoActivity.setSpecialities(apiMethods.getSpecialitiesFromJSON(id_city_select));
+
+        }
+    };
+
+    private void initializeData() {
+        Collection<String> set_cities = LogoActivity.getCities().values();
+        cities = set_cities.toArray(new String[set_cities.size()]);
+
+        Set<Integer> set_key_cities = LogoActivity.getCities().keySet();
+        key_cities = set_key_cities.toArray(new Integer[set_key_cities.size()]);
+    }
+
+    private int getPosition(int key_city) {
+        int position = 0;
+        for (int key: key_cities) {
+            if (key == key_city) {
+                break;
+            }
+            position++;
+        }
+
+        return position;
+    }
+
+    private boolean setCitySelectId(int id_city_select) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt(MainActivity.CITY_SELECT, id_city_select);
+        return editor.commit();
+    }
 
 }
