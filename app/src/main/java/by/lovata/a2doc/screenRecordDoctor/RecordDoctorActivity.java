@@ -39,14 +39,19 @@ public class RecordDoctorActivity extends AppCompatActivity {
         }
 
         Fragment fragment = new TimetableDoctorFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(TimetableDoctorFragment.ID_DOCTOR_SELECTED, id_doctor);
+        bundle.putInt(TimetableDoctorFragment.ID_FILTER_SELECTED, id_filter);
+        bundle.putInt(TimetableDoctorFragment.ID_ORGANIZATION_SELECTED, id_organization);
+        fragment.setArguments(bundle);
         FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_record, fragment);
         fragmentTransaction.commit();
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
 
         outState.putInt(ID_DOCTOR_SELECTED_SAVE, id_doctor);
         outState.putInt(ID_FILTER_SELECTED_SAVE, id_filter);

@@ -87,6 +87,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         CardView cardView = holder.cardView;
         ClickDoctor clickDoctor = new ClickDoctor(position);
         final ClickRecord clickRecord = new ClickRecord(array_doctors[position].id, id_filter);
+        clickRecord.setId_organization(array_doctors[position].id_organization[0]);
 
         final Button btn_record_doctor = (Button) cardView.findViewById(R.id.btn_card_doctor);
         btn_record_doctor.setOnClickListener(clickRecord);

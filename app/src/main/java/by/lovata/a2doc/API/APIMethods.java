@@ -21,6 +21,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.Times;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
 
@@ -343,6 +344,65 @@ public class APIMethods {
             e.printStackTrace();
         }
         return  specialities_JSON;
+    }
+
+    public Times[] getTimesFromJSON(int id_doctor, int id_filter, int id_organization, int week) {
+        Times[] time = null;
+        JSONObject dataJsonObj = null;
+        String doctorsInfo_JSON = loadTimesFromAPI(id_doctor, id_filter, id_organization, week);
+
+        try {
+            dataJsonObj = new JSONObject(doctorsInfo_JSON);
+            JSONArray items = dataJsonObj.getJSONArray("dates");
+            time = new Times[items.length()];
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+
+                String day = item.getString("day");
+
+                JSONArray times = item.getJSONArray("times");
+                String[] times_array = new String[times.length()];
+                for (int j = 0; j < times.length(); j++) {
+                    times_array[j] = times.getString(j);
+                }
+
+                String start = item.getString("start");
+                String stop = item.getString("start");
+
+                time[i] = new Times(day, times_array, start, stop);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return time;
+    }
+    private String loadTimesFromAPI(int id_doctor, int id_filter, int id_organization, int week){
+
+        Resources r = context.getResources();
+        InputStream is = null;
+        switch (week) {
+            case 0:
+                is = r.openRawResource(R.raw.timetable_doctorid_1);
+                break;
+            default:
+                is = r.openRawResource(R.raw.timetable_doctorid_2);
+                break;
+        }
+
+        String doctorsInfo_JSON = null;
+        try {
+            doctorsInfo_JSON = convertStreamToString(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return  doctorsInfo_JSON;
     }
 
     private String convertStreamToString(InputStream is) throws IOException {
