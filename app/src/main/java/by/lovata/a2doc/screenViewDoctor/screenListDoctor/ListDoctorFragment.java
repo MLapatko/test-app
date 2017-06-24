@@ -36,6 +36,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     public static interface InformationInterfaceList {
         public DoctorInfo[] getDoctors();
         public Map<Integer, String> getSevices();
+        public Map<Integer, OrganizationInfo> getOrganization();
         public void setId_sort(int id_sort_selected);
         public void setFilters(int id_filter, boolean metro, boolean baby);
     }
@@ -75,8 +76,11 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         }
 
         doctorsInfo = informationInterface.getDoctors();
-        DoctorsAdapter doctorAdapter = new DoctorsAdapter(getContext());
+        DoctorsAdapter doctorAdapter = new DoctorsAdapter(getContext(),
+                informationInterface.getSevices(),
+                informationInterface.getOrganization());
         doctorAdapter.setArray_doctors(createArrayWithFilter(doctorsInfo, id_filter, metro, baby));
+        doctorAdapter.setId_filter(id_filter);
         doctorAdapter.setListener(new ClickOnCard());
 
         recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerview_doctor);
@@ -161,6 +165,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         if (doctorsInfo.length > 1) {
             Arrays.sort(doctorsInfo, new SortDefault());
         }
+        ((DoctorsAdapter) recyclerView.getAdapter()).setId_filter(id_filter);
         ((DoctorsAdapter) recyclerView.getAdapter()).
                 setArray_doctors(createArrayWithFilter(doctorsInfo, id_filter, metro, baby));
 
@@ -247,9 +252,11 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     private class ClickOnCard implements DoctorsAdapter.Listener {
 
         @Override
-        public void onClickRecord(int id_doctor) {
+        public void onClickRecord(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), RecordDoctorActivity.class);
             intent.putExtra(RecordDoctorActivity.ID_DOCTOR_SELECTED, id_doctor);
+            intent.putExtra(RecordDoctorActivity.ID_FILTER_SELECTED, id_filter);
+            intent.putExtra(RecordDoctorActivity.ID_ORGANIZATION_SELECTED, id_organization);
             getActivity().startActivity(intent);
         }
 

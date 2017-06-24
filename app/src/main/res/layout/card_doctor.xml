@@ -54,12 +54,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <TextView
+                <Spinner
                     android:id="@+id/services_card_doctor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
-                <TextView
+                <Spinner
                     android:id="@+id/gps_card_doctor"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
