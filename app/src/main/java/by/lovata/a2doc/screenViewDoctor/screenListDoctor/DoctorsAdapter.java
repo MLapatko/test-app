@@ -26,13 +26,20 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private Context context;
 
     public static interface Listener {
-        public void onClickRecord(int position);
+        public void onClickRecord(int id_doctor);
         public void onClickDoctor(int position);
     }
 
-    DoctorsAdapter(DoctorInfo[] doctors, Context context) {
-        this.array_doctors = doctors;
+    DoctorsAdapter(Context context) {
         this.context = context;
+    }
+
+    public void setArray_doctors(DoctorInfo[] doctors) {
+        this.array_doctors = doctors;
+    }
+
+    public DoctorInfo[] getArray_doctors() {
+        return array_doctors;
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {
@@ -59,7 +66,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position){
         CardView cardView = holder.cardView;
         ClickDoctor clickDoctor = new ClickDoctor(position);
-        ClickRecord clickRecord = new ClickRecord(position);
+        ClickRecord clickRecord = new ClickRecord(array_doctors[position].id);
 
         ImageView image_doctor = (ImageView) cardView.findViewById(R.id.img_card_doctor);
         Picasso.with(context)
@@ -98,8 +105,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         return array_doctors.length;
     }
 
-    public void synchronizedAdapter(DoctorInfo[] array_doctors) {
-        this.array_doctors = array_doctors;
+    public void synchronizedAdapter() {
         notifyDataSetChanged();
     }
 
@@ -121,16 +127,16 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     private class ClickRecord implements View.OnClickListener {
 
-        int position;
+        int id_doctor;
 
         ClickRecord(int position) {
-            this.position = position;
+            this.id_doctor = id_doctor;
         }
 
         @Override
         public void onClick(View v) {
             if (listener != null) {
-                listener.onClickRecord(position);
+                listener.onClickRecord(id_doctor);
             }
         }
     }
