@@ -22,14 +22,16 @@ import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
  */
 public class MenuSortFragment extends DialogFragment {
 
+    public static final String ID_SORT_SELECTED = "ID_SORT_SELECTED";
+
     String[] menu_sort_items;
 
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
 
-        int position_item_selected = getArguments().getInt(ListDoctorFragment.ID_SORT_SELECTED);
+        int position_item_selected = getArguments().getInt(ID_SORT_SELECTED);
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
         menu_sort_items = getResources().getStringArray(R.array.menu_sort_items);
 

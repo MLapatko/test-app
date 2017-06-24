@@ -23,25 +23,52 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 import java.util.Set;
 
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
-import by.lovata.a2doc.screenViewDoctor.InformationInterface;
+import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
+import by.lovata.a2doc.screenViewDoctor.screenListDoctor.ListDoctorFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
+import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
+public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
+                        MenuFilterFragment.AccessFilter{
+
+    public static interface InformationInterfaceMap {
+        public DoctorInfo[] getDoctors();
+        public Map<Integer, String> getSevices();
+        public Map<Integer, OrganizationInfo> getOrganization();
+        public void setId_sort(int id_sort_selected);
+        public void setFilters(int id_filter, boolean metro, boolean baby);
+    }
+
+
+    public static final String ID_FILTER_SELECTED = "ID_FILTER_SELECTED";
+    public static final String IS_METRO = "IS_METRO";
+    public static final String IS_BABY = "IS_BABY";
+
+    public static final String ID_FILTER_SELECTED_SAVE = "ID_FILTER_SELECTED_SAVE";
+    public static final String IS_METRO_SAVE = "IS_METRO_SAVE";
+    public static final String IS_BABY_SAVE = "IS_BABY_SAVE";
 
     DoctorInfo[] doctorsInfo;
-    InformationInterface informationInterface;
+    InformationInterfaceMap informationInterface;
+
+    int id_filter;
+    boolean metro;
+    boolean baby;
+
     MapView mMapView;
     GoogleMap gMap;
     Geocoder geocoder;
@@ -57,6 +84,10 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
                              Bundle savedInstanceState) {
 
         doctorsInfo = informationInterface.getDoctors();
+
+        if (savedInstanceState == null) {
+            initializeData();
+        }
 
         View view = inflater.inflate(R.layout.fragment_map_doctor, container, false);
         mMapView = (MapView) view.findViewById(R.id.mapView);
@@ -82,7 +113,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.informationInterface = (InformationInterface) activity;
+        this.informationInterface = (InformationInterfaceMap) activity;
     }
 
     @Override
@@ -139,12 +170,50 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.menu_filter:
-                MenuFilterFragment dialog_filter = new MenuFilterFragment();
-                dialog_filter.show(getChildFragmentManager(), "filter");
+                showMenuFilter();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
     }
 
+    @Override
+    public void setFilters(int id_filter, boolean metro, boolean baby) {
+        this.id_filter = id_filter;
+        this.metro = metro;
+        this.baby = baby;
+
+        informationInterface.setFilters(id_filter, metro, baby);
+        informationInterface.setId_sort(0);
+
+        if (doctorsInfo.length > 1) {
+            Arrays.sort(doctorsInfo, new SortDefault());
+        }
+        /*((DoctorsAdapter) recyclerView.getAdapter()).
+                setArray_doctors(createArrayWithFilter(doctorsInfo, id_filter, metro, baby));
+
+        synchronizedDoctors();*/
+    }
+
+    @Override
+    public Map<Integer, String> getSevices() {
+        return informationInterface.getSevices();
+    }
+
+    private void showMenuFilter() {
+        MenuFilterFragment dialog_filter = new MenuFilterFragment();
+        Bundle bundle_filter = new Bundle();
+        bundle_filter.putInt(MenuFilterFragment.ID_FILTER_SELECTED, id_filter);
+        bundle_filter.putBoolean(MenuFilterFragment.IS_METRO, metro);
+        bundle_filter.putBoolean(MenuFilterFragment.IS_BABY, baby);
+        dialog_filter.setArguments(bundle_filter);
+        dialog_filter.show(getChildFragmentManager(), "filter");
+    }
+
+    private void initializeData() {
+        id_filter = getArguments().getInt(ID_FILTER_SELECTED);
+
+        metro = getArguments().getBoolean(IS_METRO);
+        baby = getArguments().getBoolean(IS_BABY);
+    }
 }
