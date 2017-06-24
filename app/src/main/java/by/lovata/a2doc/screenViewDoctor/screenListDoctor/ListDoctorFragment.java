@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,6 +24,8 @@ import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
+import by.lovata.a2doc.screenViewDoctor.SaveParameter;
+import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortExperience;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortPriceDown;
@@ -39,6 +42,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         public Map<Integer, OrganizationInfo> getOrganization();
         public void setId_sort(int id_sort_selected);
         public void setFilters(int id_filter, boolean metro, boolean baby);
+        public SaveParameter getSaveParameter();
     }
 
     public static final String ID_SORT_SELECTED = "ID_SORT_SELECTED";
@@ -257,6 +261,9 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
             intent.putExtra(RecordDoctorActivity.ID_DOCTOR_SELECTED, id_doctor);
             intent.putExtra(RecordDoctorActivity.ID_FILTER_SELECTED, id_filter);
             intent.putExtra(RecordDoctorActivity.ID_ORGANIZATION_SELECTED, id_organization);
+            intent.putExtra(RecordDoctorActivity.SAVE_INFORMATION_PARCELABLE, informationInterface.getSaveParameter());
+            Log.w("MYLOG", informationInterface.getSaveParameter().doctorsInfo[0].full_name);
+
             getActivity().startActivity(intent);
         }
 

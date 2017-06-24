@@ -201,6 +201,11 @@ public class ViewDoctorActivity extends AppCompatActivity implements
         return keys_services[0];
     }
 
+    @Override
+    public SaveParameter getSaveParameter() {
+        return new SaveParameter(doctorsInfo, sevices, organizations);
+    }
+
     private void setListDoctorsFragment() {
         Fragment fragment = new ListDoctorFragment();
         Bundle bundle = new Bundle();

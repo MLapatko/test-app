@@ -367,7 +367,7 @@ public class APIMethods {
                 }
 
                 String start = item.getString("start");
-                String stop = item.getString("start");
+                String stop = item.getString("stop");
 
                 time[i] = new Times(day, times_array, start, stop);
             }

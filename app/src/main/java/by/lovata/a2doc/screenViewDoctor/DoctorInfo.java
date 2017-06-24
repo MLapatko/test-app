@@ -36,7 +36,28 @@ public class DoctorInfo implements Parcelable{
     }
 
     public DoctorInfo(Parcel in) {
+        id = in.readInt();
+        id_organization = in.createIntArray();
+        url_img = in.readString();
+        full_name = in.readString();
+        speciality = in.readString();
+        count_reviews = in.readInt();
+        experience = in.readInt();
+        merto = in.readByte() != 0;
+        baby = in.readByte() != 0;
     }
+
+    public static final Creator<DoctorInfo> CREATOR = new Creator<DoctorInfo>() {
+        @Override
+        public DoctorInfo createFromParcel(Parcel in) {
+            return new DoctorInfo(in);
+        }
+
+        @Override
+        public DoctorInfo[] newArray(int size) {
+            return new DoctorInfo[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -45,18 +66,14 @@ public class DoctorInfo implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeIntArray(id_organization);
+        dest.writeString(url_img);
+        dest.writeString(full_name);
+        dest.writeString(speciality);
+        dest.writeInt(count_reviews);
+        dest.writeInt(experience);
+        dest.writeByte((byte) (merto ? 1 : 0));
+        dest.writeByte((byte) (baby ? 1 : 0));
     }
-
-    public static final Parcelable.Creator<DoctorInfo> CREATOR = new Parcelable.Creator<DoctorInfo>() {
-
-        @Override
-        public DoctorInfo createFromParcel(Parcel source) {
-            return new DoctorInfo(source);
-        }
-
-        @Override
-        public DoctorInfo[] newArray(int size) {
-            return new DoctorInfo[size];
-        }
-    };
 }
