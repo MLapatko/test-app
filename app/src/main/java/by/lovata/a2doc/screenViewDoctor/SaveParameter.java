@@ -19,92 +19,10 @@ public class SaveParameter implements Parcelable {
     private boolean baby;
 
     private DoctorInfo[] doctorsInfo;
-    private Map<Integer, String> sevices;
+    private Map<Integer, String> services;
     private Map<Integer, OrganizationInfo> organizations;
     private SelectDoctor selectDoctor;
 
-
-    public void setSelectDoctor(SelectDoctor selectDoctor) {
-        this.selectDoctor = selectDoctor;
-    }
-
-    public SelectDoctor getSelectDoctor() {
-
-        return selectDoctor;
-    }
-
-    public void setId_spiciality(int id_spiciality) {
-        this.id_spiciality = id_spiciality;
-    }
-
-    public void setId_city(int id_city) {
-        this.id_city = id_city;
-    }
-
-    public void setId_sort(int id_sort) {
-        this.id_sort = id_sort;
-    }
-
-    public void setId_filter(int id_filter) {
-        this.id_filter = id_filter;
-    }
-
-    public void setMetro(boolean metro) {
-        this.metro = metro;
-    }
-
-    public void setBaby(boolean baby) {
-        this.baby = baby;
-    }
-
-    public void setDoctorsInfo(DoctorInfo[] doctorsInfo) {
-        this.doctorsInfo = doctorsInfo;
-    }
-
-    public void setSevices(Map<Integer, String> sevices) {
-        this.sevices = sevices;
-    }
-
-    public void setOrganizations(Map<Integer, OrganizationInfo> organizations) {
-        this.organizations = organizations;
-    }
-
-    public int getId_spiciality() {
-
-        return id_spiciality;
-    }
-
-    public int getId_city() {
-        return id_city;
-    }
-
-    public int getId_sort() {
-        return id_sort;
-    }
-
-    public int getId_filter() {
-        return id_filter;
-    }
-
-    public boolean isMetro() {
-        return metro;
-    }
-
-    public boolean isBaby() {
-        return baby;
-    }
-
-    public DoctorInfo[] getDoctorsInfo() {
-        return doctorsInfo;
-    }
-
-    public Map<Integer, String> getSevices() {
-        return sevices;
-    }
-
-    public Map<Integer, OrganizationInfo> getOrganizations() {
-        return organizations;
-    }
 
     SaveParameter(int id_city, int id_spiciality, int id_filter, int id_sort,
                   DoctorInfo[] doctorsInfo, Map<Integer, OrganizationInfo> organizations,
@@ -115,7 +33,7 @@ public class SaveParameter implements Parcelable {
         this.id_sort = id_sort;
         this.doctorsInfo = doctorsInfo;
         this.organizations = organizations;
-        this.sevices = sevices;
+        this.services = sevices;
         this.metro = metro;
         this.baby = baby;
     }
@@ -129,7 +47,7 @@ public class SaveParameter implements Parcelable {
         baby = in.readByte() != 0;
 
         doctorsInfo = in.createTypedArray(DoctorInfo.CREATOR);
-        sevices = readServices(in);
+        services = readServices(in);
         organizations = readOrganizations(in);
         selectDoctor = SelectDoctor.class.cast(in.readParcelable(SelectDoctor.class.getClassLoader()));
     }
@@ -200,8 +118,90 @@ public class SaveParameter implements Parcelable {
         dest.writeByte((byte) (baby ? 1 : 0));
 
         dest.writeTypedArray(doctorsInfo, flags);
-        writeServices(dest, flags, sevices);
+        writeServices(dest, flags, services);
         writeOrganizations(dest, flags, organizations);
         dest.writeParcelable(selectDoctor, flags);
+    }
+
+    public void setSelectDoctor(SelectDoctor selectDoctor) {
+        this.selectDoctor = selectDoctor;
+    }
+
+    public SelectDoctor getSelectDoctor() {
+
+        return selectDoctor;
+    }
+
+    public void setId_spiciality(int id_spiciality) {
+        this.id_spiciality = id_spiciality;
+    }
+
+    public void setId_city(int id_city) {
+        this.id_city = id_city;
+    }
+
+    public void setId_sort(int id_sort) {
+        this.id_sort = id_sort;
+    }
+
+    public void setId_filter(int id_filter) {
+        this.id_filter = id_filter;
+    }
+
+    public void setMetro(boolean metro) {
+        this.metro = metro;
+    }
+
+    public void setBaby(boolean baby) {
+        this.baby = baby;
+    }
+
+    public void setDoctorsInfo(DoctorInfo[] doctorsInfo) {
+        this.doctorsInfo = doctorsInfo;
+    }
+
+    public void setServices(Map<Integer, String> sevices) {
+        this.services = sevices;
+    }
+
+    public void setOrganizations(Map<Integer, OrganizationInfo> organizations) {
+        this.organizations = organizations;
+    }
+
+    public int getId_spiciality() {
+
+        return id_spiciality;
+    }
+
+    public int getId_city() {
+        return id_city;
+    }
+
+    public int getId_sort() {
+        return id_sort;
+    }
+
+    public int getId_filter() {
+        return id_filter;
+    }
+
+    public boolean isMetro() {
+        return metro;
+    }
+
+    public boolean isBaby() {
+        return baby;
+    }
+
+    public DoctorInfo[] getDoctorsInfo() {
+        return doctorsInfo;
+    }
+
+    public Map<Integer, String> getServices() {
+        return services;
+    }
+
+    public Map<Integer, OrganizationInfo> getOrganizations() {
+        return organizations;
     }
 }

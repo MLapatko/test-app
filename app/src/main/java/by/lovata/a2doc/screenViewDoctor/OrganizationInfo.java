@@ -5,43 +5,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class OrganizationInfo implements Parcelable{
+
     private int id;
     private String name;
     private int lat;
     private int lng;
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setLat(int lat) {
-        this.lat = lat;
-    }
-
-    public void setLng(int lng) {
-        this.lng = lng;
-    }
-
-    public int getId() {
-
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public int getLat() {
-        return lat;
-    }
-
-    public int getLng() {
-        return lng;
-    }
 
     public OrganizationInfo(int id, String name, int lat, int lng) {
         this.id = id;
@@ -80,5 +48,38 @@ public class OrganizationInfo implements Parcelable{
         dest.writeString(name);
         dest.writeInt(lat);
         dest.writeInt(lng);
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setLat(int lat) {
+        this.lat = lat;
+    }
+
+    public void setLng(int lng) {
+        this.lng = lng;
+    }
+
+    public int getId() {
+
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public int getLat() {
+        return lat;
+    }
+
+    public int getLng() {
+        return lng;
     }
 }

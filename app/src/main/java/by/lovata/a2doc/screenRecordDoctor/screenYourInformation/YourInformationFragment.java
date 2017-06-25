@@ -11,9 +11,7 @@ import android.widget.TextView;
 import java.util.HashMap;
 import java.util.Map;
 
-import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
-import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.Times;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 
@@ -71,7 +69,7 @@ public class YourInformationFragment extends Fragment {
         for (DoctorInfo doctorInfo: saveParameter.getDoctorsInfo()) {
             if (doctorInfo.getId() == saveParameter.getSelectDoctor().getId_doctor()) {
                 map.put("name", doctorInfo.getFull_name());
-                map.put("service", saveParameter.getSevices().get(
+                map.put("service", saveParameter.getServices().get(
                         saveParameter.getSelectDoctor().getId_filter()));
                 map.put("price", String.format("Цена: %s", doctorInfo.getService_list().get(
                         saveParameter.getSelectDoctor().getId_filter())));

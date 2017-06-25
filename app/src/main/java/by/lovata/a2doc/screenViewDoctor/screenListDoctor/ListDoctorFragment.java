@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -23,10 +22,8 @@ import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
-import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
-import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortExperience;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortPriceDown;
@@ -65,7 +62,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         }
 
         DoctorsAdapter doctorAdapter = new DoctorsAdapter(getContext(),
-                saveParameter.getSevices(),
+                saveParameter.getServices(),
                 saveParameter.getOrganizations());
         doctorAdapter.setArray_doctors(createArrayWithFilter(saveParameter.getDoctorsInfo(),
                 saveParameter.getId_filter(), saveParameter.isMetro(), saveParameter.isBaby()));
@@ -163,7 +160,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
 
     @Override
     public Map<Integer, String> getSevices() {
-        return saveParameter.getSevices();
+        return saveParameter.getServices();
     }
 
     private DoctorInfo[] createArrayWithFilter(DoctorInfo[] doctorsInfo, int id_filter,

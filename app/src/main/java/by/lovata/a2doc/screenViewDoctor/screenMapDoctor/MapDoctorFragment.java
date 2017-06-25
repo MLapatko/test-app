@@ -196,7 +196,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public Map<Integer, String> getSevices() {
         return null;
-        //return informationInterface.getSevices();
+        //return informationInterface.getServices();
     }
 
     private void showMenuFilter() {

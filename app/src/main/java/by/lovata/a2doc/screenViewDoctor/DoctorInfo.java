@@ -13,94 +13,17 @@ import by.lovata.a2doc.LogoActivity;
 
 public class DoctorInfo implements Parcelable{
 
-    public int getId() {
-        return id;
-    }
-
-    public int[] getId_organization() {
-        return id_organization;
-    }
-
-    public String getUrl_img() {
-        return url_img;
-    }
-
-    public String getFull_name() {
-        return full_name;
-    }
-
-    public String getSpeciality() {
-        return speciality;
-    }
-
-    public Map<Integer, Integer> getService_list() {
-        return service_list;
-    }
-
-    public int getCount_reviews() {
-        return count_reviews;
-    }
-
-    public int getExperience() {
-        return experience;
-    }
-
-    public boolean isMerto() {
-        return merto;
-    }
-
-    public boolean isBaby() {
-        return baby;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setId_organization(int[] id_organization) {
-        this.id_organization = id_organization;
-    }
-
-    public void setUrl_img(String url_img) {
-        this.url_img = url_img;
-    }
-
-    public void setFull_name(String full_name) {
-        this.full_name = full_name;
-    }
-
-    public void setSpeciality(String speciality) {
-        this.speciality = speciality;
-    }
-
-    public void setService_list(Map<Integer, Integer> service_list) {
-        this.service_list = service_list;
-    }
-
-    public void setCount_reviews(int count_reviews) {
-        this.count_reviews = count_reviews;
-    }
-
-    public void setExperience(int experience) {
-        this.experience = experience;
-    }
-
-    public void setMerto(boolean merto) {
-        this.merto = merto;
-    }
-
-    public void setBaby(boolean baby) {
-        this.baby = baby;
-    }
-
     private int id;
+    private int count_reviews;
+    private int experience;
     private int[] id_organization;
+
     private String url_img;
     private String full_name;
     private String speciality;
+
     private Map<Integer, Integer> service_list;
-    private int count_reviews;
-    private int experience;
+
     private boolean merto;
     private boolean baby;
 
@@ -181,5 +104,85 @@ public class DoctorInfo implements Parcelable{
         dest.writeInt(experience);
         dest.writeByte((byte) (merto ? 1 : 0));
         dest.writeByte((byte) (baby ? 1 : 0));
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int[] getId_organization() {
+        return id_organization;
+    }
+
+    public String getUrl_img() {
+        return url_img;
+    }
+
+    public String getFull_name() {
+        return full_name;
+    }
+
+    public String getSpeciality() {
+        return speciality;
+    }
+
+    public Map<Integer, Integer> getService_list() {
+        return service_list;
+    }
+
+    public int getCount_reviews() {
+        return count_reviews;
+    }
+
+    public int getExperience() {
+        return experience;
+    }
+
+    public boolean isMerto() {
+        return merto;
+    }
+
+    public boolean isBaby() {
+        return baby;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setId_organization(int[] id_organization) {
+        this.id_organization = id_organization;
+    }
+
+    public void setUrl_img(String url_img) {
+        this.url_img = url_img;
+    }
+
+    public void setFull_name(String full_name) {
+        this.full_name = full_name;
+    }
+
+    public void setSpeciality(String speciality) {
+        this.speciality = speciality;
+    }
+
+    public void setService_list(Map<Integer, Integer> service_list) {
+        this.service_list = service_list;
+    }
+
+    public void setCount_reviews(int count_reviews) {
+        this.count_reviews = count_reviews;
+    }
+
+    public void setExperience(int experience) {
+        this.experience = experience;
+    }
+
+    public void setMerto(boolean merto) {
+        this.merto = merto;
+    }
+
+    public void setBaby(boolean baby) {
+        this.baby = baby;
     }
 }
