@@ -46,13 +46,11 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
                         MenuFilterFragment.AccessFilter{
 
     public static interface InformationInterfaceMap {
-        public DoctorInfo[] getDoctors();
-        public Map<Integer, String> getSevices();
-        public Map<Integer, OrganizationInfo> getOrganization();
         public void setId_sort(int id_sort_selected);
         public void setFilters(int id_filter, boolean metro, boolean baby);
     }
 
+    public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
 
     public static final String ID_FILTER_SELECTED = "ID_FILTER_SELECTED";
     public static final String IS_METRO = "IS_METRO";
@@ -83,14 +81,14 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        doctorsInfo = informationInterface.getDoctors();
+        //doctorsInfo = informationInterface.getDoctors();
 
         if (savedInstanceState == null) {
             initializeData();
         }
 
         View view = inflater.inflate(R.layout.fragment_map_doctor, container, false);
-        mMapView = (MapView) view.findViewById(R.id.mapView);
+        /*mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
         mMapView.onResume();// needed to get the map to display immediately
 
@@ -103,7 +101,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             e.printStackTrace();
         }
 
-        mMapView.getMapAsync(this);
+        mMapView.getMapAsync(this);*/
 
         setHasOptionsMenu(true);
 
@@ -136,7 +134,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             String doctorName;
 
             for(DoctorInfo doctorInfo : doctorsInfo) {
-                doctorName = doctorInfo.full_name;
+                doctorName = doctorInfo.getFull_name();
 //                gMap.addMarker(new MarkerOptions()
 //                        .position(new LatLng(doctorInfo.lat, doctorInfo.lng))
 //                        .title(doctorName)).setTag(doctorInfo);
@@ -197,7 +195,8 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public Map<Integer, String> getSevices() {
-        return informationInterface.getSevices();
+        return null;
+        //return informationInterface.getSevices();
     }
 
     private void showMenuFilter() {
@@ -211,9 +210,9 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void initializeData() {
-        id_filter = getArguments().getInt(ID_FILTER_SELECTED);
+        //id_filter = getArguments().getInt(ID_FILTER_SELECTED);
 
-        metro = getArguments().getBoolean(IS_METRO);
-        baby = getArguments().getBoolean(IS_BABY);
+        //metro = getArguments().getBoolean(IS_METRO);
+        //baby = getArguments().getBoolean(IS_BABY);
     }
 }

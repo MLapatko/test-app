@@ -9,7 +9,7 @@ public class SortDefault implements Comparator<DoctorInfo>{
 
     @Override
     public int compare(DoctorInfo o1, DoctorInfo o2) {
-        return o1.full_name.compareTo(o2.full_name);
+        return o1.getFull_name().compareTo(o2.getFull_name());
     }
 
 }

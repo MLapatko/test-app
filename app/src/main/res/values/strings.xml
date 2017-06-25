@@ -15,6 +15,17 @@
         Мы ответим на все вопросы
     </string>
 
+    /*timetable*/
+    <string name="timetable_not_get">Нет приёмов</string>
+
+    /*your_information*/
+    <string name="your_information_contacts">Контактные данные: </string>
+    <string name="your_information_hint_fio">ФИО </string>
+    <string name="your_information_hint_phone">Контактный телефон </string>
+    <string name="your_information_hint_email">Эл. почта (по желанию) </string>
+    <string name="your_information_btn_record">Записаться на приём </string>
+
+
     /*cities_screen*/
     <string-array name="cities_screen_cities">
         <item>Минск</item>
