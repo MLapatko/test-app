@@ -20,6 +20,7 @@
 
     /*profile*/
     <string name="profile_record_label">Записаться на приём</string>
+    <string name="profile_about">Информация</string>
 
     /*your_information*/
     <string name="your_information_contacts">Контактные данные: </string>

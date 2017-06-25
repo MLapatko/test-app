@@ -1,10 +1,12 @@
 package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
-import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -21,6 +23,7 @@ import java.util.Map;
 import java.util.Set;
 
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
@@ -42,9 +45,18 @@ public class DoctorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
+        if (saveParameter == null) {
+            Log.w("MYLOG", "1");
+        }
+        if (savedInstanceState == null) {
+            Log.w("MYLOG", "2");
 
+        }
         if (savedInstanceState == null) {
             saveParameter = getIntent().getParcelableExtra(SAVEPARAMETER_PARSALABEL);
+            if (saveParameter == null) {
+                Log.w("MYLOG", "3");
+            }
             id_organization = saveParameter.getSelectDoctor().getId_organization();
             id_filter = saveParameter.getSelectDoctor().getId_filter();
         } else {
@@ -65,6 +77,25 @@ public class DoctorActivity extends AppCompatActivity {
         outState.putParcelable(SAVEPARAMETER_PARSALABEL_SAVE, saveParameter);
         outState.putInt(ID_ORGANIZATION_SAVE, id_organization);
         outState.putInt(ID_FILTER_SAVE, id_filter);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.view_about_doctor, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.view_about_doctor:
+                clickViewAboutDoctor();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     private void initialView() {
@@ -219,5 +250,11 @@ public class DoctorActivity extends AppCompatActivity {
         }
 
         return position_service;
+    }
+
+    private void clickViewAboutDoctor() {
+        Intent intent = new Intent(DoctorActivity.this, AboutDoctorActivity.class);
+        intent.putExtra(AboutDoctorActivity.ID_SELECTED_DOCTOR, saveParameter.getSelectDoctor().getId_doctor());
+        startActivity(intent);
     }
 }
