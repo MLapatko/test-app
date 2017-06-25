@@ -9,7 +9,7 @@ public class SortExperience implements Comparator<DoctorInfo> {
 
     @Override
     public int compare(DoctorInfo o1, DoctorInfo o2) {
-        return o2.experience - o1.experience;
+        return o2.getExperience() - o1.getExperience();
     }
 
 }

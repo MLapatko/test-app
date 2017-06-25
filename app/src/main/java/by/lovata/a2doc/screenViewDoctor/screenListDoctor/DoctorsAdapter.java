@@ -86,29 +86,29 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     public void onBindViewHolder(ViewHolder holder, final int position){
         CardView cardView = holder.cardView;
         ClickDoctor clickDoctor = new ClickDoctor(position);
-        final ClickRecord clickRecord = new ClickRecord(array_doctors[position].id, id_filter);
-        clickRecord.setId_organization(array_doctors[position].id_organization[0]);
+        final ClickRecord clickRecord = new ClickRecord(array_doctors[position].getId(), id_filter);
+        clickRecord.setId_organization(array_doctors[position].getId_organization()[0]);
 
         final Button btn_record_doctor = (Button) cardView.findViewById(R.id.btn_card_doctor);
         btn_record_doctor.setOnClickListener(clickRecord);
 
         ImageView image_doctor = (ImageView) cardView.findViewById(R.id.img_card_doctor);
         Picasso.with(context)
-                .load(array_doctors[position].url_img)
+                .load(array_doctors[position].getUrl_img())
                 .placeholder(R.drawable.ic_file_download_black_24dp)
                 .error(R.drawable.ic_error_black_24dp)
                 .into(image_doctor);
         image_doctor.setOnClickListener(clickDoctor);
 
         TextView full_name_doctor = (TextView) cardView.findViewById(R.id.fio_card_doctor);
-        full_name_doctor.setText(array_doctors[position].full_name);
+        full_name_doctor.setText(array_doctors[position].getFull_name());
         full_name_doctor.setOnClickListener(clickDoctor);
 
         TextView speciality_doctor = (TextView) cardView.findViewById(R.id.speciality_card_doctor);
-        speciality_doctor.setText(array_doctors[position].speciality);
+        speciality_doctor.setText(array_doctors[position].getSpeciality());
 
         final TextView price_doctor = (TextView) cardView.findViewById(R.id.price_of_consultation_card_doctor);
-        price_doctor.setText(Integer.toString(array_doctors[position].service_list.get(id_filter)));
+        price_doctor.setText(Integer.toString(array_doctors[position].getService_list().get(id_filter)));
 
         String[] services_name = getServicesName(position);
         final Spinner services_doctor = (Spinner) cardView.findViewById(R.id.services_card_doctor);
@@ -137,7 +137,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
                 context,
                 android.R.layout.simple_list_item_activated_1,
                 organizations_name));
-        final int[] id_organizations = array_doctors[position].id_organization;
+        final int[] id_organizations = array_doctors[position].getId_organization();
         gps_doctor.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -151,7 +151,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         });
 
         TextView review_doctor = (TextView) cardView.findViewById(R.id.review_card_doctor);
-        review_doctor.setText(Integer.toString(array_doctors[position].count_reviews));
+        review_doctor.setText(Integer.toString(array_doctors[position].getCount_reviews()));
 
     }
 
@@ -163,7 +163,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private int getPositionService(int id_filter) {
         int position_service = 0;
 
-        for (int key: array_doctors[0].service_list.keySet()) {
+        for (int key: array_doctors[0].getService_list().keySet()) {
             if (key == id_filter) {
                 break;
             }
@@ -176,7 +176,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private String[] getServicesName(int position) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id: array_doctors[position].service_list.keySet()) {
+        for (int id: array_doctors[position].getService_list().keySet()) {
             arrayList.add(sevices.get(id));
         }
 
@@ -186,8 +186,8 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private String[] getOrganizationName(int position) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id: array_doctors[position].id_organization) {
-            arrayList.add(organizations.get(id).name);
+        for (int id: array_doctors[position].getId_organization()) {
+            arrayList.add(organizations.get(id).getName());
         }
 
         return arrayList.toArray(new String[arrayList.size()]);

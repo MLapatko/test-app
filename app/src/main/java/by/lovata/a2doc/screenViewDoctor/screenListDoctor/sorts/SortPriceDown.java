@@ -15,7 +15,7 @@ public class SortPriceDown implements Comparator<DoctorInfo> {
 
     @Override
     public int compare(DoctorInfo o1, DoctorInfo o2) {
-        return o2.service_list.get(id_filter) - o1.service_list.get(id_filter);
+        return o2.getService_list().get(id_filter) - o1.getService_list().get(id_filter);
     }
 
 }
