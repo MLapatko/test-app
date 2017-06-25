@@ -42,8 +42,8 @@ public class DoctorInfoWindowAdapter implements InfoWindowAdapter {
 
         DoctorInfo doctorInfo = (DoctorInfo) marker.getTag();
 
-        fio.setText(doctorInfo.full_name);
-        speciality.setText(doctorInfo.speciality);
+        fio.setText(doctorInfo.getFull_name());
+        speciality.setText(doctorInfo.getSpeciality());
 //        review.setText(doctorInfo.review);
 //        price.setText(doctorInfo.price_of_consultation);
         btn.setText("Записаться");

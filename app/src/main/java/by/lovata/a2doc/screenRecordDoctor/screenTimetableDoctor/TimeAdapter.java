@@ -21,22 +21,22 @@ import java.util.ArrayList;
 
 import by.lovata.a2doc.R;
 
-public class TimeAdapter extends BaseAdapter {
+class TimeAdapter extends BaseAdapter {
 
-    public static interface RecordTime {
+    static interface RecordTime {
         public void record(String day_selected, String time_selected);
     }
 
-    Times[] times;
-    Context context;
-    RecordTime recordTime;
+    private Times[] times;
+    private Context context;
+    private RecordTime recordTime;
 
-    public TimeAdapter(Context context, Times[] times) {
+    TimeAdapter(Context context, Times[] times) {
         this.times = times;
         this.context = context;
     }
 
-    public void setListener(RecordTime recordTime) {
+    void setListener(RecordTime recordTime) {
         this.recordTime = recordTime;
     }
 
@@ -100,7 +100,7 @@ public class TimeAdapter extends BaseAdapter {
         return view;
     }
 
-    public void setTimes(Times[] times) {
+    void setTimes(Times[] times) {
         this.times = times;
         notifyDataSetInvalidated();
     }
