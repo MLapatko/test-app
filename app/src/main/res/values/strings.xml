@@ -18,6 +18,9 @@
     /*timetable*/
     <string name="timetable_not_get">Нет приёмов</string>
 
+    /*profile*/
+    <string name="profile_record_label">Записаться на приём</string>
+
     /*your_information*/
     <string name="your_information_contacts">Контактные данные: </string>
     <string name="your_information_hint_fio">ФИО </string>

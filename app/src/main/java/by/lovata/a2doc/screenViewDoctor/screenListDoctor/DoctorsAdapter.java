@@ -40,7 +40,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     public static interface Listener {
         public void onClickRecord(int id_doctor, int id_filter, int id_organization);
-        public void onClickDoctor(int position);
+        public void onClickDoctor(int id_doctor, int id_filter, int id_organization);
     }
 
     DoctorsAdapter(Context context, Map<Integer, String> sevices,
@@ -85,8 +85,9 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position){
         CardView cardView = holder.cardView;
-        ClickDoctor clickDoctor = new ClickDoctor(position);
+        final ClickDoctor clickDoctor = new ClickDoctor(array_doctors[position].getId(), id_filter);
         final ClickRecord clickRecord = new ClickRecord(array_doctors[position].getId(), id_filter);
+        clickDoctor.setId_organization(array_doctors[position].getId_organization()[0]);
         clickRecord.setId_organization(array_doctors[position].getId_organization()[0]);
 
         final Button btn_record_doctor = (Button) cardView.findViewById(R.id.btn_card_doctor);
@@ -142,6 +143,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 clickRecord.setId_organization(id_organizations[position]);
+                clickDoctor.setId_organization(id_organizations[position]);
             }
 
             @Override
@@ -199,16 +201,23 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     private class ClickDoctor implements View.OnClickListener {
 
-        int position;
+        int id_doctor;
+        int id_filter;
+        int id_organization;
 
-        ClickDoctor(int position) {
-            this.position = position;
+        ClickDoctor(int id_doctor, int id_filter) {
+            this.id_doctor = id_doctor;
+            this.id_filter = id_filter;
+        }
+
+        public void setId_organization(int organization) {
+            this.id_organization = organization;
         }
 
         @Override
         public void onClick(View v) {
             if (listener != null) {
-                listener.onClickDoctor(position);
+                listener.onClickDoctor(id_doctor, id_filter, id_organization);
             }
         }
     }

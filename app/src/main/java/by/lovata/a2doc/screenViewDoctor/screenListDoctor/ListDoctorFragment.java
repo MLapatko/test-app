@@ -235,8 +235,11 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         }
 
         @Override
-        public void onClickDoctor(int position) {
+        public void onClickDoctor(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), DoctorActivity.class);
+            saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null));
+            intent.putExtra(DoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
+
             getActivity().startActivity(intent);
         }
     }
