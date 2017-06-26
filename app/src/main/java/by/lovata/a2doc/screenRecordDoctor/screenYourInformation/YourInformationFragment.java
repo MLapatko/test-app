@@ -73,6 +73,7 @@ public class YourInformationFragment extends Fragment {
                         saveParameter.getSelectDoctor().getId_filter()));
                 map.put("price", String.format("Цена: %s", doctorInfo.getService_list().get(
                         saveParameter.getSelectDoctor().getId_filter())));
+                break;
             }
         }
         return map;

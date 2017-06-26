@@ -18,6 +18,23 @@
     /*timetable*/
     <string name="timetable_not_get">Нет приёмов</string>
 
+    /*profile*/
+    <string name="profile_record_label">Записаться на приём</string>
+    <string name="profile_about">Информация</string>
+    <string-array name="profile_day">
+        <item>Понедельник</item>
+        <item>Вторник</item>
+        <item>Среда</item>
+        <item>Четверг</item>
+        <item>Пятница</item>
+        <item>Суббота</item>
+        <item>Воскресенье</item>
+    </string-array>
+
+    /*record_time*/
+    <string name="record_time_start">Начало в:</string>
+    <string name="record_time_stop">Конец в:</string>
+
     /*your_information*/
     <string name="your_information_contacts">Контактные данные: </string>
     <string name="your_information_hint_fio">ФИО </string>

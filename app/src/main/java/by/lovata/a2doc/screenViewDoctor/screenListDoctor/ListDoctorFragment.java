@@ -228,16 +228,32 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         @Override
         public void onClickRecord(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), RecordDoctorActivity.class);
-            saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null));
+            DoctorInfo doctorInfo = getDoctor(id_doctor);
+            //saveParameter.setDoctorsInfo(null);
+            saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null, doctorInfo));
             intent.putExtra(RecordDoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
 
             getActivity().startActivity(intent);
         }
 
         @Override
-        public void onClickDoctor(int position) {
+        public void onClickDoctor(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), DoctorActivity.class);
+            DoctorInfo doctorInfo = getDoctor(id_doctor);
+            //saveParameter.setDoctorsInfo(null);
+            saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null, doctorInfo));
+            intent.putExtra(DoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
+
             getActivity().startActivity(intent);
+        }
+
+        private DoctorInfo getDoctor(int id_doctor) {
+            for (DoctorInfo doctorInfo: saveParameter.getDoctorsInfo()) {
+                if (doctorInfo.getId() == id_doctor) {
+                    return doctorInfo;
+                }
+            }
+            return null;
         }
     }
 

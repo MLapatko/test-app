@@ -13,12 +13,15 @@ public class SelectDoctor implements Parcelable {
     private String day;
     private String time;
 
-    public SelectDoctor(int id_doctor, int id_filter, int id_organization, String day, String time) {
+    DoctorInfo doctorInfo;
+
+    public SelectDoctor(int id_doctor, int id_filter, int id_organization, String day, String time, DoctorInfo doctorInfo) {
         this.id_doctor = id_doctor;
         this.id_filter = id_filter;
         this.id_organization = id_organization;
         this.day = day;
         this.time = time;
+        this.doctorInfo = doctorInfo;
     }
 
     protected SelectDoctor(Parcel in) {
@@ -27,6 +30,7 @@ public class SelectDoctor implements Parcelable {
         id_organization = in.readInt();
         day = in.readString();
         time = in.readString();
+        this.doctorInfo = DoctorInfo.class.cast(in.readParcelable(DoctorInfo.class.getClassLoader()));
     }
 
     public static final Creator<SelectDoctor> CREATOR = new Creator<SelectDoctor>() {
@@ -53,6 +57,7 @@ public class SelectDoctor implements Parcelable {
         dest.writeInt(id_organization);
         dest.writeString(day);
         dest.writeString(time);
+        dest.writeParcelable(doctorInfo, flags);
     }
 
     public void setId_doctor(int id_doctor) {
