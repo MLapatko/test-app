@@ -42,7 +42,8 @@
             android:parentActivityName=".screenStart.MainActivity" />
         <activity
             android:name=".screenRecordDoctor.RecordDoctorActivity"
-            android:parentActivityName=".screenViewDoctor.ViewDoctorActivity" />
+            android:parentActivityName=".screenViewDoctor.ViewDoctorActivity"
+            android:windowSoftInputMode="adjustPan"/>
         <activity
             android:name=".screenDoctor.DoctorActivity"
             android:parentActivityName=".screenViewDoctor.ViewDoctorActivity" />

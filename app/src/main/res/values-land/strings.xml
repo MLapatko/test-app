@@ -39,7 +39,7 @@
     /*record_time*/
     <string name="record_time_start">Начало в:</string>
     <string name="record_time_stop">Конец в:</string>
-    <string name="record_time_size">3</string>
+    <string name="record_time_size">5</string>
 
 
     /*your_information*/
