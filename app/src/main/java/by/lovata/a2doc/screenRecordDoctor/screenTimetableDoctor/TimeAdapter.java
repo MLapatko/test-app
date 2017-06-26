@@ -91,20 +91,18 @@ class TimeAdapter extends BaseAdapter {
 
         root_view.addView(gridLayout);
 
-        ViewGroup.LayoutParams layoutParams_button = new ViewGroup.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT);
-
         for (final String time_coming : time.times) {
             Button button = new Button(context);
             button.setText(time_coming);
+            button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+            button.setBackground(ContextCompat.getDrawable(context, R.drawable.button_selector));
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     recordTime.record(time.day, time_coming);
                 }
             });
-            gridLayout.addView(button, layoutParams_button);
+            gridLayout.addView(button);
         }
 
         String string_border = createBorder(time.start, time.stop);

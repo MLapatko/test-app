@@ -8,10 +8,10 @@ public class OrganizationInfo implements Parcelable{
 
     private int id;
     private String name;
-    private int lat;
-    private int lng;
+    private double lat;
+    private double lng;
 
-    public OrganizationInfo(int id, String name, int lat, int lng) {
+    public OrganizationInfo(int id, String name, double lat, double lng) {
         this.id = id;
         this.name = name;
         this.lat = lat;
@@ -21,8 +21,8 @@ public class OrganizationInfo implements Parcelable{
     protected OrganizationInfo(Parcel in) {
         id = in.readInt();
         name = in.readString();
-        lat = in.readInt();
-        lng = in.readInt();
+        lat = in.readDouble();
+        lng = in.readDouble();
     }
 
     public static final Creator<OrganizationInfo> CREATOR = new Creator<OrganizationInfo>() {
@@ -46,8 +46,8 @@ public class OrganizationInfo implements Parcelable{
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeString(name);
-        dest.writeInt(lat);
-        dest.writeInt(lng);
+        dest.writeDouble(lat);
+        dest.writeDouble(lng);
     }
 
     public void setId(int id) {
@@ -75,11 +75,11 @@ public class OrganizationInfo implements Parcelable{
         return name;
     }
 
-    public int getLat() {
+    public double getLat() {
         return lat;
     }
 
-    public int getLng() {
+    public double getLng() {
         return lng;
     }
 }

@@ -252,8 +252,8 @@ public class APIMethods {
 
                 int id = item.getInt("id");
                 String name = item.getString("name");
-                int lat = item.getInt("lat");
-                int lng = item.getInt("lng");
+                double lat = item.getDouble("lat");
+                double lng = item.getDouble("lng");
                 organizationInfo_map.put(id, new OrganizationInfo(id, name, lat, lng));
             }
 

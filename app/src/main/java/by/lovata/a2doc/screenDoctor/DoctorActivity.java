@@ -47,7 +47,6 @@ import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
-import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.DoctorInfoWindowAdapter;
 
 public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallback {
 
