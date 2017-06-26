@@ -6,6 +6,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MenuItem;
 
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.TimetableDoctorFragment;
@@ -41,14 +42,25 @@ public class RecordDoctorActivity extends AppCompatActivity implements
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
     public void setYourInformationFragment(String day_selected, String time_selected) {
         Fragment fragment = new YourInformationFragment();
-        Bundle bundle = new Bundle();
-
         setTime(day_selected, time_selected);
 
+        Bundle bundle = new Bundle();
         bundle.putParcelable(YourInformationFragment.SAVEPARAMETER_PARSALABEL, saveParameter);
         fragment.setArguments(bundle);
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frame_record, fragment);
         fragmentTransaction.commit();
@@ -63,9 +75,11 @@ public class RecordDoctorActivity extends AppCompatActivity implements
 
     private void setTimetableDoctorFragment() {
         Fragment fragment = new TimetableDoctorFragment();
+
         Bundle bundle = new Bundle();
         bundle.putParcelable(TimetableDoctorFragment.SELECT_DOCTOR, saveParameter.getSelectDoctor());
         fragment.setArguments(bundle);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.frame_record, fragment);
         ft.commit();

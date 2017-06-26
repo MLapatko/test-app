@@ -77,9 +77,18 @@ public class TimetableDoctorFragment extends Fragment implements
     private void initializeData() {
         selectDoctor = getArguments().getParcelable(SELECT_DOCTOR);
 
+        int week = 0;
+        times = getTimes(week);
+    }
+
+    private Times[] getTimes(int week) {
         APIMethods apiMethods = new APIMethods(getActivity());
-        times = apiMethods.getTimesFromJSON(selectDoctor.getId_doctor(),
-                selectDoctor.getId_filter(), selectDoctor.getId_organization(), 0);
+
+        int id_doctor = selectDoctor.getId_doctor();
+        int id_filter = selectDoctor.getId_filter();
+        int id_organization = selectDoctor.getId_organization();
+
+        return apiMethods.getTimesFromJSON(id_doctor, id_filter, id_organization, week);
     }
 
     private void restoreData(Bundle savedInstanceState) {
@@ -98,29 +107,24 @@ public class TimetableDoctorFragment extends Fragment implements
 
         SeekBar seekBar = (SeekBar) root_view.findViewById(R.id.seekbar_week);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int progress;
+            int start_seekbar;
 
             @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
-            }
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                progress = seekBar.getProgress();
+                start_seekbar = seekBar.getProgress();
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 int end_seekbar = seekBar.getProgress();
-                if (progress != end_seekbar) {
+                if (start_seekbar != end_seekbar) {
                     if (!list_weeks.contains(end_seekbar)) {
                         list_weeks.add(end_seekbar);
 
-                        APIMethods apiMethods = new APIMethods(getActivity());
-                        times = concatArray(times, apiMethods.getTimesFromJSON(
-                                selectDoctor.getId_doctor(), selectDoctor.getId_filter(),
-                                selectDoctor.getId_organization(), end_seekbar));
+                        times = concatArray(times, getTimes(end_seekbar));
                     }
 
                     int position = list_weeks.indexOf(end_seekbar);

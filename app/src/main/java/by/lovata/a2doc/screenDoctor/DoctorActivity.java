@@ -1,6 +1,9 @@
 package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,21 +18,38 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
+import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
+import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
+import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.DoctorInfoWindowAdapter;
 
-public class DoctorActivity extends AppCompatActivity {
+public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
 
@@ -45,18 +65,8 @@ public class DoctorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
-        if (saveParameter == null) {
-            Log.w("MYLOG", "1");
-        }
-        if (savedInstanceState == null) {
-            Log.w("MYLOG", "2");
-
-        }
         if (savedInstanceState == null) {
             saveParameter = getIntent().getParcelableExtra(SAVEPARAMETER_PARSALABEL);
-            if (saveParameter == null) {
-                Log.w("MYLOG", "3");
-            }
             id_organization = saveParameter.getSelectDoctor().getId_organization();
             id_filter = saveParameter.getSelectDoctor().getId_filter();
         } else {
@@ -67,6 +77,7 @@ public class DoctorActivity extends AppCompatActivity {
         }
 
         initialView();
+        initialMap(savedInstanceState);
 
     }
 
@@ -95,6 +106,43 @@ public class DoctorActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        GoogleMap gMap = googleMap;
+        Geocoder geocoder = new Geocoder(this, Locale.US);
+        Set<LatLng> markerLocation = new HashSet<>();
+        try {
+            int position = getPositionDoctor();
+            double lat = saveParameter.getOrganizations()
+                    .get(saveParameter.getSelectDoctor().getId_organization()).getLat();
+            double lng = saveParameter.getOrganizations()
+                    .get(saveParameter.getSelectDoctor().getId_organization()).getLng();
+            LatLng visible = new LatLng(lat, lng);
+
+            CameraPosition cameraPosition = new CameraPosition.Builder()
+                    .target(visible)      // Sets the center of the map to location user
+                    .zoom(10)          // Sets the zoom
+                    .bearing(0)        // Sets the orientation of the camera to east
+                    .tilt(0)           // Sets the tilt of the camera to 40 degrees
+                    .build();          // Creates a CameraPosition from the builder
+
+            String doctorName;
+
+            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+            for(int id_organization: saveParameter.getDoctorsInfo()[position].getId_organization()) {
+                MarkerOptions markerOptions = new MarkerOptions();
+                double lat_marker = saveParameter.getOrganizations().get(id_organization).getLat();
+                double lng_marker = saveParameter.getOrganizations().get(id_organization).getLng();
+                markerOptions.title(saveParameter.getOrganizations().get(id_organization).getName());
+                markerOptions.position(new LatLng(lat_marker, lng_marker));
+                Marker location = gMap.addMarker(markerOptions);
+                location.showInfoWindow();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -188,6 +236,29 @@ public class DoctorActivity extends AppCompatActivity {
         });
     }
 
+    private int getPositionDoctor() {
+        int position = 0;
+        for (DoctorInfo doctorInfo: saveParameter.getDoctorsInfo()) {
+            if (doctorInfo.getId() == saveParameter.getSelectDoctor().getId_doctor()) {
+                break;
+            }
+            position++;
+        }
+        return position;
+    }
+
+    private void initialMap(Bundle savedInstanceState) {
+        MapView mapView = (MapView) findViewById(R.id.map_profile);
+        mapView.onCreate(savedInstanceState);
+        mapView.onResume();
+        try {
+            MapsInitializer.initialize(getApplicationContext());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mapView.getMapAsync(this);
+    }
+
     private Map<String, String> getInformations() {
         Map<String , String> map = new HashMap<>();
         int position = 0;
@@ -257,4 +328,5 @@ public class DoctorActivity extends AppCompatActivity {
         intent.putExtra(AboutDoctorActivity.ID_SELECTED_DOCTOR, saveParameter.getSelectDoctor().getId_doctor());
         startActivity(intent);
     }
+
 }
