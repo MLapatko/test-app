@@ -131,7 +131,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
             String doctorName;
 
             gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            for(int id_organization: saveParameter.getDoctorsInfo()[position].getId_organization()) {
+            for (int id_organization : saveParameter.getDoctorsInfo()[position].getId_organization()) {
                 MarkerOptions markerOptions = new MarkerOptions();
                 double lat_marker = saveParameter.getOrganizations().get(id_organization).getLat();
                 double lng_marker = saveParameter.getOrganizations().get(id_organization).getLng();
@@ -237,7 +237,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private int getPositionDoctor() {
         int position = 0;
-        for (DoctorInfo doctorInfo: saveParameter.getDoctorsInfo()) {
+        for (DoctorInfo doctorInfo : saveParameter.getDoctorsInfo()) {
             if (doctorInfo.getId() == saveParameter.getSelectDoctor().getId_doctor()) {
                 break;
             }
@@ -259,10 +259,10 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     }
 
     private Map<String, String> getInformations() {
-        Map<String , String> map = new HashMap<>();
+        Map<String, String> map = new HashMap<>();
         int position = 0;
 
-        for (DoctorInfo doctorInfo: saveParameter.getDoctorsInfo()) {
+        for (DoctorInfo doctorInfo : saveParameter.getDoctorsInfo()) {
             if (doctorInfo.getId() == saveParameter.getSelectDoctor().getId_doctor()) {
                 map.put("name", doctorInfo.getFull_name());
                 map.put("speciality", doctorInfo.getSpeciality());
@@ -279,7 +279,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     private String[] getOrganizationName(int position) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id: saveParameter.getDoctorsInfo()[position].getId_organization()) {
+        for (int id : saveParameter.getDoctorsInfo()[position].getId_organization()) {
             arrayList.add(saveParameter.getOrganizations().get(id).getName());
         }
 
@@ -289,7 +289,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     private int getPositionOrganization(int position, int id_organization) {
         int position_organization = 0;
 
-        for (int key: saveParameter.getDoctorsInfo()[position].getId_organization()) {
+        for (int key : saveParameter.getDoctorsInfo()[position].getId_organization()) {
             if (key == id_organization) {
                 break;
             }
@@ -302,7 +302,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     private String[] getServicesName(int position) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id: saveParameter.getDoctorsInfo()[position].getService_list().keySet()) {
+        for (int id : saveParameter.getDoctorsInfo()[position].getService_list().keySet()) {
             arrayList.add(saveParameter.getServices().get(id));
         }
 
@@ -312,7 +312,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     private int getPositionService(int position, int id_filter) {
         int position_service = 0;
 
-        for (int key: saveParameter.getDoctorsInfo()[position].getService_list().keySet()) {
+        for (int key : saveParameter.getDoctorsInfo()[position].getService_list().keySet()) {
             if (key == id_filter) {
                 break;
             }

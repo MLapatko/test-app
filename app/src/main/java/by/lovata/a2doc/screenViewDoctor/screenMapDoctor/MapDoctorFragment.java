@@ -3,6 +3,7 @@ package by.lovata.a2doc.screenViewDoctor.screenMapDoctor;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.location.Address;
@@ -27,10 +28,13 @@ import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.maps.android.clustering.Cluster;
+import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
+import com.google.maps.android.clustering.algo.GridBasedAlgorithm;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -42,10 +46,12 @@ import java.util.Set;
 
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
+import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 
@@ -72,7 +78,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     public static final String IS_METRO_SAVE = "IS_METRO_SAVE";
     public static final String IS_BABY_SAVE = "IS_BABY_SAVE";
 
-    static final float COORDINATE_OFFSET = 0.002f;
+    static final float COORDINATE_OFFSET = 0.00002f;
 
     private AbstractMarker clickedClusterItem = null;
     DoctorInfo[] doctorsInfo;
@@ -153,11 +159,28 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             return;
         }
         gMap.setMyLocationEnabled(true);
+        gMap.setMaxZoomPreference(19f);
         geocoder = new Geocoder(getActivity(), Locale.US);
         markerLocation = new HashSet<>();
         clusterManager = new ClusterManager<>(getActivity(), gMap);
 
         gMap.setOnMarkerClickListener(clusterManager);
+
+        clusterManager.setOnClusterClickListener(new ClusterManager.
+                OnClusterClickListener<AbstractMarker>() {
+                    @Override
+                    public boolean onClusterClick(final Cluster<AbstractMarker> cluster) {
+
+                        LatLngBounds.Builder builder = LatLngBounds.builder();
+                        for (ClusterItem item : cluster.getItems()) {
+                            builder.include(item.getPosition());
+                        }
+                        final LatLngBounds bounds = builder.build();
+                        gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                        return true;
+                    }
+                });
+
         clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<AbstractMarker>() {
             @Override
             public boolean onClusterItemClick(AbstractMarker item) {
@@ -165,21 +188,38 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
                 return false;
             }
         });
+
         gMap.setOnCameraIdleListener(clusterManager);
         gMap.setOnMarkerClickListener(clusterManager);
-        gMap.setOnInfoWindowClickListener(clusterManager);
-        gMap.setOnInfoWindowClickListener(clusterManager);
+        gMap.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                if (clickedClusterItem != null) {
+                    Intent intent = new Intent(getActivity(), DoctorActivity.class);
+                    DoctorInfo doctorInfo = clickedClusterItem.getDoctorInfo();
+                    //saveParameter.setDoctorsInfo(null);
+                    saveParameter.setSelectDoctor(new SelectDoctor(doctorInfo.getId(), 1,
+                            clickedClusterItem.getOrg_id(), null, null, doctorInfo));
+                    intent.putExtra(DoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
+                    getActivity().startActivity(intent);
+                }
+            }
+        });
+
         try {
             List<Address> addressList = geocoder.getFromLocationName(LogoActivity.getCities()
                     .get(sharedPreferences.getInt(MainActivity.CITY_SELECT, 0)), 1);
             LatLng city = new LatLng(addressList.get(0).getLatitude(),
                     addressList.get(0).getLongitude());
-            CameraPosition cameraPosition = new CameraPosition.Builder()
+            final CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(city)      // Sets the center of the map to location user
                     .zoom(10)          // Sets the zoom
                     .bearing(0)        // Sets the orientation of the camera to east
-                    .tilt(10)          // Sets the tilt of the camera to 40 degrees
+                    .tilt(10)          // Sets the tilt of the camera to 10 degrees
                     .build();          // Creates a CameraPosition from the builder
+
+            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
 
             String doctorName;
             int[] organizationIDs;
@@ -195,17 +235,19 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
                     LatLng coords = coordinateForMarker(new LatLng(organizations.get(id).getLat(),
                             organizations.get(id).getLng()));
                     AbstractMarker offsetItem = new AbstractMarker(coords.latitude,
-                            coords.longitude, doctorName, doctorInfo);
+                            coords.longitude, doctorName, doctorInfo, id);
                     clusterManager.addItem(offsetItem);
                 }
             }
-            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
             gMap.setInfoWindowAdapter(clusterManager.getMarkerManager());
             clusterManager.getMarkerCollection().setOnInfoWindowAdapter(
                     new DoctorInfoWindowAdapter(getActivity().getLayoutInflater()));
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        clusterManager.setRenderer(new CustomClusterRenderer<>(getActivity(), gMap, clusterManager));
 
     }
 
@@ -289,8 +331,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         //baby = getArguments().getBoolean(IS_BABY);
     }
 
-    private class DoctorInfoWindowAdapter implements GoogleMap.InfoWindowAdapter,
-            GoogleMap.OnInfoWindowClickListener {
+    private class DoctorInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 
         private LayoutInflater inflater = null;
 
@@ -310,7 +351,6 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
 
             if (clickedClusterItem != null) {
                 DoctorInfo doctorInfo = clickedClusterItem.getDoctorInfo();
-
                 fio.setText(doctorInfo.getFull_name());
                 speciality.setText(doctorInfo.getSpeciality());
 //            review.setText(doctorInfo.review);
@@ -323,13 +363,6 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
 
         @Override
         public View getInfoContents(Marker marker) { return null; }
-
-        @Override
-        public void onInfoWindowClick(Marker marker) {
-            if (clickedClusterItem != null) {
-
-            }
-        }
     }
 
 }
