@@ -1,15 +1,14 @@
 package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
-import android.location.Address;
 import android.location.Geocoder;
-import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,27 +22,22 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
-import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
@@ -54,30 +48,28 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
     public static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
     public static final String ID_ORGANIZATION_SAVE = "ID_ORGANIZATION_SAVE";
-    public static final String ID_FILTER_SAVE = "ID_FILTER_SAVE";
+    public static final String ID_SERVICE_SAVE = "ID_SERVICE_SAVE";
 
     SaveParameter saveParameter;
     int id_organization;
     int id_filter;
+
+    GoogleMap googleMap;
+    Map<Integer, Marker> markers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
         if (savedInstanceState == null) {
-            saveParameter = getIntent().getParcelableExtra(SAVEPARAMETER_PARSALABEL);
-            id_organization = saveParameter.getSelectDoctor().getId_organization();
-            id_filter = saveParameter.getSelectDoctor().getId_filter();
+            initializeData();
         } else {
-            saveParameter = savedInstanceState.getParcelable(SAVEPARAMETER_PARSALABEL_SAVE);
-            id_organization = savedInstanceState.getInt(ID_ORGANIZATION_SAVE);
-            id_filter = savedInstanceState.getInt(ID_FILTER_SAVE);
-
+            restoreData(savedInstanceState);
         }
 
+        setTitle(getString(R.string.profile));
         initialView();
         initialMap(savedInstanceState);
-
     }
 
     @Override
@@ -86,7 +78,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
         outState.putParcelable(SAVEPARAMETER_PARSALABEL_SAVE, saveParameter);
         outState.putInt(ID_ORGANIZATION_SAVE, id_organization);
-        outState.putInt(ID_FILTER_SAVE, id_filter);
+        outState.putInt(ID_SERVICE_SAVE, id_filter);
     }
 
     @Override
@@ -100,6 +92,9 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.view_about_doctor:
                 clickViewAboutDoctor();
                 return true;
@@ -110,75 +105,113 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-        GoogleMap gMap = googleMap;
-        Geocoder geocoder = new Geocoder(this, Locale.US);
-        Set<LatLng> markerLocation = new HashSet<>();
         try {
-            int position = getPositionDoctor();
-            double lat = saveParameter.getOrganizations()
-                    .get(saveParameter.getSelectDoctor().getId_organization()).getLat();
-            double lng = saveParameter.getOrganizations()
-                    .get(saveParameter.getSelectDoctor().getId_organization()).getLng();
-            LatLng visible = new LatLng(lat, lng);
-
-            CameraPosition cameraPosition = new CameraPosition.Builder()
-                    .target(visible)      // Sets the center of the map to location user
-                    .zoom(10)          // Sets the zoom
-                    .bearing(0)        // Sets the orientation of the camera to east
-                    .tilt(0)           // Sets the tilt of the camera to 40 degrees
-                    .build();          // Creates a CameraPosition from the builder
-
-            String doctorName;
-
-            gMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-            for (int id_organization : saveParameter.getDoctorsInfo()[position].getId_organization()) {
-                MarkerOptions markerOptions = new MarkerOptions();
-                double lat_marker = saveParameter.getOrganizations().get(id_organization).getLat();
-                double lng_marker = saveParameter.getOrganizations().get(id_organization).getLng();
-                markerOptions.title(saveParameter.getOrganizations().get(id_organization).getName());
-                markerOptions.position(new LatLng(lat_marker, lng_marker));
-                Marker location = gMap.addMarker(markerOptions);
-                location.showInfoWindow();
+            this.googleMap = googleMap;
+            changeCoordinate();
+            int size = saveParameter.getSelectDoctor().
+                    getDoctorInfo().getId_organization().length;
+            markers = new HashMap<>();
+            for (int id_organization : saveParameter.getSelectDoctor().
+                    getDoctorInfo().getId_organization()) {
+                Marker location = googleMap.addMarker(setParamMarker(id_organization));
+                markers.put(id_organization, location);
+                if (id_organization == this.id_organization) {
+                    location.showInfoWindow();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
+    private MarkerOptions setParamMarker(int id_organization) {
+        MarkerOptions markerOptions = new MarkerOptions();
+        double lat_marker = saveParameter.getOrganizations().get(id_organization).getLat();
+        double lng_marker = saveParameter.getOrganizations().get(id_organization).getLng();
+        String name = saveParameter.getOrganizations().get(id_organization).getName();
+        markerOptions.title(name);
+        markerOptions.position(new LatLng(lat_marker, lng_marker));
+
+        return markerOptions;
+    }
+
+    private double getLat() {
+        return saveParameter.getOrganizations()
+                .get(id_organization).getLat();
+    }
+
+    private double getLng() {
+        return saveParameter.getOrganizations()
+                .get(id_organization).getLng();
+    }
+
+    private void initializeData() {
+        saveParameter = getIntent().getParcelableExtra(SAVEPARAMETER_PARSALABEL);
+        id_organization = saveParameter.getSelectDoctor().getId_organization();
+        id_filter = saveParameter.getSelectDoctor().getId_filter();
+    }
+
+    private void restoreData(Bundle savedInstanceState) {
+        saveParameter = savedInstanceState.getParcelable(SAVEPARAMETER_PARSALABEL_SAVE);
+        id_organization = savedInstanceState.getInt(ID_ORGANIZATION_SAVE);
+        id_filter = savedInstanceState.getInt(ID_SERVICE_SAVE);
+    }
+
+    private void changeCoordinate(){
+        if (markers != null) {
+            markers.get(id_organization).showInfoWindow();
+        }
+
+        double lat = getLat();
+        double lng = getLng();
+        LatLng visible = new LatLng(lat, lng);
+
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(visible)      // Sets the center of the map to location user
+                .zoom(10)          // Sets the zoom
+                .bearing(0)        // Sets the orientation of the camera to east
+                .tilt(0)           // Sets the tilt of the camera to 40 degrees
+                .build();          // Creates a CameraPosition from the builder
+
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
+
     private void initialView() {
 
-        final Map<String, String> informations = getInformations();
-
+        String img = getIMG();
         ImageView img_profile = (ImageView) findViewById(R.id.img_profile);
         Picasso.with(this)
-                .load(informations.get("img"))
-                .placeholder(R.drawable.ic_file_download_black_24dp)
-                .error(R.drawable.ic_error_black_24dp)
+                .load(img)
+                .placeholder(R.drawable.ic_file_download_24dp)
+                .error(R.drawable.ic_error_24dp)
                 .into(img_profile);
 
+        String name = getName();
         TextView fio_profile = (TextView) findViewById(R.id.fio_profile);
-        fio_profile.setText(informations.get("name"));
+        fio_profile.setText(name);
 
+        String speciality = getSpeciality();
         TextView speciality_profile = (TextView) findViewById(R.id.speciality_profile);
-        speciality_profile.setText(informations.get("speciality"));
+        speciality_profile.setText(speciality);
 
+        String experience = getExperience();
         TextView expirience_profile = (TextView) findViewById(R.id.expirience_profile);
-        expirience_profile.setText(informations.get("expirience"));
+        expirience_profile.setText(experience);
 
-        String[] organizations_name = getOrganizationName(Integer.valueOf(informations.get("position")));
+        String[] organizations_name = getOrganizationName();
+        int posotion_organization = getPositionOrganization();
         Spinner organizations_profile = (Spinner) findViewById(R.id.organizations_profile);
         organizations_profile.setAdapter(new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
                 organizations_name));
-        int posotion_organization = getPositionOrganization(Integer.valueOf(informations.get("position")),
-                saveParameter.getSelectDoctor().getId_organization());
         organizations_profile.setSelection(posotion_organization);
         organizations_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                id_organization = saveParameter.getDoctorsInfo()
-                        [Integer.valueOf(informations.get("position"))].getId_organization()[position];
+                id_organization = saveParameter.getSelectDoctor().
+                        getDoctorInfo().getId_organization()[position];
+                changeCoordinate();
             }
 
             @Override
@@ -187,30 +220,24 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
             }
         });
 
+        String price = getPrice();
         final TextView price_profile = (TextView) findViewById(R.id.price_profile);
-        price_profile.setText(String.valueOf(saveParameter.getDoctorsInfo()
-                [Integer.valueOf(informations.get("position"))].getService_list().
-                get(id_filter)));
+        price_profile.setText(price);
 
-        String[] services_name = getServicesName(Integer.valueOf(informations.get("position")));
+        String[] services_name = getServicesName();
+        int posotion_service = getPositionService();
         Spinner services_profile = (Spinner) findViewById(R.id.services_profile);
         services_profile.setAdapter(new ArrayAdapter<String>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
                 services_name));
-        int posotion_service = getPositionService(Integer.valueOf(informations.get("position")),
-                saveParameter.getSelectDoctor().getId_filter());
         services_profile.setSelection(posotion_service);
         services_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Set<Integer> set_id_filter = saveParameter.getDoctorsInfo()
-                        [Integer.valueOf(informations.get("position"))].
-                        getService_list().keySet();
-                id_filter = set_id_filter.toArray(new Integer[set_id_filter.size()])[position];
-                price_profile.setText(String.valueOf(saveParameter.getDoctorsInfo()
-                        [Integer.valueOf(informations.get("position"))].getService_list().
-                        get(id_filter)));
+                id_filter = setService(position);
+                String price_of_service = getPrice();
+                price_profile.setText(price_of_service);
             }
 
             @Override
@@ -224,26 +251,47 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DoctorActivity.this, RecordDoctorActivity.class);
-                SelectDoctor selectDoctor = saveParameter.getSelectDoctor();
-                selectDoctor.setId_organization(id_organization);
-                selectDoctor.setId_filter(id_filter);
-                saveParameter.setSelectDoctor(selectDoctor);
+                setupSaveParameter();
                 intent.putExtra(RecordDoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
 
                 startActivity(intent);
             }
+
+            private void setupSaveParameter() {
+                SelectDoctor selectDoctor = saveParameter.getSelectDoctor();
+                selectDoctor.setId_organization(id_organization);
+                selectDoctor.setId_filter(id_filter);
+                saveParameter.setSelectDoctor(selectDoctor);
+            }
         });
     }
 
-    private int getPositionDoctor() {
-        int position = 0;
-        for (DoctorInfo doctorInfo : saveParameter.getDoctorsInfo()) {
-            if (doctorInfo.getId() == saveParameter.getSelectDoctor().getId_doctor()) {
-                break;
-            }
-            position++;
-        }
-        return position;
+    private String getIMG() {
+        return saveParameter.getSelectDoctor().getDoctorInfo().getUrl_img();
+    }
+
+    private String getName() {
+        return saveParameter.getSelectDoctor().getDoctorInfo().getFull_name();
+    }
+
+    private String getSpeciality() {
+        return saveParameter.getSelectDoctor().getDoctorInfo().getSpeciality();
+    }
+
+    private String getExperience() {
+        String experience = getString(R.string.profile_experience);
+        String count_year = Integer.toString(saveParameter.getSelectDoctor().getDoctorInfo().getExperience());
+        String year = getString(R.string.profile_year);;
+        return String.format("%s %s %s", experience, count_year, year);
+    }
+
+    private String getPrice() {
+        int id_service = id_filter;
+        String price = Integer.toString(saveParameter.getSelectDoctor().
+                getDoctorInfo().getService_list().get(id_service));
+        String price_label = getString(R.string.profile_price);
+        String money = getString(R.string.profile_money);
+        return String.format("%s %s %s", price_label, price, money);
     }
 
     private void initialMap(Bundle savedInstanceState) {
@@ -258,61 +306,45 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         mapView.getMapAsync(this);
     }
 
-    private Map<String, String> getInformations() {
-        Map<String, String> map = new HashMap<>();
-        int position = 0;
-
-        for (DoctorInfo doctorInfo : saveParameter.getDoctorsInfo()) {
-            if (doctorInfo.getId() == saveParameter.getSelectDoctor().getId_doctor()) {
-                map.put("name", doctorInfo.getFull_name());
-                map.put("speciality", doctorInfo.getSpeciality());
-                map.put("img", doctorInfo.getUrl_img());
-                map.put("expirience", Integer.toString(doctorInfo.getExperience()));
-                map.put("position", Integer.toString(position));
-                break;
-            }
-            position++;
-        }
-        return map;
-    }
-
-    private String[] getOrganizationName(int position) {
+    private String[] getOrganizationName() {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id : saveParameter.getDoctorsInfo()[position].getId_organization()) {
+        for (int id : saveParameter.getSelectDoctor().getDoctorInfo().getId_organization()) {
             arrayList.add(saveParameter.getOrganizations().get(id).getName());
         }
 
         return arrayList.toArray(new String[arrayList.size()]);
     }
 
-    private int getPositionOrganization(int position, int id_organization) {
-        int position_organization = 0;
+    private int getPositionOrganization() {
+        int position = 0;
+        int id_organization = saveParameter.getSelectDoctor().getId_organization();
 
-        for (int key : saveParameter.getDoctorsInfo()[position].getId_organization()) {
+        for (int key : saveParameter.getSelectDoctor().getDoctorInfo().getId_organization()) {
             if (key == id_organization) {
                 break;
             }
-            position_organization++;
+            position++;
         }
 
-        return position_organization;
+        return position;
     }
 
-    private String[] getServicesName(int position) {
+    private String[] getServicesName() {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id : saveParameter.getDoctorsInfo()[position].getService_list().keySet()) {
+        for (int id : saveParameter.getSelectDoctor().getDoctorInfo().getService_list().keySet()) {
             arrayList.add(saveParameter.getServices().get(id));
         }
 
         return arrayList.toArray(new String[arrayList.size()]);
     }
 
-    private int getPositionService(int position, int id_filter) {
+    private int getPositionService() {
         int position_service = 0;
+        int id_filter = saveParameter.getSelectDoctor().getId_filter();
 
-        for (int key : saveParameter.getDoctorsInfo()[position].getService_list().keySet()) {
+        for (int key : saveParameter.getSelectDoctor().getDoctorInfo().getService_list().keySet()) {
             if (key == id_filter) {
                 break;
             }
@@ -322,9 +354,16 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         return position_service;
     }
 
+    private int setService(int position) {
+        Set<Integer> set_id_filter = saveParameter.getSelectDoctor().
+                getDoctorInfo().getService_list().keySet();
+        return set_id_filter.toArray(new Integer[set_id_filter.size()])[position];
+    }
+
     private void clickViewAboutDoctor() {
         Intent intent = new Intent(DoctorActivity.this, AboutDoctorActivity.class);
-        intent.putExtra(AboutDoctorActivity.ID_SELECTED_DOCTOR, saveParameter.getSelectDoctor().getId_doctor());
+        int id_doctor_selected = saveParameter.getSelectDoctor().getId_doctor();
+        intent.putExtra(AboutDoctorActivity.ID_SELECTED_DOCTOR, id_doctor_selected);
         startActivity(intent);
     }
 

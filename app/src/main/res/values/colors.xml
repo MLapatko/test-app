@@ -19,6 +19,9 @@
     <color name="main_screen_color_dark">#2AACE2</color>
     <color name="primary_material_light">#3f51b5</color>
 
+    /*list_doctors/*
+    <color name="list_doctors_text">#000000</color>
+
     /*filter_screen/*
     <color name="filterColorPrimary">#125688</color>
     <color name="filterColorPrimaryDark">#125688</color>

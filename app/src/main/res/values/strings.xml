@@ -22,11 +22,7 @@
     <string name="timetable_week_3">Неделя 3</string>
     <string name="timetable_week_4">Неделя 4</string>
     <string name="timetable">Запись</string>
-
-    /*profile*/
-    <string name="profile_record_label">Записаться на приём</string>
-    <string name="profile_about">Информация</string>
-    <string-array name="profile_day">
+    <string-array name="timetable_day">
         <item>Понедельник</item>
         <item>Вторник</item>
         <item>Среда</item>
@@ -35,12 +31,22 @@
         <item>Суббота</item>
         <item>Воскресенье</item>
     </string-array>
+    <string name="timetable_start">Начало в:</string>
+    <string name="timetable_stop">Конец в:</string>
+    <string name="timetable_size">3</string>
 
-    /*record_time*/
-    <string name="record_time_start">Начало в:</string>
-    <string name="record_time_stop">Конец в:</string>
-    <string name="record_time_size">3</string>
+    /*about_doctor*/
+    <string name="about_doctor_review">Отзывы</string>
+    <string name="about_doctor_qualification">Квалификация</string>
 
+    /*profile*/
+    <string name="profile">Доктор</string>
+    <string name="profile_record_label">Записаться на приём</string>
+    <string name="profile_about">Информация</string>
+    <string name="profile_experience">Стаж: </string>
+    <string name="profile_year">лет </string>
+    <string name="profile_price">Стоимость услуги </string>
+    <string name="profile_money">р. </string>
 
     /*your_information*/
     <string name="your_information_contacts">Контактные данные: </string>
@@ -60,6 +66,11 @@
         <item>Жодино</item>
         <item>Орша</item>
     </string-array>
+
+    /*list_doctors*/
+    <string name="list_doctors_btn_record">Записаться</string>
+    <string name="list_doctors_reviw">отз.</string>
+    <string name="list_doctors_price">цена:</string>
 
     /*menu*/
     <string name="view_change_list">Список</string>
@@ -125,5 +136,5 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    >>>>>>> master
+
 </resources>

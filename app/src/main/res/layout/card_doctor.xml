@@ -3,12 +3,12 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_view"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
+    android:layout_height="250dp"
     android:layout_margin="10dp"
     card_view:cardCornerRadius="15dp">
 
-    <LinearLayout
-        android:orientation="vertical"
+    <RelativeLayout
+        android:padding="5sp"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -24,44 +24,49 @@
 
                 <ImageView
                     android:id="@+id/img_card_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="100dp"
+                    android:layout_height="150dp" />
 
                 <TextView
                     android:id="@+id/review_card_doctor"
+                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
 
             <LinearLayout
+                android:paddingLeft="10sp"
                 android:orientation="vertical"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/fio_card_doctor"
+                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/speciality_card_doctor"
+                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <TextView
                     android:id="@+id/price_of_consultation_card_doctor"
+                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
 
                 <Spinner
                     android:id="@+id/services_card_doctor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
                 <Spinner
                     android:id="@+id/gps_card_doctor"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
 
             </LinearLayout>
@@ -70,9 +75,13 @@
 
         <Button
             android:id="@+id/btn_card_doctor"
+            android:layout_alignParentBottom="true"
+            android:text="@string/list_doctors_btn_record"
+            android:textColor="@color/colorPrimary"
+            android:background="@drawable/button_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="50dp" />
 
-    </LinearLayout>
+    </RelativeLayout>
 
 </android.support.v7.widget.CardView>

@@ -2,25 +2,19 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 
 
 import android.content.Context;
-import android.content.Intent;
-import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -115,7 +109,7 @@ class TimeAdapter extends BaseAdapter {
     }
 
     private void setLayoutParams(GridLayout gridLayout) {
-        int column = Integer.valueOf(context.getResources().getString(R.string.record_time_size));
+        int column = Integer.valueOf(context.getResources().getString(R.string.timetable_size));
         gridLayout.setColumnCount(column);
 
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
@@ -126,8 +120,8 @@ class TimeAdapter extends BaseAdapter {
     }
 
     private String createBorder(String start, String stop) {
-        String start_label = context.getResources().getString(R.string.record_time_start);
-        String stop_label = context.getResources().getString(R.string.record_time_stop);
+        String start_label = context.getResources().getString(R.string.timetable_start);
+        String stop_label = context.getResources().getString(R.string.timetable_stop);
         return String.format("%s %s\n%s %s",start_label, start, stop_label, stop);
     }
 
@@ -158,25 +152,25 @@ class TimeAdapter extends BaseAdapter {
         String day = null;
         switch (calendar.get(Calendar.DAY_OF_WEEK)) {
             case Calendar.MONDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[0];
+                day = context.getResources().getStringArray(R.array.timetable_day)[0];
                 break;
             case Calendar.TUESDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[1];
+                day = context.getResources().getStringArray(R.array.timetable_day)[1];
                 break;
             case Calendar.WEDNESDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[2];
+                day = context.getResources().getStringArray(R.array.timetable_day)[2];
                 break;
             case Calendar.THURSDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[3];
+                day = context.getResources().getStringArray(R.array.timetable_day)[3];
                 break;
             case Calendar.FRIDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[4];
+                day = context.getResources().getStringArray(R.array.timetable_day)[4];
                 break;
             case Calendar.SATURDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[5];
+                day = context.getResources().getStringArray(R.array.timetable_day)[5];
                 break;
             case Calendar.SUNDAY:
-                day = context.getResources().getStringArray(R.array.profile_day)[6];
+                day = context.getResources().getStringArray(R.array.timetable_day)[6];
                 break;
         }
 
