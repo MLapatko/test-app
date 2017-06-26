@@ -50,7 +50,6 @@ public class TabCityFragment extends Fragment {
         int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, key_cities[0]);
         int position = getPosition(id_city);
 
-
         ListView lst_city = (ListView)view_root.findViewById(R.id.list_city);
         lst_city.setAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.select_dialog_singlechoice, cities));

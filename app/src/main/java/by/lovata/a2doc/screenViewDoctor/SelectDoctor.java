@@ -100,4 +100,12 @@ public class SelectDoctor implements Parcelable {
     public String getTime() {
         return time;
     }
+
+    public DoctorInfo getDoctorInfo() {
+        return doctorInfo;
+    }
+
+    public void setDoctorInfo(DoctorInfo doctorInfo) {
+        this.doctorInfo = doctorInfo;
+    }
 }

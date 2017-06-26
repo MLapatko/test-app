@@ -27,6 +27,8 @@ public class RecordDoctorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_doctor);
 
+        setTitle(getString(R.string.timetable));
+
         if (savedInstanceState == null) {
             initializeData();
         } else {

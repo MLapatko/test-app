@@ -2,6 +2,7 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -82,32 +83,46 @@ class TimeAdapter extends BaseAdapter {
         ViewGroup root_view = ((ViewGroup) view.findViewById(R.id.root_timetable));
 
         GridLayout gridLayout = new GridLayout(context);
-        gridLayout.setColumnCount(3);
-
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
-                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        params.gravity = Gravity.CENTER;
-        gridLayout.setLayoutParams(params);
-
+        setLayoutParams(gridLayout);
         root_view.addView(gridLayout);
 
         for (final String time_coming : time.times) {
             Button button = new Button(context);
             button.setText(time_coming);
-            button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-            button.setBackground(ContextCompat.getDrawable(context, R.drawable.button_selector));
+
+            setLayoutParamsToButton(button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     recordTime.record(time.day, time_coming);
                 }
             });
+
             gridLayout.addView(button);
         }
 
         String string_border = createBorder(time.start, time.stop);
         TextView border = (TextView) view.findViewById(R.id.timetable_border);
         border.setText(string_border);
+    }
+
+    private void setLayoutParamsToButton(Button button) {
+        button.setWidth(50);
+        button.setHeight(50);
+        button.setPadding(20, 20, 20, 20);
+        button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
+        button.setBackground(ContextCompat.getDrawable(context, R.drawable.time_selector));
+    }
+
+    private void setLayoutParams(GridLayout gridLayout) {
+        int column = Integer.valueOf(context.getResources().getString(R.string.record_time_size));
+        gridLayout.setColumnCount(column);
+
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.gravity = Gravity.CENTER;
+        params.setMargins(20, 20, 20, 20);
+        gridLayout.setLayoutParams(params);
     }
 
     private String createBorder(String start, String stop) {

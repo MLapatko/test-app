@@ -3,11 +3,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="@color/accent_material_light_1"
     tools:context="by.lovata.a2doc.screenStart.screenSearch.TabSearchFragment">
 
     <TextView
         android:gravity="center"
         android:layout_weight="3"
+        android:textColor="@color/colorPrimary"
+        android:textSize="50sp"
         android:text="@string/search_screen_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
@@ -26,30 +29,43 @@
     <LinearLayout
         android:layout_weight="3"
         android:gravity="bottom|center_horizontal"
-        android:id="@+id/call_phone"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:src="@drawable/ic_phone_in_talk_24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
         <LinearLayout
+            android:id="@+id/call_phone"
             android:orientation="vertical"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
 
             <TextView
+                android:textColor="@color/textColorPrimary"
+                android:textSize="20sp"
                 android:text="@string/search_screen_label_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-            <TextView
-                android:id="@+id/phone"
+            <LinearLayout
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:src="@drawable/ic_phone_in_talk_24dp"
+                    android:contentDescription="@string/phone"
+                    android:layout_width="20dp"
+                    android:layout_height="match_parent" />
+
+                <TextView
+                    android:textColor="@color/textColorPrimary"
+                    android:textSize="20sp"
+                    android:id="@+id/phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

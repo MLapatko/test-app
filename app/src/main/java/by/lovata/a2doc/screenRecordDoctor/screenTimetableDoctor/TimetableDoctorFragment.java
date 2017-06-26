@@ -6,9 +6,11 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.os.Parcelable;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
 
@@ -36,6 +38,9 @@ public class TimetableDoctorFragment extends Fragment implements
     Times[] times;
     SelectDoctor selectDoctor;
     RecordDoctor recordDoctor;
+
+    ArrayList<Integer> list_weeks;
+    TimeAdapter timeAdapter;
 
     public TimetableDoctorFragment() {}
 
@@ -97,54 +102,75 @@ public class TimetableDoctorFragment extends Fragment implements
     }
 
     private void initializeView(View root_view) {
-        final TimeAdapter timeAdapter = new TimeAdapter(getActivity(), times);
+        timeAdapter = new TimeAdapter(getActivity(), times);
         timeAdapter.setListener(this);
         ListView timetable_lst = (ListView) root_view.findViewById(R.id.timetable_lst);
         timetable_lst.setAdapter(timeAdapter);
 
-        final ArrayList<Integer> list_weeks = new ArrayList<>();
+        list_weeks = new ArrayList<>();
         list_weeks.add(0);
 
-        SeekBar seekBar = (SeekBar) root_view.findViewById(R.id.seekbar_week);
-        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            int start_seekbar;
-
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-                start_seekbar = seekBar.getProgress();
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                int end_seekbar = seekBar.getProgress();
-                if (start_seekbar != end_seekbar) {
-                    if (!list_weeks.contains(end_seekbar)) {
-                        list_weeks.add(end_seekbar);
-
-                        times = concatArray(times, getTimes(end_seekbar));
-                    }
-
-                    int position = list_weeks.indexOf(end_seekbar);
-                    Times[] times_current = new Times[7];
-                    System.arraycopy(times, position * 7, times_current, 0, 7);
-                    timeAdapter.setTimes(times_current);
-                }
-            }
-
-            private Times[] concatArray(Times[] a, Times[] b) {
-                if (a == null)
-                    return b;
-                if (b == null)
-                    return a;
-                Times[] r = new Times[a.length + b.length];
-                System.arraycopy(a, 0, r, 0, a.length);
-                System.arraycopy(b, 0, r, a.length, b.length);
-                return r;
-            }
-        });
+        Button button_week_1 = (Button) root_view.findViewById(R.id.btn_week_1);
+        button_week_1.setOnClickListener(onClickListener_btn_week);
+        Button button_week_2 = (Button) root_view.findViewById(R.id.btn_week_2);
+        button_week_2.setOnClickListener(onClickListener_btn_week);
+        Button button_week_3 = (Button) root_view.findViewById(R.id.btn_week_3);
+        button_week_3.setOnClickListener(onClickListener_btn_week);
+        Button button_week_4 = (Button) root_view.findViewById(R.id.btn_week_4);
+        button_week_4.setOnClickListener(onClickListener_btn_week);
 
     }
+
+    View.OnClickListener onClickListener_btn_week = new View.OnClickListener() {
+        int btn_week_old = 0;
+
+        @Override
+        public void onClick(View v) {
+            int btn_week = 0;
+            switch (v.getId()) {
+                case R.id.btn_week_1:
+                    btn_week = 0;
+                    break;
+                case R.id.btn_week_2:
+                    btn_week = 1;
+                    break;
+                case R.id.btn_week_3:
+                    btn_week = 2;
+                    break;
+                case R.id.btn_week_4:
+                    btn_week = 3;
+                    break;
+            }
+
+            getNewTime(btn_week);
+
+        }
+
+        private void getNewTime(int btn_week) {
+            if (btn_week_old != btn_week) {
+                btn_week_old = btn_week;
+                if (!list_weeks.contains(btn_week)) {
+                    list_weeks.add(btn_week);
+
+                    times = concatArray(times, getTimes(btn_week));
+                }
+
+                int position = list_weeks.indexOf(btn_week);
+                Times[] times_current = new Times[7];
+                System.arraycopy(times, position * 7, times_current, 0, 7);
+                timeAdapter.setTimes(times_current);
+            }
+        }
+
+        private Times[] concatArray(Times[] a, Times[] b) {
+            if (a == null)
+                return b;
+            if (b == null)
+                return a;
+            Times[] r = new Times[a.length + b.length];
+            System.arraycopy(a, 0, r, 0, a.length);
+            System.arraycopy(b, 0, r, a.length, b.length);
+            return r;
+        }
+    };
 }
