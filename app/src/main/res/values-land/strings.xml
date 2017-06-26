@@ -37,9 +37,9 @@
     </string-array>
 
     /*record_time*/
-    <string name="record_time_start">Начало в:</string>
-    <string name="record_time_stop">Конец в:</string>
-    <string name="record_time_size">5</string>
+    <string name="timetable_start">Начало в:</string>
+    <string name="timetable_stop">Конец в:</string>
+    <string name="timetable_size">5</string>
 
 
     /*your_information*/

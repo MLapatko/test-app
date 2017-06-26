@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -24,15 +26,22 @@ import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 
 public class ListProfessionActivity extends AppCompatActivity {
 
+    public static final String SPECIALITIES_SAVE = "SPECIALITIES_SAVE";
+    public static final String KEY_SPECIALITIES_SAVE = "KEY_SPECIALITIES_SAVE";
+
     String[] specialities;
-    Integer[] key_specialities;
+    int[] key_specialities;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_profession);
 
-        initializeData();
+        if (savedInstanceState == null) {
+            initializeData();
+        } else {
+            restoreData(savedInstanceState);
+        }
         ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
                 R.layout.speciality_item,
                 specialities);
@@ -40,6 +49,25 @@ public class ListProfessionActivity extends AppCompatActivity {
         ListView lst_profession = (ListView) findViewById(R.id.lst_profession);
         lst_profession.setAdapter(mAdapter);
         lst_profession.setOnItemClickListener(itemClickListener_lst_profession);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putStringArray(SPECIALITIES_SAVE, specialities);
+        outState.putIntArray(KEY_SPECIALITIES_SAVE, key_specialities);
     }
 
     AdapterView.OnItemClickListener itemClickListener_lst_profession = new AdapterView.OnItemClickListener() {
@@ -58,7 +86,22 @@ public class ListProfessionActivity extends AppCompatActivity {
         specialities = set_specialities.toArray(new String[set_specialities.size()]);
 
         Set<Integer> set_key_specialities = LogoActivity.getSpecialities().keySet();
-        key_specialities = set_key_specialities.toArray(new Integer[set_key_specialities.size()]);
+        Integer[] key_specialities = set_key_specialities.toArray(new Integer[set_key_specialities.size()]);
+        this.key_specialities = integerToPrimitive(key_specialities);
+    }
+
+    private void restoreData(Bundle savedInstanceState) {
+        specialities = savedInstanceState.getStringArray(SPECIALITIES_SAVE);
+        key_specialities = savedInstanceState.getIntArray(KEY_SPECIALITIES_SAVE);
+    }
+
+    public static int[] integerToPrimitive(Integer[] IntegerArray) {
+
+        int[] result = new int[IntegerArray.length];
+        for (int i = 0; i < IntegerArray.length; i++) {
+            result[i] = IntegerArray[i].intValue();
+        }
+        return result;
     }
 
 }

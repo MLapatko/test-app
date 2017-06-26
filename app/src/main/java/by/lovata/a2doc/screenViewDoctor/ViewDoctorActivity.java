@@ -69,6 +69,9 @@ public class ViewDoctorActivity extends AppCompatActivity implements
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                return true;
             case R.id.view_change:
                 clickViewChange(item);
                 return true;

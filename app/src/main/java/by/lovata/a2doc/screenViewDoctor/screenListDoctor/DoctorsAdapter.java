@@ -4,7 +4,6 @@ package by.lovata.a2doc.screenViewDoctor.screenListDoctor;
 import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,11 +17,8 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Map;
-import java.util.Set;
 
-import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
@@ -96,8 +92,8 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         ImageView image_doctor = (ImageView) cardView.findViewById(R.id.img_card_doctor);
         Picasso.with(context)
                 .load(array_doctors[position].getUrl_img())
-                .placeholder(R.drawable.ic_file_download_black_24dp)
-                .error(R.drawable.ic_error_black_24dp)
+                .placeholder(R.drawable.ic_file_download_24dp)
+                .error(R.drawable.ic_error_24dp)
                 .into(image_doctor);
         image_doctor.setOnClickListener(clickDoctor);
 
@@ -109,7 +105,8 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         speciality_doctor.setText(array_doctors[position].getSpeciality());
 
         final TextView price_doctor = (TextView) cardView.findViewById(R.id.price_of_consultation_card_doctor);
-        price_doctor.setText(Integer.toString(array_doctors[position].getService_list().get(id_filter)));
+        price_doctor.setText(String.format("%s %s", context.getString(R.string.list_doctors_price),
+                Integer.toString(array_doctors[position].getService_list().get(id_filter))));
 
         String[] services_name = getServicesName(position);
         final Spinner services_doctor = (Spinner) cardView.findViewById(R.id.services_card_doctor);
@@ -153,7 +150,8 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         });
 
         TextView review_doctor = (TextView) cardView.findViewById(R.id.review_card_doctor);
-        review_doctor.setText(Integer.toString(array_doctors[position].getCount_reviews()));
+        review_doctor.setText(String.format("%s %s", Integer.toString(array_doctors[position].getCount_reviews()),
+                context.getString(R.string.list_doctors_reviw)));
 
     }
 
