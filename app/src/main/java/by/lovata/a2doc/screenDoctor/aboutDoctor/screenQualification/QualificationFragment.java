@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -51,34 +52,61 @@ public class QualificationFragment extends Fragment {
     private void initializeView(LinearLayout view_root) {
         setTreatment(view_root);
         setUpdatequalification(view_root);
-
-
-        TextView experience_label = (TextView) view_root.findViewById(R.id.experience_label);
-        TextView education_label = (TextView) view_root.findViewById(R.id.education_label);
-
+        setExperience(view_root);
+        setEducation(view_root);
     }
+
+    private void setEducation(LinearLayout view_root) {
+        String[] education_label = getEducationLabel();
+        String[] education_text = getEducationText();
+        if (education_label.length == 0) {
+            LinearLayout linearLayout = (LinearLayout) view_root.findViewById(R.id.education_text);
+            setErrorContain(linearLayout);
+        } else {
+            int id = R.id.education_text;
+            int id_img = R.drawable.ic_account_balance_24dp;
+            createGroupView(view_root, education_label, education_text, id, id_img);
+        }
+    }
+
+    private void setExperience(LinearLayout view_root) {
+        String[] experience_label = getExperienceLabel();
+        String[] experience_text = getExperienceText();
+        if (experience_label.length == 0) {
+            LinearLayout linearLayout = (LinearLayout) view_root.findViewById(R.id.experience_text);
+            setErrorContain(linearLayout);
+        } else {
+            int id = R.id.experience_text;
+            int id_img = R.drawable.ic_work_24dp;
+            createGroupView(view_root, experience_label, experience_text, id, id_img);
+        }
+    }
+
     private void setUpdatequalification(LinearLayout view_root) {
-        String[] updatequalification_label = qualification.getUpdatequalification_period()
-                .toArray(new String[qualification.getUpdatequalification_period().size()]);
-        String[] updatequalification_text = qualification.getUpdatequalification_description()
-                .toArray(new String[qualification.getUpdatequalification_description().size()]);
+        String[] updatequalification_label = getUpdatequalificationLabel();
+        String[] updatequalification_text = getUpdatequalificationText();
         if (updatequalification_label.length == 0) {
-            view_root.removeViewAt(R.id.updatequalification_label);
-            view_root.removeViewAt(R.id.updatequalification_text);
+            LinearLayout linearLayout = (LinearLayout) view_root.findViewById(R.id.updatequalification_text);
+            setErrorContain(linearLayout);
         } else {
             int id = R.id.updatequalification_text;
-            createGroupView(view_root, updatequalification_label, updatequalification_text, id);
+            int id_img = R.drawable.ic_language_24dp;
+            createGroupView(view_root, updatequalification_label, updatequalification_text, id, id_img);
         }
     }
 
     private void createGroupView(View view_root,
                                  String[] updatequalification_label,
                                  String[]updatequalification_text,
-                                 int id) {
+                                 int id, int id_img) {
         LinearLayout linearLayout = (LinearLayout) view_root.findViewById(id);
 
-        RelativeLayout relativeLayout = (RelativeLayout) getContext().getResources().getLayout(R.layout.qualification);
         for (int i = 0; i < updatequalification_label.length; i++) {
+            RelativeLayout relativeLayout = (RelativeLayout) LayoutInflater.from(getContext()).inflate(R.layout.qualification, null);
+
+            ImageView imageView = (ImageView) relativeLayout.findViewById(R.id.qualification_img);
+            imageView.setImageResource(id_img);
+
             TextView textView_label = (TextView) relativeLayout.findViewById(R.id.qualification_period);
             textView_label.setText(updatequalification_label[i]);
 
@@ -89,10 +117,47 @@ public class QualificationFragment extends Fragment {
         }
     }
 
+    private void setErrorContain(LinearLayout linearLayout) {
+        String error = getString(R.string.review_error);
+        TextView textView = new TextView(getContext());
+        textView.setText(error);
+        linearLayout.addView(textView);
+    }
+
+    private String[] getEducationLabel() {
+        return qualification.getEducation_period()
+                .toArray(new String[qualification.getEducation_period().size()]);
+    }
+
+    private String[] getEducationText() {
+        return qualification.getEducation_description()
+                .toArray(new String[qualification.getEducation_description().size()]);
+    }
+
+    private String[] getExperienceLabel() {
+        return qualification.getExperience_period()
+                .toArray(new String[qualification.getExperience_period().size()]);
+    }
+
+    private String[] getExperienceText() {
+        return qualification.getExperience_description()
+                .toArray(new String[qualification.getExperience_description().size()]);
+    }
+
+    private String[] getUpdatequalificationText() {
+        return qualification.getUpdatequalification_description()
+                .toArray(new String[qualification.getUpdatequalification_description().size()]);
+    }
+
+    private String[] getUpdatequalificationLabel() {
+        return qualification.getUpdatequalification_period()
+                .toArray(new String[qualification.getUpdatequalification_period().size()]);
+    }
+
     private void setTreatment(LinearLayout view_root) {
         if (qualification.getTreatment().equals("null")) {
-            view_root.removeViewAt(R.id.treatment_label);
-            view_root.removeViewAt(R.id.treatment_text);
+            TextView textView = (TextView) view_root.findViewById(R.id.treatment_text);
+            textView.setText(getString(R.string.review_error));
         } else {
             TextView treatment_text = (TextView) view_root.findViewById(R.id.treatment_text);
             treatment_text.setText(qualification.getTreatment());
