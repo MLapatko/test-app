@@ -13,19 +13,14 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
 class CustomClusterRenderer<T extends AbstractMarker> extends DefaultClusterRenderer<T> {
 
-    private GoogleMap googleMap;
-
     CustomClusterRenderer(Context context, GoogleMap map, ClusterManager<T> clusterManager) {
         super(context, map, clusterManager);
-        this.googleMap = map;
     }
 
     @Override
     protected boolean shouldRenderAsCluster(Cluster<T> cluster) {
         //start clustering if at least 2 items overlap
-        float currentZoom = googleMap.getCameraPosition().zoom;
-        float currentMaxZoom = googleMap.getMaxZoomLevel();
-        return currentZoom < currentMaxZoom && cluster.getSize() > 1;
+        return cluster.getSize() > 1;
     }
 
 }

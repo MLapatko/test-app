@@ -17,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -30,14 +29,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.maps.android.MarkerManager;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.algo.GridBasedAlgorithm;
+import com.google.maps.android.clustering.view.DefaultClusterRenderer;
+import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -143,43 +144,24 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
-        // The My Location button will be visible on the top right of the map.
-        if (ActivityCompat.checkSelfPermission(getActivity(),
-                Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getActivity(),
-                        Manifest.permission.ACCESS_COARSE_LOCATION)
-                        != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            return;
-        }
-        gMap.setMyLocationEnabled(true);
-        gMap.setMaxZoomPreference(19f);
         geocoder = new Geocoder(getActivity(), Locale.US);
         markerLocation = new HashSet<>();
         clusterManager = new ClusterManager<>(getActivity(), gMap);
 
-        gMap.setOnMarkerClickListener(clusterManager);
-
         clusterManager.setOnClusterClickListener(new ClusterManager.
                 OnClusterClickListener<AbstractMarker>() {
-                    @Override
-                    public boolean onClusterClick(final Cluster<AbstractMarker> cluster) {
+            @Override
+            public boolean onClusterClick(final Cluster<AbstractMarker> cluster) {
 
-                        LatLngBounds.Builder builder = LatLngBounds.builder();
-                        for (ClusterItem item : cluster.getItems()) {
-                            builder.include(item.getPosition());
-                        }
-                        final LatLngBounds bounds = builder.build();
-                        gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
-                        return true;
-                    }
-                });
+                LatLngBounds.Builder builder = LatLngBounds.builder();
+                for (ClusterItem item : cluster.getItems()) {
+                    builder.include(item.getPosition());
+                }
+                final LatLngBounds bounds = builder.build();
+                gMap.animateCamera(CameraUpdateFactory.newLatLngBounds(bounds, 100));
+                return true;
+            }
+        });
 
         clusterManager.setOnClusterItemClickListener(new ClusterManager.OnClusterItemClickListener<AbstractMarker>() {
             @Override
@@ -224,14 +206,10 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             String doctorName;
             int[] organizationIDs;
 
-            for(DoctorInfo doctorInfo : doctorsInfo) {
+            for (DoctorInfo doctorInfo : doctorsInfo) {
                 doctorName = doctorInfo.getFull_name();
                 organizationIDs = doctorInfo.getId_organization();
-                for(int id : organizationIDs) {
-//                    gMap.addMarker(new MarkerOptions()
-//                            .position(coordinateForMarker(new LatLng(organizations.get(id).getLat(),
-//                                    organizations.get(id).getLng())))
-//                            .title(doctorName)).setTag(doctorInfo);
+                for (int id : organizationIDs) {
                     LatLng coords = coordinateForMarker(new LatLng(organizations.get(id).getLat(),
                             organizations.get(id).getLng()));
                     AbstractMarker offsetItem = new AbstractMarker(coords.latitude,
@@ -345,16 +323,29 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             View infoWindows = inflater.inflate(R.layout.doctor_info_window, null);
             TextView fio = (TextView) infoWindows.findViewById(R.id.fio_infoWindow);
             TextView speciality = (TextView) infoWindows.findViewById(R.id.speciality_infoWindow);
-            ImageView img = (ImageView) infoWindows.findViewById(R.id.img_infoWindow);
+            ImageView image = (ImageView) infoWindows.findViewById(R.id.img_infoWindow);
             TextView review = (TextView) infoWindows.findViewById(R.id.review_infoWindow);
-            TextView price = (TextView) infoWindows.findViewById(R.id.price_of_consultation_infoWindow);
+            TextView price = (TextView) infoWindows.findViewById(R.id.price_infoWindow);
 
             if (clickedClusterItem != null) {
                 DoctorInfo doctorInfo = clickedClusterItem.getDoctorInfo();
                 fio.setText(doctorInfo.getFull_name());
                 speciality.setText(doctorInfo.getSpeciality());
-//            review.setText(doctorInfo.review);
-//            price.setText(doctorInfo.price_of_consultation);
+                Picasso.with(getActivity())
+                        .load(doctorInfo.getUrl_img())
+                        .placeholder(R.drawable.ic_file_download_24dp)
+                        .error(R.drawable.ic_error_24dp)
+                        .into(image);
+                review.setText(String.valueOf(doctorInfo.getCount_reviews()).concat(" отз."));
+                int minPrice, maxPrice;
+                minPrice = Collections.min(doctorInfo.getService_list().values());
+                maxPrice = Collections.max(doctorInfo.getService_list().values());
+                if (minPrice == maxPrice) {
+                    price.setText("Цена: ".concat(String.valueOf(minPrice)).concat(" руб."));
+                } else {
+                    price.setText("Цена: от ".concat(String.valueOf(minPrice)).concat(" до ")
+                            .concat(String.valueOf(maxPrice)).concat(" руб."));
+                }
             }
 
             return infoWindows;
@@ -362,7 +353,9 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         }
 
         @Override
-        public View getInfoContents(Marker marker) { return null; }
+        public View getInfoContents(Marker marker) {
+            return null;
+        }
     }
 
 }
