@@ -2,6 +2,7 @@ package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
 import android.location.Geocoder;
+import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -26,6 +27,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -67,6 +69,9 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
             restoreData(savedInstanceState);
         }
 
+        SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        layout.setDragView(findViewById(R.id.sliding_title));
+        layout.setEnabled(true);
         setTitle(getString(R.string.profile));
         initialView();
         initialMap(savedInstanceState);

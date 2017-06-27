@@ -1,122 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<com.sothree.slidinguppanel.SlidingUpPanelLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:sothree="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/sliding_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="by.lovata.a2doc.screenDoctor.DoctorActivity">
+    android:gravity="bottom"
+    sothree:umanoPanelHeight="68dp"
+    sothree:umanoShadowHeight="4dp">
 
-    <ScrollView
+    <include layout="@layout/doctor_profile_main_content" />
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:clickable="true"
+        android:orientation="vertical">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:id="@+id/sliding_title"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="70dp"
+            android:text="@string/sliding_title"
+            android:gravity="center"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="35sp"/>
 
-            <LinearLayout
-                android:layout_margin="20sp"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
 
-                <ImageView
-                    android:id="@+id/img_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_margin="30dp"
-                    android:contentDescription="@string/profile"
-                    android:layout_width="200dp"
-                    android:layout_height="250dp" />
+        <include layout="@layout/bottom_sheet" />
 
-                <TextView
-                    android:id="@+id/fio_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+    </LinearLayout>
 
-                <TextView
-                    android:id="@+id/speciality_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/expirience_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/textColorPrimary"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:padding="20sp"
-                android:background="@color/accent_material_light_1"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:text="@string/profile_record_label"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-                <Spinner
-                    android:id="@+id/organizations_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Spinner
-                    android:id="@+id/services_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
-
-                <Button
-                    android:id="@+id/btn_record"
-                    android:layout_margin="10dp"
-                    android:textColor="@color/colorPrimary"
-                    android:text="@string/list_doctors_btn_record"
-                    android:background="@drawable/button_selector"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-                <TextView
-                    android:id="@+id/price_profile"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_horizontal"
-                    android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
-
-            </LinearLayout>
-
-            <RelativeLayout
-                android:layout_gravity="bottom"
-                android:layout_width="match_parent"
-                android:layout_height="100dp" />
-
-        </LinearLayout>
-
-    </ScrollView>
-
-    <include layout="@layout/bottom_sheet" />
-
-</android.support.design.widget.CoordinatorLayout>
+</com.sothree.slidinguppanel.SlidingUpPanelLayout>
