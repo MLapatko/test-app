@@ -60,6 +60,7 @@
 
     /*review*/
     <string name="review_recommend">Буду рекоммендовать</string>
+    <string name="review_error">Нет информации</string>
 
     /*qualification*/
     <string name="qualification_title">Квалификация и биография </string>
