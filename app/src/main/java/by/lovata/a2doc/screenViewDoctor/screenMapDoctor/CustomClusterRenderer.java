@@ -11,16 +11,38 @@ import com.google.maps.android.clustering.view.DefaultClusterRenderer;
  * Created by kroos on 6/26/17.
  */
 
-class CustomClusterRenderer<T extends AbstractMarker> extends DefaultClusterRenderer<T> {
+class CustomClusterRenderer<T extends AbstractMarker> extends DefaultClusterRenderer<T> implements
+        GoogleMap.OnCameraMoveListener {
 
-    CustomClusterRenderer(Context context, GoogleMap map, ClusterManager<T> clusterManager) {
+    private float currentZoomLevel, maxZoomLevel;
+    private GoogleMap map;
+
+    CustomClusterRenderer(Context context, GoogleMap map, ClusterManager<T> clusterManager,
+                          float currentZoomLevel, float maxZoomLevel) {
         super(context, map, clusterManager);
+        this.map = map;
+        this.currentZoomLevel = currentZoomLevel;
+        this.maxZoomLevel = maxZoomLevel;
     }
 
     @Override
     protected boolean shouldRenderAsCluster(Cluster<T> cluster) {
-        //start clustering if at least 2 items overlap
-        return cluster.getSize() > 1;
+        boolean superWouldCluster = shouldRenderAsClusterSize(cluster);
+
+        // if it would, then determine if you still want it to based on zoom level
+        if (superWouldCluster) {
+            superWouldCluster = currentZoomLevel < maxZoomLevel;
+        }
+
+        return superWouldCluster;
     }
 
+    @Override
+    public void onCameraMove() {
+        currentZoomLevel = map.getCameraPosition().zoom;
+    }
+
+    private boolean shouldRenderAsClusterSize(Cluster<T> cluster) {
+        return cluster.getSize() > 1;
+    }
 }

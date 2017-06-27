@@ -96,7 +96,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     ClusterManager<AbstractMarker> clusterManager;
     Geocoder geocoder;
     SharedPreferences sharedPreferences;
-    Set<LatLng> markerLocation;    // HashMap of marker identifier and its location as a string
+    Set<LatLng> markerLocations;    // HashMap of marker identifier and its location as a string
 
     public MapDoctorFragment() {
         // Required empty public constructor
@@ -144,8 +144,9 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     @Override
     public void onMapReady(GoogleMap googleMap) {
         gMap = googleMap;
+        gMap.setMaxZoomPreference(19f);
         geocoder = new Geocoder(getActivity(), Locale.US);
-        markerLocation = new HashSet<>();
+        markerLocations = new HashSet<>();
         clusterManager = new ClusterManager<>(getActivity(), gMap);
 
         clusterManager.setOnClusterClickListener(new ClusterManager.
@@ -225,7 +226,10 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             e.printStackTrace();
         }
 
-        clusterManager.setRenderer(new CustomClusterRenderer<>(getActivity(), gMap, clusterManager));
+        CustomClusterRenderer<AbstractMarker> clusterRenderer = new CustomClusterRenderer<>(
+                getActivity(), gMap, clusterManager, gMap.getCameraPosition().zoom, 19f);
+        clusterManager.setRenderer(clusterRenderer);
+        gMap.setOnCameraMoveListener(clusterRenderer);
 
     }
 
@@ -237,14 +241,14 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             location = coordinateForMarker(new LatLng(location.latitude + COORDINATE_OFFSET,
                     location.longitude + COORDINATE_OFFSET));
         } else {
-            markerLocation.add(location);
+            markerLocations.add(location);
         }
         return location;
     }
 
     // Return whether marker with same location is already on map
     private boolean mapAlreadyHasMarkerForLocation(LatLng location) {
-        return (markerLocation.contains(location));
+        return (markerLocations.contains(location));
     }
 
     @Override
