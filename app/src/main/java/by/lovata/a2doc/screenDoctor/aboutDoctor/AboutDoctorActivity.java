@@ -2,21 +2,14 @@ package by.lovata.a2doc.screenDoctor.aboutDoctor;
 
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuItem;
 
 import by.lovata.a2doc.R;
-import by.lovata.a2doc.screenStart.screenAbout.TabAboutFragment;
-import by.lovata.a2doc.screenStart.screenCity.TabCityFragment;
-import by.lovata.a2doc.screenStart.screenQuestion.TabQuestionFragment;
-import by.lovata.a2doc.screenStart.screenSearch.TabSearchFragment;
-
-import static by.lovata.a2doc.R.id.tabs;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification.QualificationFragment;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewFragment;
 
 public class AboutDoctorActivity extends AppCompatActivity {
 

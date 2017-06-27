@@ -33,7 +33,7 @@
 
         <activity
             android:name=".screenStart.MainActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name" />
         <activity
             android:name=".screenStart.screenSearch.ListProfessionActivity"
             android:parentActivityName=".screenStart.MainActivity" />
@@ -43,7 +43,7 @@
         <activity
             android:name=".screenRecordDoctor.RecordDoctorActivity"
             android:parentActivityName=".screenViewDoctor.ViewDoctorActivity"
-            android:windowSoftInputMode="adjustPan"/>
+            android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".screenDoctor.DoctorActivity"
             android:parentActivityName=".screenViewDoctor.ViewDoctorActivity" />
@@ -57,6 +57,9 @@
         <activity
             android:name=".screenDoctor.aboutDoctor.AboutDoctorActivity"
             android:parentActivityName=".screenDoctor.DoctorActivity" />
+        <activity
+            android:name=".screenDoctor.aboutDoctor.screenReviews.ShowReviewActivity"
+            android:parentActivityName=".screenDoctor.aboutDoctor.AboutDoctorActivity" />
     </application>
 
 </manifest>

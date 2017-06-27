@@ -3,9 +3,6 @@ package by.lovata.a2doc.API;
 
 import android.content.Context;
 import android.content.res.Resources;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -13,14 +10,14 @@ import org.json.JSONObject;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Dictionary;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
 
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification.Qualification;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.Reviews;
 import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.Times;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
@@ -58,7 +55,8 @@ public class APIMethods {
 
         return cities_map;
     }
-    private String loadCitiesFromAPI(int choice_id){
+
+    private String loadCitiesFromAPI(int choice_id) {
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(choice_id);
@@ -73,7 +71,7 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  cities_JSON;
+        return cities_JSON;
     }
 
     public String getPhoneFromJSON() {
@@ -90,7 +88,8 @@ public class APIMethods {
 
         return phone;
     }
-    private String loadPhoneFromAPI(int choice_id){
+
+    private String loadPhoneFromAPI(int choice_id) {
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(choice_id);
@@ -105,7 +104,7 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  phone_JSON;
+        return phone_JSON;
     }
 
     public Map<Integer, String> getSpecialitiesFromJSON(int id_city) {
@@ -131,7 +130,8 @@ public class APIMethods {
 
         return specialities_map;
     }
-    private String loadSpecialitiesFromAPI(int id_city){
+
+    private String loadSpecialitiesFromAPI(int id_city) {
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -158,7 +158,7 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  specialities_JSON;
+        return specialities_JSON;
     }
 
     public DoctorInfo[] getDoctorsInfoFromJSON(int id_city, int id_speciality) {
@@ -208,7 +208,8 @@ public class APIMethods {
 
         return item_set;
     }
-    private String loadDoctorsInfoFromAPI(int id_city, int id_speciality){
+
+    private String loadDoctorsInfoFromAPI(int id_city, int id_speciality) {
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -235,7 +236,7 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  doctorsInfo_JSON;
+        return doctorsInfo_JSON;
     }
 
     public Map<Integer, OrganizationInfo> getOrganizationsInfoFromJSON(int id_city, int id_speciality) {
@@ -263,7 +264,8 @@ public class APIMethods {
 
         return organizationInfo_map;
     }
-    private String loadOrganizationsInfoFromAPI(int id_city, int id_speciality){
+
+    private String loadOrganizationsInfoFromAPI(int id_city, int id_speciality) {
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -290,7 +292,7 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  doctorsInfo_JSON;
+        return doctorsInfo_JSON;
     }
 
     public Map<Integer, String> getServicesFromJSON(int id_city, Set<Integer> services_list) {
@@ -316,7 +318,8 @@ public class APIMethods {
 
         return services_map;
     }
-    private String loadServicesFromAPI(int id_city, Set<Integer> services_list){
+
+    private String loadServicesFromAPI(int id_city, Set<Integer> services_list) {
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -343,7 +346,7 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  specialities_JSON;
+        return specialities_JSON;
     }
 
     public Times[] getTimesFromJSON(int id_doctor, int id_filter, int id_organization, int week) {
@@ -378,7 +381,8 @@ public class APIMethods {
 
         return time;
     }
-    private String loadTimesFromAPI(int id_doctor, int id_filter, int id_organization, int week){
+
+    private String loadTimesFromAPI(int id_doctor, int id_filter, int id_organization, int week) {
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -402,17 +406,133 @@ public class APIMethods {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return  doctorsInfo_JSON;
+        return doctorsInfo_JSON;
+    }
+
+    public Reviews[] getReviewsFromJSON(int id_doctor) {
+        Reviews[] reviews = null;
+        JSONObject dataJsonObj = null;
+        String reviewses_JSON = loadReviewsFromAPI(id_doctor);
+
+        try {
+            dataJsonObj = new JSONObject(reviewses_JSON);
+            JSONArray items = dataJsonObj.getJSONArray("reviews");
+            reviews = new Reviews[items.length()];
+
+            for (int i = 0; i < items.length(); i++) {
+                JSONObject item = items.getJSONObject(i);
+
+                int id = item.getInt("id");
+                String name = item.getString("name");
+                String date = item.getString("date");
+                String discription = item.getString("discription");
+                boolean recommend = item.getBoolean("recommend");
+                reviews[i] = new Reviews(id, name, date, discription, recommend);
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return reviews;
+    }
+
+    private String loadReviewsFromAPI(int id_doctor) {
+
+        Resources r = context.getResources();
+        InputStream is = r.openRawResource(R.raw.reviews);
+
+        String specialities_JSON = null;
+        try {
+            specialities_JSON = convertStreamToString(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return specialities_JSON;
+    }
+
+    public Qualification getQualificationFromJSON(int id_doctor) {
+        Qualification qualification = null;
+        JSONObject dataJsonObj = null;
+        String qualification_JSON = loadQualificationFromAPI(id_doctor);
+
+        try {
+            dataJsonObj = new JSONObject(qualification_JSON);
+            JSONObject item = dataJsonObj.getJSONObject("qualification");
+
+            String treatment = item.getString("treatment");
+
+            JSONArray items_updatequalification = item.getJSONArray("updatequalification");
+            ArrayList<String> updatequalification_period = new ArrayList<>();
+            ArrayList<String> updatequalification_description = new ArrayList<>();
+            for (int i = 0; i < items_updatequalification.length(); i++) {
+                JSONObject item_updatequalification = items_updatequalification.getJSONObject(i);
+                updatequalification_period.add(item_updatequalification.getString("period"));
+                updatequalification_description.add(item_updatequalification.getString("description"));
+            }
+
+            JSONArray items_experience = item.getJSONArray("experience");
+            ArrayList<String> experience_period = new ArrayList<>();
+            ArrayList<String> experience_description = new ArrayList<>();
+            for (int i = 0; i < items_experience.length(); i++) {
+                JSONObject item_experience = items_experience.getJSONObject(i);
+                experience_period.add(item_experience.getString("period"));
+                experience_description.add(item_experience.getString("description"));
+            }
+
+            JSONArray items_education = item.getJSONArray("education");
+            ArrayList<String> education_period = new ArrayList<>();
+            ArrayList<String> education_description = new ArrayList<>();
+            for (int i = 0; i < items_education.length(); i++) {
+                JSONObject item_education = items_education.getJSONObject(i);
+                education_period.add(item_education.getString("period"));
+                education_description.add(item_education.getString("description"));
+            }
+
+
+            qualification = new Qualification(treatment,
+                    updatequalification_period, updatequalification_description,
+                    experience_period, experience_description,
+                    education_period, education_description);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return qualification;
+    }
+
+    private String loadQualificationFromAPI(int id_doctor) {
+
+        Resources r = context.getResources();
+        InputStream is = r.openRawResource(R.raw.qualification);
+
+        String specialities_JSON = null;
+        try {
+            specialities_JSON = convertStreamToString(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return specialities_JSON;
     }
 
     private String convertStreamToString(InputStream is) throws IOException {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         int i = is.read();
-        while( i != -1)
-        {
+        while (i != -1) {
             baos.write(i);
             i = is.read();
         }
-        return  baos.toString();
+        return baos.toString();
     }
 }

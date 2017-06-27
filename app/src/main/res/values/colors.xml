@@ -8,25 +8,16 @@
     <color name="textColorPrimary">#2CAFE3</color>
     <color name="colorAccent">#2CAFE3</color>
 
-    /*global_instruction*/
-    <color name="global_instruction_color">#2AACE2</color>
-    <color name="accent_material_light_1">#addfeb</color>
-    <color name="accent_material_light_2">#00f5f5</color>
-    <color name="accent_material_light_3">#2cafe3</color>
+    /*review*/
+    <color name="colorRecommend">#fead51</color>
 
-    /*main_screen*/
-    <color name="main_screen_color">#B9EDFA</color>
-    <color name="main_screen_color_dark">#2AACE2</color>
-    <color name="primary_material_light">#3f51b5</color>
+    /*global_instruction*/
+    <color name="accent_material_light_1">#addfeb</color>
 
     /*list_doctors/*
     <color name="list_doctors_text">#000000</color>
 
     /*filter_screen/*
-    <color name="filterColorPrimary">#125688</color>
-    <color name="filterColorPrimaryDark">#125688</color>
-    <color name="filterTextColorPrimary">#FFFFFF</color>
-    <color name="filterWindowBackground">#FFFFFF</color>
-    <color name="filterNavigationBarColor">#000000</color>
     <color name="filterColorAccent">#c8e8ff</color>
+
 </resources>

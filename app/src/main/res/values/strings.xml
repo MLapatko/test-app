@@ -58,6 +58,15 @@
     <string name="your_information_date">Дата и время приёма: </string>
     <string name="your_information_price">Стоимсоть: </string>
 
+    /*review*/
+    <string name="review_recommend">Буду рекоммендовать</string>
+
+    /*qualification*/
+    <string name="qualification_title">Квалификация и биография </string>
+    <string name="qualification_treatment_label">Профилактика и лечение: </string>
+    <string name="qualification_updatequalification_label">Курсы повышения квалификации:</string>
+    <string name="qualification_experience_label">Опыт работы:</string>
+    <string name="qualification_education_label">Образование:</string>
 
     /*cities_screen*/
     <string-array name="cities_screen_cities">
