@@ -22,8 +22,8 @@ import by.lovata.a2doc.R;
 
 class TimeAdapter extends BaseAdapter {
 
-    static interface RecordTime {
-        public void record(String day_selected, String time_selected);
+    interface RecordTime {
+        void record(String day_selected, String time_selected);
     }
 
     private Times[] times;
@@ -101,9 +101,9 @@ class TimeAdapter extends BaseAdapter {
     }
 
     private void setLayoutParamsToButton(Button button) {
-        button.setWidth(50);
-        button.setHeight(50);
-        button.setPadding(20, 20, 20, 20);
+        //button.setWidth(30);
+        //button.setHeight(30);
+        //button.setPadding(10, 10, 10, 10);
         button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
         button.setBackground(ContextCompat.getDrawable(context, R.drawable.time_selector));
     }
@@ -115,8 +115,8 @@ class TimeAdapter extends BaseAdapter {
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         params.gravity = Gravity.CENTER;
-        params.setMargins(20, 20, 20, 20);
         gridLayout.setLayoutParams(params);
+        gridLayout.setUseDefaultMargins(true);
     }
 
     private String createBorder(String start, String stop) {

@@ -189,11 +189,16 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             }
         });
 
+        //Move camera to initial position (Belarus)
+        gMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(54, 27), 5f));
+
         try {
             List<Address> addressList = geocoder.getFromLocationName(LogoActivity.getCities()
                     .get(sharedPreferences.getInt(MainActivity.CITY_SELECT, 0)), 1);
             LatLng city = new LatLng(addressList.get(0).getLatitude(),
                     addressList.get(0).getLongitude());
+
+
             final CameraPosition cameraPosition = new CameraPosition.Builder()
                     .target(city)      // Sets the center of the map to location user
                     .zoom(10)          // Sets the zoom
@@ -214,7 +219,8 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
                     LatLng coords = coordinateForMarker(new LatLng(organizations.get(id).getLat(),
                             organizations.get(id).getLng()));
                     AbstractMarker offsetItem = new AbstractMarker(coords.latitude,
-                            coords.longitude, doctorName, doctorInfo, id);
+                            coords.longitude, doctorName, doctorInfo, id,
+                            organizations.get(id).getName());
                     clusterManager.addItem(offsetItem);
                 }
             }
@@ -330,11 +336,13 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             ImageView image = (ImageView) infoWindows.findViewById(R.id.img_infoWindow);
             TextView review = (TextView) infoWindows.findViewById(R.id.review_infoWindow);
             TextView price = (TextView) infoWindows.findViewById(R.id.price_infoWindow);
+            TextView position = (TextView) infoWindows.findViewById(R.id.position_infoWindow);
 
             if (clickedClusterItem != null) {
                 DoctorInfo doctorInfo = clickedClusterItem.getDoctorInfo();
                 fio.setText(doctorInfo.getFull_name());
                 speciality.setText(doctorInfo.getSpeciality());
+                position.setText("Адрес: ".concat(clickedClusterItem.getOrgName()));
                 Picasso.with(getActivity())
                         .load(doctorInfo.getUrl_img())
                         .placeholder(R.drawable.ic_file_download_24dp)

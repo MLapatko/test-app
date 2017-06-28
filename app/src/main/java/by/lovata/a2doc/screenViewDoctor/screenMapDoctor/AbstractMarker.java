@@ -14,14 +14,16 @@ public class AbstractMarker implements ClusterItem {
     private final LatLng mPosition;
     private DoctorInfo doctorInfo;
     private String title;
+    private String orgName;
     private int org_id;
 
     public AbstractMarker(double latitude, double longitude, String title, DoctorInfo doctorInfo,
-                          int org_id) {
+                          int org_id, String orgName) {
         mPosition = new LatLng(latitude, longitude);
         this.doctorInfo = doctorInfo;
         this.title = title;
         this.org_id = org_id;
+        this.orgName = orgName;
     }
 
     @Override
@@ -39,11 +41,15 @@ public class AbstractMarker implements ClusterItem {
         return null;
     }
 
-    public DoctorInfo getDoctorInfo() {
+    DoctorInfo getDoctorInfo() {
         return doctorInfo;
     }
 
-    public int getOrg_id() {
+    int getOrg_id() {
         return org_id;
+    }
+
+    String getOrgName() {
+        return orgName;
     }
 }
