@@ -37,8 +37,6 @@
 
     /*add_review*/
     <dimen name="add_review_margin_view">10dp</dimen>
-    <dimen name="review_card_radius">15dp</dimen>
-
 
     /*qualification*/
     <dimen name="qualification_title_text">30sp</dimen>
