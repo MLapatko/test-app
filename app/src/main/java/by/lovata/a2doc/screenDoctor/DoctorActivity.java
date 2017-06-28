@@ -114,6 +114,8 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     public void onMapReady(GoogleMap googleMap) {
         try {
             this.googleMap = googleMap;
+            //Move camera to initial position (Belarus)
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(54, 27), 5f));
             changeCoordinate();
             int size = saveParameter.getSelectDoctor().
                     getDoctorInfo().getId_organization().length;
