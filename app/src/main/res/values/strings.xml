@@ -61,6 +61,10 @@
     /*review*/
     <string name="review_recommend">Буду рекоммендовать</string>
     <string name="review_error">Нет информации</string>
+    <string name="review_hint_fio">ФИО</string>
+    <string name="review_hint_discription">Отзыв</string>
+    <string name="review_send">Отправить</string>
+
 
     /*qualification*/
     <string name="qualification_title">Квалификация и биография </string>

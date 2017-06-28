@@ -72,7 +72,9 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         layout.setDragView(findViewById(R.id.sliding_title));
         layout.setEnabled(true);
+
         setTitle(getString(R.string.profile));
+
         initialView();
         initialMap(savedInstanceState);
     }
@@ -178,7 +180,9 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
                 .tilt(0)           // Sets the tilt of the camera to 40 degrees
                 .build();          // Creates a CameraPosition from the builder
 
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        if (googleMap != null) {
+            googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+        }
     }
 
     private void initialView() {
