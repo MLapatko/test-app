@@ -11,6 +11,7 @@ public class Reviews implements Parcelable{
     private String date;
     private String discription;
     private boolean recommend;
+    private boolean status = false;
 
     public Reviews(int id, String name, String date, String discription, boolean recommend) {
         this.id = id;
@@ -26,6 +27,7 @@ public class Reviews implements Parcelable{
         date = in.readString();
         discription = in.readString();
         recommend = in.readByte() != 0;
+        status = in.readByte() != 0;
     }
 
     public static final Creator<Reviews> CREATOR = new Creator<Reviews>() {
@@ -52,6 +54,7 @@ public class Reviews implements Parcelable{
         dest.writeString(date);
         dest.writeString(discription);
         dest.writeByte((byte) (recommend ? 1 : 0));
+        dest.writeByte((byte) (status ? 1 : 0));
     }
 
     public int getId() {
@@ -92,5 +95,13 @@ public class Reviews implements Parcelable{
 
     public void setRecommend(boolean recommend) {
         this.recommend = recommend;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
+    }
+
+    public boolean isStatus() {
+        return status;
     }
 }

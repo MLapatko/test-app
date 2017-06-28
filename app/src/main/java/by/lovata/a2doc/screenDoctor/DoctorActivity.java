@@ -1,15 +1,12 @@
 package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
-import android.location.Geocoder;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -32,15 +29,12 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
-import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 
@@ -48,35 +42,31 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
 
-    public static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
-    public static final String ID_ORGANIZATION_SAVE = "ID_ORGANIZATION_SAVE";
-    public static final String ID_SERVICE_SAVE = "ID_SERVICE_SAVE";
+    private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
+    private static final String ID_ORGANIZATION_SAVE = "ID_ORGANIZATION_SAVE";
+    private static final String ID_SERVICE_SAVE = "ID_SERVICE_SAVE";
 
-    SaveParameter saveParameter;
-    int id_organization;
-    int id_filter;
+    private SaveParameter saveParameter;
+    private int id_organization;
+    private int id_filter;
 
-    GoogleMap googleMap;
-    Map<Integer, Marker> markers;
+    private GoogleMap googleMap;
+    private Map<Integer, Marker> markers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doctor);
+
         if (savedInstanceState == null) {
             initializeData();
         } else {
             restoreData(savedInstanceState);
         }
 
-        SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        layout.setDragView(findViewById(R.id.sliding_title));
-        layout.setEnabled(true);
-
-        setTitle(getString(R.string.profile));
-
-        initialView();
-        initialMap(savedInstanceState);
+        initialalizeConfigiguration();
+        initialalizeView();
+        initialalizeMap(savedInstanceState);
     }
 
     @Override
@@ -115,8 +105,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         try {
             this.googleMap = googleMap;
             changeCoordinate();
-            int size = saveParameter.getSelectDoctor().
-                    getDoctorInfo().getId_organization().length;
+
             markers = new HashMap<>();
             for (int id_organization : saveParameter.getSelectDoctor().
                     getDoctorInfo().getId_organization()) {
@@ -136,6 +125,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         double lat_marker = saveParameter.getOrganizations().get(id_organization).getLat();
         double lng_marker = saveParameter.getOrganizations().get(id_organization).getLng();
         String name = saveParameter.getOrganizations().get(id_organization).getName();
+
         markerOptions.title(name);
         markerOptions.position(new LatLng(lat_marker, lng_marker));
 
@@ -185,8 +175,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         }
     }
 
-    private void initialView() {
-
+    private void initialalizeView() {
         String img = getIMG();
         ImageView img_profile = (ImageView) findViewById(R.id.img_profile);
         Picasso.with(this)
@@ -210,7 +199,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         String[] organizations_name = getOrganizationName();
         int posotion_organization = getPositionOrganization();
         Spinner organizations_profile = (Spinner) findViewById(R.id.organizations_profile);
-        organizations_profile.setAdapter(new ArrayAdapter<String>(
+        organizations_profile.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
                 organizations_name));
@@ -236,7 +225,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         String[] services_name = getServicesName();
         int posotion_service = getPositionService();
         Spinner services_profile = (Spinner) findViewById(R.id.services_profile);
-        services_profile.setAdapter(new ArrayAdapter<String>(
+        services_profile.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
                 services_name));
@@ -290,7 +279,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     private String getExperience() {
         String experience = getString(R.string.profile_experience);
         String count_year = Integer.toString(saveParameter.getSelectDoctor().getDoctorInfo().getExperience());
-        String year = getString(R.string.profile_year);;
+        String year = getString(R.string.profile_year);
         return String.format("%s %s %s", experience, count_year, year);
     }
 
@@ -303,15 +292,25 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         return String.format("%s %s %s", price_label, price, money);
     }
 
-    private void initialMap(Bundle savedInstanceState) {
+    private void initialalizeConfigiguration() {
+        SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        layout.setDragView(findViewById(R.id.sliding_title));
+        layout.setEnabled(true);
+
+        setTitle(getString(R.string.profile));
+    }
+
+    private void initialalizeMap(Bundle savedInstanceState) {
         MapView mapView = (MapView) findViewById(R.id.map_profile);
         mapView.onCreate(savedInstanceState);
         mapView.onResume();
+
         try {
             MapsInitializer.initialize(getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
+
         mapView.getMapAsync(this);
     }
 
@@ -373,6 +372,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         Intent intent = new Intent(DoctorActivity.this, AboutDoctorActivity.class);
         int id_doctor_selected = saveParameter.getSelectDoctor().getId_doctor();
         intent.putExtra(AboutDoctorActivity.ID_SELECTED_DOCTOR, id_doctor_selected);
+
         startActivity(intent);
     }
 

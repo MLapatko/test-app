@@ -3,12 +3,14 @@ package by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import by.lovata.a2doc.API.APIMethods;
@@ -22,14 +24,14 @@ public class QualificationFragment extends Fragment {
 
     private static final String QUALIFICATION_SAVE = "QUALIFICATION_SAVE";
 
-    Qualification qualification;
+    private Qualification qualification;
 
     public QualificationFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        LinearLayout view_root = (LinearLayout) inflater.inflate(R.layout.fragment_qualification, container, false);
+        View view_root = inflater.inflate(R.layout.fragment_qualification, container, false);
 
         if (savedInstanceState == null) {
             initializeData();
@@ -49,14 +51,14 @@ public class QualificationFragment extends Fragment {
         outState.putParcelable(QUALIFICATION_SAVE, qualification);
     }
 
-    private void initializeView(LinearLayout view_root) {
+    private void initializeView(View view_root) {
         setTreatment(view_root);
         setUpdatequalification(view_root);
         setExperience(view_root);
         setEducation(view_root);
     }
 
-    private void setEducation(LinearLayout view_root) {
+    private void setEducation(View view_root) {
         String[] education_label = getEducationLabel();
         String[] education_text = getEducationText();
         if (education_label.length == 0) {
@@ -69,7 +71,7 @@ public class QualificationFragment extends Fragment {
         }
     }
 
-    private void setExperience(LinearLayout view_root) {
+    private void setExperience(View view_root) {
         String[] experience_label = getExperienceLabel();
         String[] experience_text = getExperienceText();
         if (experience_label.length == 0) {
@@ -82,7 +84,7 @@ public class QualificationFragment extends Fragment {
         }
     }
 
-    private void setUpdatequalification(LinearLayout view_root) {
+    private void setUpdatequalification(View view_root) {
         String[] updatequalification_label = getUpdatequalificationLabel();
         String[] updatequalification_text = getUpdatequalificationText();
         if (updatequalification_label.length == 0) {
@@ -154,7 +156,7 @@ public class QualificationFragment extends Fragment {
                 .toArray(new String[qualification.getUpdatequalification_period().size()]);
     }
 
-    private void setTreatment(LinearLayout view_root) {
+    private void setTreatment(View view_root) {
         if (qualification.getTreatment().equals("null")) {
             TextView textView = (TextView) view_root.findViewById(R.id.treatment_text);
             textView.setText(getString(R.string.review_error));

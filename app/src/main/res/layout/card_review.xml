@@ -3,58 +3,59 @@
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:id="@+id/card_review"
     android:layout_width="match_parent"
-    android:layout_height="200dp"
-    android:layout_margin="10dp"
-    card_view:cardCornerRadius="15dp">
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/review_card_margin"
+    card_view:cardCornerRadius="@dimen/review_card_radius">
 
     <RelativeLayout
-        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="@dimen/review_padding">
 
         <TextView
             android:id="@+id/review_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/review_name_size" />
 
         <TextView
             android:id="@+id/review_date"
-            android:layout_marginLeft="20sp"
-            android:layout_alignBottom="@id/review_name"
-            android:layout_toRightOf="@id/review_name"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/review_name"
+            android:layout_marginLeft="@dimen/review_margin_view"
+            android:layout_toRightOf="@id/review_name" />
 
         <TextView
             android:id="@+id/review_discription"
-            android:layout_marginTop="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignLeft="@id/review_name"
             android:layout_below="@id/review_name"
+            android:layout_marginTop="@dimen/review_margin_view" />
+
+
+        <ImageView
+            android:id="@+id/review_recommend_img"
+            android:layout_width="@dimen/review_recommend_size"
+            android:layout_height="@dimen/review_recommend_size"
+            android:layout_alignLeft="@id/review_discription"
+            android:layout_below="@id/review_discription"
+            android:layout_marginTop="@dimen/review_margin_view"
+            android:contentDescription="@string/review_recommend" />
+
+        <TextView
+            android:id="@+id/review_recommend"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/review_recommend_img"
+            android:layout_marginLeft="@dimen/review_margin_view"
+            android:layout_toRightOf="@id/review_recommend_img"
+            android:textColor="@color/colorRecommend" />
 
-        <LinearLayout
-            android:layout_alignParentBottom="true"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/review_recommend_img"
-                android:contentDescription="@string/review_recommend"
-                android:layout_width="20sp"
-                android:layout_height="20sp" />
-
-            <TextView
-                android:id="@+id/review_recommend"
-                android:layout_marginLeft="20sp"
-                android:textColor="@color/colorRecommend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-
-        </LinearLayout>
 
     </RelativeLayout>
 

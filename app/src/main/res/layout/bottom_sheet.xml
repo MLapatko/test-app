@@ -9,6 +9,6 @@
         android:id="@+id/map_profile"
         android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="300sp" />
+        android:layout_height="@dimen/doctor_map_height" />
 
 </FrameLayout>

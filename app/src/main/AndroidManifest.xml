@@ -58,7 +58,7 @@
             android:name=".screenDoctor.aboutDoctor.AboutDoctorActivity"
             android:parentActivityName=".screenDoctor.DoctorActivity" />
         <activity
-            android:name=".screenDoctor.aboutDoctor.screenReviews.ShowReviewActivity"
+            android:name=".screenDoctor.aboutDoctor.screenReviews.ReviewWriteActivity"
             android:parentActivityName=".screenDoctor.aboutDoctor.AboutDoctorActivity" />
     </application>
 
