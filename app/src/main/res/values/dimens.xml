@@ -6,4 +6,49 @@
     <dimen name="nav_header_height">160dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="time">3dp</dimen>
+
+    /*doctor_profile_main_content*/
+    <dimen name="marging_layout_doctor_profile">20dp</dimen>
+
+    <dimen name="marging_doctor_img">30dp</dimen>
+    <dimen name="doctor_layout_width">200dp</dimen>
+    <dimen name="doctor_layout_height">250dp</dimen>
+    <dimen name="doctor_labels">25sp</dimen>
+    <dimen name="doctor_other_info">20sp</dimen>
+    <dimen name="doctor_margin_btn_send">20dp</dimen>
+
+    <dimen name="sliding_title">35sp</dimen>
+    <dimen name="sliding_hight">70dp</dimen>
+
+    <dimen name="doctor_map_height">300dp</dimen>
+
+    /*reviews*/
+    <dimen name="reviews_fab_size">56dp</dimen>
+    <dimen name="reviews_fab_margin">10dp</dimen>
+
+    /*review*/
+    <dimen name="review_card_margin">10dp</dimen>
+    <dimen name="review_card_radius">15dp</dimen>
+
+    <dimen name="review_padding">20dp</dimen>
+    <dimen name="review_margin_view">20dp</dimen>
+    <dimen name="review_recommend_size">20dp</dimen>
+    <dimen name="review_name_size">20sp</dimen>
+
+    /*add_review*/
+    <dimen name="add_review_margin_view">10dp</dimen>
+    <dimen name="review_card_radius">15dp</dimen>
+
+
+    /*qualification*/
+    <dimen name="qualification_title_text">30sp</dimen>
+
+    <dimen name="qualification_label_marginTop">20sp</dimen>
+    <dimen name="qualification_label_text">15sp</dimen>
+    <dimen name="qualification_text_marginTop">15sp</dimen>
+
+    <dimen name="qualification_layout_padding">20sp</dimen>
+
+
+
 </resources>

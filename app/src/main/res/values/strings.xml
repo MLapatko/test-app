@@ -1,11 +1,7 @@
 <resources>
     <string name="app_name">2doc</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
     <string name="logo">2doc</string>
-    <string name="phone">+375 29 119 10 88</string>
     <string name="phone_call">+375291191088</string>
 
     /*search_screen*/
@@ -59,12 +55,18 @@
     <string name="your_information_price">Стоимсоть: </string>
 
     /*review*/
+    <string name="review">О враче</string>
     <string name="review_recommend">Буду рекоммендовать</string>
     <string name="review_error">Нет информации</string>
-    <string name="review_hint_fio">ФИО</string>
+    <string name="review_hint_fio">Имя</string>
     <string name="review_hint_discription">Отзыв</string>
     <string name="review_send">Отправить</string>
+    <string name="review_checkbox_text">Буду рекоммендовать</string>
 
+    /*add_review*/
+    <string name="add_review">Новый комментарий</string>
+    <string name="add_review_sent">ОТПРАВЛЕНО!</string>
+    <string name="add_review_send">Отправить</string>
 
     /*qualification*/
     <string name="qualification_title">Квалификация и биография </string>
@@ -148,8 +150,6 @@
     <string name="filterCheckBox2">Рядом с метро</string>
     <string name="filterApplyButton">Подобрать</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="sliding_title">На карте</string>
 
 </resources>

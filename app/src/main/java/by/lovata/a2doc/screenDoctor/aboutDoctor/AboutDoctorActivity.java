@@ -16,22 +16,17 @@ public class AboutDoctorActivity extends AppCompatActivity {
     public static final String ID_SELECTED_DOCTOR = "ID_SELECTED_DOCTOR";
 
     private TabLayout tabLayout;
-    private ViewPager viewPager;
+    ViewPager viewPager;
 
-    int id_doctor;
+    private int id_doctor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_about_doctor);
 
-        id_doctor = getIntent().getIntExtra(ID_SELECTED_DOCTOR, 0);
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager_doctor_about);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs_doctor_about);
-        tabLayout.setupWithViewPager(viewPager);
+        initializeData();
+        initializeView();
 
         setupTabIcons();
     }
@@ -46,6 +41,20 @@ public class AboutDoctorActivity extends AppCompatActivity {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void initializeData() {
+        id_doctor = getIntent().getIntExtra(ID_SELECTED_DOCTOR, 0);
+    }
+
+    private void initializeView() {
+        setTitle(getString(R.string.review));
+
+        viewPager = (ViewPager) findViewById(R.id.viewpager_doctor_about);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs_doctor_about);
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void setupViewPager(ViewPager viewPager) {

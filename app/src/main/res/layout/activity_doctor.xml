@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="bottom"
-    sothree:umanoPanelHeight="68dp"
-    sothree:umanoShadowHeight="4dp">
+    sothree:umanoPanelHeight="@dimen/sliding_hight">
 
     <include layout="@layout/doctor_profile_main_content" />
 
@@ -19,11 +18,11 @@
         <TextView
             android:id="@+id/sliding_title"
             android:layout_width="match_parent"
-            android:layout_height="70dp"
+            android:layout_height="@dimen/sliding_hight"
             android:text="@string/sliding_title"
             android:gravity="center"
             android:textColor="@color/colorPrimaryDark"
-            android:textSize="35sp"/>
+            android:textSize="@dimen/sliding_title"/>
 
 
         <include layout="@layout/bottom_sheet" />
