@@ -23,19 +23,17 @@ import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ReviewFragment extends Fragment implements View.OnKeyListener{
+public class ReviewFragment extends Fragment {
 
     public static final String REVIEWS_SAVE = "REVIEWS_SAVE";
 
     private Reviews[] reviewses;
-    MaterialSheetFab<Fab> materialSheetFab;
 
     public ReviewFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view_root = inflater.inflate(R.layout.fragment_review, container, false);
 
         if (savedInstanceState == null) {
@@ -46,47 +44,7 @@ public class ReviewFragment extends Fragment implements View.OnKeyListener{
 
         setAdapter(view_root);
 
-        Fab fab = (Fab) view_root.findViewById(R.id.fab);
-        View sheetView = view_root.findViewById(R.id.fab_sheet);
-        View overlay = view_root.findViewById(R.id.overlay);
-        int sheetColor = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-        int fabColor = ContextCompat.getColor(getContext(), R.color.colorPrimary);
-
-        // Initialize material sheet FAB
-        materialSheetFab = new MaterialSheetFab<>(fab, sheetView, overlay,
-                sheetColor, fabColor);
-
-        materialSheetFab.setEventListener(new MaterialSheetFabEventListener() {
-            @Override
-            public void onShowSheet() {
-                // Called when the material sheet's "show" animation starts.
-            }
-
-            @Override
-            public void onSheetShown() {
-                // Called when the material sheet's "show" animation ends.
-            }
-
-            @Override
-            public void onHideSheet() {
-                // Called when the material sheet's "hide" animation starts.
-            }
-
-            public void onSheetHidden() {
-                // Called when the material sheet's "hide" animation ends.
-            }
-        });
-
         return view_root;
-    }
-
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        view.setFocusableInTouchMode(true);
-        view.requestFocus();
-        view.setOnKeyListener(this);
     }
 
     @Override
@@ -94,15 +52,6 @@ public class ReviewFragment extends Fragment implements View.OnKeyListener{
         super.onSaveInstanceState(outState);
 
         outState.putParcelableArray(REVIEWS_SAVE, reviewses);
-    }
-
-    @Override
-    public boolean onKey(View v, int keyCode, KeyEvent event) {
-        if (materialSheetFab.isSheetVisible()) {
-            materialSheetFab.hideSheet();
-            return true;
-        }
-        return false;
     }
 
     private void setAdapter(View view_root) {
@@ -123,6 +72,5 @@ public class ReviewFragment extends Fragment implements View.OnKeyListener{
         APIMethods apiMethods = new APIMethods(getContext());
         reviewses = apiMethods.getReviewsFromJSON(id_doctor);
     }
-
 
 }

@@ -1,96 +1,88 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/accent_material_light_1"
-    android:orientation="vertical"
-
     tools:context="by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification.QualificationFragment">
 
-    <ScrollView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/qualification_layout_padding">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/qualification_title"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/qualification_title_text" />
+
+        <TextView
+            android:id="@+id/treatment_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_label_marginTop"
+            android:text="@string/qualification_treatment_label"
+            android:textSize="@dimen/qualification_label_text" />
+
+        <TextView
+            android:id="@+id/treatment_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="20sp">
+            android:layout_marginTop="@dimen/qualification_text_marginTop" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/qualification_title"
-                android:textColor="@color/colorPrimaryDark"
-                android:textSize="30sp" />
+        <TextView
+            android:id="@+id/updatequalification_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_label_marginTop"
+            android:text="@string/qualification_updatequalification_label"
+            android:textSize="@dimen/qualification_label_text" />
 
-            <TextView
-                android:id="@+id/treatment_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:textSize="15sp"
-                android:text="@string/qualification_treatment_label" />
-
-            <TextView
-                android:id="@+id/treatment_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"/>
-
-            <TextView
-                android:id="@+id/updatequalification_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:textSize="15sp"
-                android:text="@string/qualification_updatequalification_label" />
-
-            <LinearLayout
-                android:id="@+id/updatequalification_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/experience_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:textSize="15sp"
-                android:text="@string/qualification_experience_label" />
-
-            <LinearLayout
-                android:id="@+id/experience_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:orientation="vertical">
-
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/education_label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20sp"
-                android:textSize="15sp"
-                android:text="@string/qualification_education_label" />
-
-            <LinearLayout
-                android:id="@+id/education_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15sp"
-                android:orientation="vertical">
-
-            </LinearLayout>
+        <LinearLayout
+            android:id="@+id/updatequalification_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_text_marginTop"
+            android:orientation="vertical">
 
         </LinearLayout>
 
-    </ScrollView>
+        <TextView
+            android:id="@+id/experience_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_label_marginTop"
+            android:text="@string/qualification_experience_label"
+            android:textSize="@dimen/qualification_label_text" />
 
-</LinearLayout>
+        <LinearLayout
+            android:id="@+id/experience_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_text_marginTop"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/education_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_label_marginTop"
+            android:text="@string/qualification_education_label"
+            android:textSize="@dimen/qualification_label_text" />
+
+        <LinearLayout
+            android:id="@+id/education_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/qualification_text_marginTop"
+            android:orientation="vertical">
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</ScrollView>

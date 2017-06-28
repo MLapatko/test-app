@@ -17,7 +17,7 @@
             android:layout_height="wrap_content">
 
             <LinearLayout
-                android:layout_margin="20sp"
+                android:layout_margin="@dimen/marging_layout_doctor_profile"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
@@ -25,17 +25,17 @@
                 <ImageView
                     android:id="@+id/img_profile"
                     android:layout_gravity="center_horizontal"
-                    android:layout_margin="30dp"
+                    android:layout_margin="@dimen/marging_doctor_img"
                     android:contentDescription="@string/profile"
-                    android:layout_width="200dp"
-                    android:layout_height="250dp" />
+                    android:layout_width="@dimen/doctor_layout_width"
+                    android:layout_height="@dimen/doctor_layout_height" />
 
                 <TextView
                     android:id="@+id/fio_profile"
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/doctor_labels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -44,7 +44,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/doctor_other_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -53,14 +53,14 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:textColor="@color/textColorPrimary"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/doctor_other_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
 
             <LinearLayout
-                android:padding="20sp"
+                android:padding="@dimen/marging_layout_doctor_profile"
                 android:background="@color/accent_material_light_1"
                 android:orientation="vertical"
                 android:layout_width="match_parent"
@@ -71,7 +71,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="25sp"
+                    android:textSize="@dimen/doctor_labels"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 
@@ -91,7 +91,7 @@
 
                 <Button
                     android:id="@+id/btn_record"
-                    android:layout_margin="10dp"
+                    android:layout_margin="@dimen/doctor_margin_btn_send"
                     android:textColor="@color/colorPrimary"
                     android:text="@string/list_doctors_btn_record"
                     android:background="@drawable/button_selector"
@@ -103,7 +103,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center_horizontal"
                     android:textColor="@color/colorPrimaryDark"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/doctor_other_info"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"/>
 

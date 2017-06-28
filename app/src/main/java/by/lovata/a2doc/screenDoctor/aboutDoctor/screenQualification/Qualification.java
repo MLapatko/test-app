@@ -45,6 +45,22 @@ public class Qualification implements Parcelable{
         education_description = in.createStringArrayList();
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(treatment);
+        dest.writeStringList(updatequalification_period);
+        dest.writeStringList(updatequalification_description);
+        dest.writeStringList(experience_period);
+        dest.writeStringList(experience_description);
+        dest.writeStringList(education_period);
+        dest.writeStringList(education_description);
+    }
+
     public static final Creator<Qualification> CREATOR = new Creator<Qualification>() {
         @Override
         public Qualification createFromParcel(Parcel in) {
@@ -113,19 +129,4 @@ public class Qualification implements Parcelable{
         this.education_description = education_description;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(treatment);
-        dest.writeStringList(updatequalification_period);
-        dest.writeStringList(updatequalification_description);
-        dest.writeStringList(experience_period);
-        dest.writeStringList(experience_description);
-        dest.writeStringList(education_period);
-        dest.writeStringList(education_description);
-    }
 }
