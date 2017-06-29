@@ -4,15 +4,11 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.os.Parcelable;
-import android.os.PersistableBundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.SeekBar;
 
 import java.util.ArrayList;
 
@@ -30,15 +26,14 @@ public class TimetableDoctorFragment extends Fragment implements
         public void setYourInformationFragment(String day_selected, String time_selected);
     }
 
-    public static String TIMES_PARCELABLE = "TIMES_PARCELABLE";
-    public static String SELECT_DOCTOR = "SELECT_DOCTOR";
+    public static final String TIMES_PARCELABLE = "TIMES_PARCELABLE";
+    public static final String SELECT_DOCTOR = "SELECT_DOCTOR";
 
-    public static String SELECT_DOCTOR_SAVE = "SELECT_DOCTOR_SAVE";
+    private static final String SELECT_DOCTOR_SAVE = "SELECT_DOCTOR_SAVE";
 
     Times[] times;
     SelectDoctor selectDoctor;
     RecordDoctor recordDoctor;
-
     ArrayList<Integer> list_weeks;
     TimeAdapter timeAdapter;
 

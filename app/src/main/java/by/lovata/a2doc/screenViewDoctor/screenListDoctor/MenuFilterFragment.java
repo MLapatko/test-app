@@ -34,7 +34,7 @@ public class MenuFilterFragment extends DialogFragment {
 
     public static interface AccessFilter {
         public void setFilters(int id_filter, boolean metro, boolean baby);
-        public Map<Integer, String> getSevices();
+        public Map<Integer, String> getServices();
     }
 
     public static final String ID_FILTER_SELECTED = "ID_FILTER_SELECTED";
@@ -56,7 +56,7 @@ public class MenuFilterFragment extends DialogFragment {
         View screen_filter = inflater.inflate(R.layout.fragment_menu_filter, null);
 
         final AlertDialog alertDialog = builder.setView(screen_filter).create();
-        services = ((AccessFilter) getParentFragment()).getSevices();
+        services = ((AccessFilter) getParentFragment()).getServices();
 
         id_filter = getArguments().getInt(ID_FILTER_SELECTED);
         metro = getArguments().getBoolean(IS_METRO);
@@ -74,7 +74,7 @@ public class MenuFilterFragment extends DialogFragment {
         String[] array_services = set_services.toArray(new String[set_services.size()]);
 
         final Spinner spinner = (Spinner) screen_filter.findViewById(R.id.services_spinner);
-        spinner.setAdapter(new ArrayAdapter<String>(
+        spinner.setAdapter(new ArrayAdapter<>(
                 getContext(),
                 android.R.layout.simple_list_item_1,
                 array_services));

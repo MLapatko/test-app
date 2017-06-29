@@ -37,6 +37,25 @@
 
     /*add_review*/
     <dimen name="add_review_margin_view">10dp</dimen>
+    <dimen name="add_review_text_size">15sp</dimen>
+
+    /*tab_about*/
+    <dimen name="tab_about_padding_top">20dp</dimen>
+    <dimen name="tab_about_text_size">20sp</dimen>
+    <dimen name="tab_about_label_size">50sp</dimen>
+    <dimen name="tab_about_view_margin">20dp</dimen>
+    <dimen name="tab_about_size_phone">20dp</dimen>
+
+    /*tab_search*/
+    <dimen name="tab_search_padding_top">20dp</dimen>
+    <dimen name="tab_search_text_size">20sp</dimen>
+    <dimen name="tab_search_label_size">30sp</dimen>
+
+    /*your_information*/
+    <dimen name="your_information_view_margin">20dp</dimen>
+    <dimen name="your_information_text_size">15sp</dimen>
+    <dimen name="your_information_text_size_label">20sp</dimen>
+    <dimen name="your_information_text_size_title">30sp</dimen>
 
     /*qualification*/
     <dimen name="qualification_title_text">30sp</dimen>

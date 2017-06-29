@@ -1,25 +1,22 @@
 package by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews;
 
 
+import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.gordonwong.materialsheetfab.MaterialSheetFab;
-import com.gordonwong.materialsheetfab.MaterialSheetFabEventListener;
-
 import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 
 /**
@@ -27,11 +24,13 @@ import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
  */
 public class ReviewFragment extends Fragment {
 
-    public static final String REVIEWS_SAVE = "REVIEWS_SAVE";
+    private static final String REVIEWS_SAVE = "REVIEWS_SAVE";
 
-    private Reviews[] reviewses;
+    private Reviews[] reviews;
+    private AboutDoctorActivity listener;
 
-    public ReviewFragment() {}
+    public ReviewFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +53,7 @@ public class ReviewFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelableArray(REVIEWS_SAVE, reviewses);
+        outState.putParcelableArray(REVIEWS_SAVE, reviews);
     }
 
     private void initializeView(View view_root) {
@@ -69,7 +68,7 @@ public class ReviewFragment extends Fragment {
     }
 
     private void setAdapter(View view_root) {
-        ReviewsAdapter reviewsAdapter = new ReviewsAdapter(getContext(), reviewses);
+        ReviewsAdapter reviewsAdapter = new ReviewsAdapter(getContext(), reviews);
         RecyclerView recyclerView = (RecyclerView) view_root.findViewById(R.id.recyclerview_review);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
@@ -77,14 +76,15 @@ public class ReviewFragment extends Fragment {
     }
 
     private void restoreData(Bundle savedInstanceState) {
-        reviewses = (Reviews[]) savedInstanceState.getParcelableArray(REVIEWS_SAVE);
+        reviews = (Reviews[]) savedInstanceState.getParcelableArray(REVIEWS_SAVE);
     }
 
     private void initializeData() {
         int id_doctor = getArguments().getInt(AboutDoctorActivity.ID_SELECTED_DOCTOR);
 
         APIMethods apiMethods = new APIMethods(getContext());
-        reviewses = apiMethods.getReviewsFromJSON(id_doctor);
+        reviews = apiMethods.getReviewsFromJSON(id_doctor);
+
     }
 
 }

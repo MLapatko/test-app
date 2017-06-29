@@ -37,6 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="3"
+            android:textSize="@dimen/add_review_text_size"
             android:text="@string/review_checkbox_text"
             android:textColor="@color/colorRecommend" />
 

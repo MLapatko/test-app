@@ -5,10 +5,6 @@ import com.google.maps.android.clustering.ClusterItem;
 
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 
-/**
- * Created by kroos on 6/25/17.
- */
-
 public class AbstractMarker implements ClusterItem {
 
     private final LatLng mPosition;

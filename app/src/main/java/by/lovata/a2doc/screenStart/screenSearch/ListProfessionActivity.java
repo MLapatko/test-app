@@ -1,33 +1,25 @@
 package by.lovata.a2doc.screenStart.screenSearch;
 
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.Set;
 
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
-import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 
 public class ListProfessionActivity extends AppCompatActivity {
 
-    public static final String SPECIALITIES_SAVE = "SPECIALITIES_SAVE";
-    public static final String KEY_SPECIALITIES_SAVE = "KEY_SPECIALITIES_SAVE";
+    private static final String SPECIALITIES_SAVE = "SPECIALITIES_SAVE";
+    private static final String KEY_SPECIALITIES_SAVE = "KEY_SPECIALITIES_SAVE";
 
     String[] specialities;
     int[] key_specialities;
@@ -42,13 +34,8 @@ public class ListProfessionActivity extends AppCompatActivity {
         } else {
             restoreData(savedInstanceState);
         }
-        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
-                R.layout.speciality_item,
-                specialities);
 
-        ListView lst_profession = (ListView) findViewById(R.id.lst_profession);
-        lst_profession.setAdapter(mAdapter);
-        lst_profession.setOnItemClickListener(itemClickListener_lst_profession);
+        initializeView();
     }
 
     @Override
@@ -80,6 +67,18 @@ public class ListProfessionActivity extends AppCompatActivity {
             finish();
         }
     };
+
+    private void initializeView() {
+        setTitle(getString(R.string.list_profession));
+
+        ArrayAdapter<String> mAdapter = new ArrayAdapter<>(this,
+                R.layout.speciality_item,
+                specialities);
+
+        ListView lst_profession = (ListView) findViewById(R.id.lst_profession);
+        lst_profession.setAdapter(mAdapter);
+        lst_profession.setOnItemClickListener(itemClickListener_lst_profession);
+    }
 
     private void initializeData() {
         Collection<String> set_specialities = LogoActivity.getSpecialities().values();

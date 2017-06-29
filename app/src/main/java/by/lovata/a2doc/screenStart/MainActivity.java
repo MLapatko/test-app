@@ -37,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        initializeView();
+
+    }
+
+    private void initializeView() {
         phone = getIntent().getStringExtra(PHONE);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
@@ -44,6 +49,7 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(tabs);
         tabLayout.setupWithViewPager(viewPager);
+
         setupTabIcons();
     }
 

@@ -17,8 +17,9 @@ import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 public class RecordDoctorActivity extends AppCompatActivity implements
         TimetableDoctorFragment.RecordDoctor {
 
-    public static String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
-    public static String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
+    public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
+
+    private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
     SaveParameter saveParameter;
 
@@ -27,13 +28,13 @@ public class RecordDoctorActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_record_doctor);
 
-        setTitle(getString(R.string.timetable));
-
         if (savedInstanceState == null) {
             initializeData();
         } else {
             restoreData(savedInstanceState);
         }
+
+        setTitle(getString(R.string.timetable));
     }
 
     @Override

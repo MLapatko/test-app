@@ -28,16 +28,13 @@ import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuSortFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.MapDoctorFragment;
 
-public class ViewDoctorActivity extends AppCompatActivity implements
-                    ListDoctorFragment.InformationInterfaceList,
-                    MapDoctorFragment.InformationInterfaceMap {
-
-    public static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
+public class ViewDoctorActivity extends AppCompatActivity {
 
     public static final String ID_SPECIALITY_SELECTED = "ID_SPECIALITY_SELECTED";
-
     public static final String LIST_VIEW_FRAGMENT = "LIST_VIEW_FRAGMENT";
     public static final String MAP_VIEW_FRAGMENT = "MAP_VIEW_FRAGMENT";
+
+    private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
     SaveParameter saveParameter;
 
@@ -49,13 +46,12 @@ public class ViewDoctorActivity extends AppCompatActivity implements
         if (savedInstanceState == null) {
             initializeData();
 
-            if (saveParameter.getDoctorsInfo().length > 1) {
-                Arrays.sort(saveParameter.getDoctorsInfo(), new SortDefault());
-            }
             setListDoctorsFragment();
         } else {
             restoreData(savedInstanceState);
         }
+
+        setTitle(getString(R.string.list_doctors));
     }
 
     @Override
@@ -112,18 +108,6 @@ public class ViewDoctorActivity extends AppCompatActivity implements
         return services;
     }
 
-    @Override
-    public void setId_sort(int id_sort_selected) {
-        saveParameter.setId_sort(id_sort_selected);
-    }
-
-    @Override
-    public void setFilters(int id_filter, boolean metro, boolean baby) {
-        saveParameter.setId_filter(id_filter);
-        saveParameter.setMetro(metro);
-        saveParameter.setBaby(baby);
-    }
-
     private void restoreData(Bundle savedInstanceState) {
         saveParameter = savedInstanceState.getParcelable(SAVEPARAMETER_PARSALABEL_SAVE);
     }
@@ -154,9 +138,11 @@ public class ViewDoctorActivity extends AppCompatActivity implements
 
     private void setListDoctorsFragment() {
         Fragment fragment = new ListDoctorFragment();
+
         Bundle bundle = new Bundle();
         bundle.putParcelable(ListDoctorFragment.SAVEPARAMETER_PARSALABEL, saveParameter);
         fragment.setArguments(bundle);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contain_view_doctor, fragment, LIST_VIEW_FRAGMENT);
         ft.commit();
@@ -164,9 +150,11 @@ public class ViewDoctorActivity extends AppCompatActivity implements
 
     private void setMapDoctorsFragment() {
         Fragment fragment = new MapDoctorFragment();
+
         Bundle bundle = new Bundle();
         bundle.putParcelable(MapDoctorFragment.SAVEPARAMETER_PARSALABEL, saveParameter);
         fragment.setArguments(bundle);
+
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.contain_view_doctor, fragment, MAP_VIEW_FRAGMENT);
         ft.commit();

@@ -6,12 +6,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import by.lovata.a2doc.R;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewWriteActivity;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 
@@ -20,8 +23,9 @@ import by.lovata.a2doc.screenViewDoctor.SaveParameter;
  */
 public class YourInformationFragment extends Fragment {
 
-    public static String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
-    public static String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
+    public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
+
+    private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
     SaveParameter saveParameter;
 
@@ -79,6 +83,16 @@ public class YourInformationFragment extends Fragment {
         String price = getPriceDoctor();
         TextView doctor_price = (TextView) root_view.findViewById(R.id.doctor_price);
         doctor_price.setText(price);
+
+        Button button_send = (Button) root_view.findViewById(R.id.record_send_to_server);
+        button_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String messanger = getString(R.string.add_review_sent);
+                Toast.makeText(getContext(), messanger, Toast.LENGTH_SHORT).show();
+                getActivity().finish();
+            }
+        });
     }
 
     private String getNameDoctor() {

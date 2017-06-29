@@ -26,8 +26,8 @@ import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
 class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     private DoctorInfo[] array_doctors;
-    Map<Integer, String> sevices;
-    Map<Integer, OrganizationInfo> organizations;
+    private Map<Integer, String> sevices;
+    private Map<Integer, OrganizationInfo> organizations;
 
     private Listener listener;
     private Context context;
@@ -110,7 +110,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
         String[] services_name = getServicesName(position);
         final Spinner services_doctor = (Spinner) cardView.findViewById(R.id.services_card_doctor);
-        services_doctor.setAdapter(new ArrayAdapter<String>(
+        services_doctor.setAdapter(new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_list_item_activated_1,
                 services_name));
@@ -131,7 +131,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
         String[] organizations_name = getOrganizationName(position);
         Spinner gps_doctor = (Spinner) cardView.findViewById(R.id.gps_card_doctor);
-        gps_doctor.setAdapter(new ArrayAdapter<String>(
+        gps_doctor.setAdapter(new ArrayAdapter<>(
                 context,
                 android.R.layout.simple_list_item_activated_1,
                 organizations_name));

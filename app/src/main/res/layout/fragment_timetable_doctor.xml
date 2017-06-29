@@ -9,48 +9,52 @@
         android:id="@+id/timetable_lst"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"/>
+        android:layout_weight="1" />
 
     <LinearLayout
-        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_week_1"
-            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_week_1"
+            android:layout_weight="1"
             android:background="@color/textColorPrimary"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/timetable_week_1"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/btn_week_2"
-            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_week_2"
+            android:layout_weight="1"
             android:background="@color/textColorPrimary"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/timetable_week_2"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/btn_week_3"
-            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_week_3"
+            android:layout_weight="1"
             android:background="@color/textColorPrimary"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/timetable_week_3"
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/btn_week_4"
-            android:layout_weight="1"
+            style="?android:attr/buttonBarButtonStyle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/timetable_week_4"
+            android:layout_weight="1"
             android:background="@color/textColorPrimary"
-            android:textColor="@color/colorPrimary"/>
+            android:text="@string/timetable_week_4"
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 

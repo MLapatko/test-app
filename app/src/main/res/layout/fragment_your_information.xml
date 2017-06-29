@@ -1,101 +1,98 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="by.lovata.a2doc.screenRecordDoctor.screenYourInformation.YourInformationFragment">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="20dp">
+        android:layout_margin="@dimen/your_information_view_margin"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/doctor_name"
-            android:textSize="30sp"
-            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/your_information_text_size_title" />
 
         <TextView
             android:id="@+id/doctor_gps"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/your_information_text_size" />
 
         <TextView
             android:id="@+id/doctor_service"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/your_information_text_size" />
 
         <TextView
             android:id="@+id/doctor_date"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/your_information_text_size" />
 
         <TextView
             android:id="@+id/doctor_price"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/your_information_text_size" />
 
     </LinearLayout>
 
-    <RelativeLayout
-        android:background="@color/accent_material_light_1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
-            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp">
+            android:background="@color/accent_material_light_1"
+            android:padding="@dimen/your_information_view_margin"
+            android:orientation="vertical">
 
             <TextView
-                android:text="@string/your_information_contacts"
-                android:textSize="20sp"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:text="@string/your_information_contacts"
+                android:textSize="@dimen/your_information_text_size_label" />
 
             <EditText
-                android:hint="@string/your_information_hint_fio"
                 android:id="@+id/edit_fio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/your_information_hint_fio"
                 android:maxLines="1" />
 
             <EditText
-                android:hint="@string/your_information_hint_phone"
                 android:id="@+id/edit_phone"
+                android:inputType="phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/your_information_hint_phone"
                 android:maxLines="1" />
 
             <EditText
-                android:hint="@string/your_information_hint_email"
                 android:id="@+id/edit_email"
+                android:inputType="textWebEmailAddress"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:hint="@string/your_information_hint_email"
                 android:maxLines="1" />
 
             <Button
-                android:text="@string/your_information_btn_record"
                 android:id="@+id/record_send_to_server"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/colorPrimary"
-                android:background="@drawable/button_selector" />
+                android:background="@drawable/button_selector"
+                android:text="@string/your_information_btn_record"
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
 
-    </RelativeLayout>
 
 </LinearLayout>

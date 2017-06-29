@@ -35,18 +35,22 @@ public class TabCityFragment extends Fragment {
     Integer[] key_cities;
 
 
-    public TabCityFragment() {
-    }
-
+    public TabCityFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view_root = inflater.inflate(R.layout.fragment_tab_cities, container, false);
 
-        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
         initializeData();
 
+        initializeView(view_root);
+
+        return view_root;
+    }
+
+    private void initializeView(View view_root) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
         int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, key_cities[0]);
         int position = getPosition(id_city);
 
@@ -55,8 +59,6 @@ public class TabCityFragment extends Fragment {
                 android.R.layout.select_dialog_singlechoice, cities));
         lst_city.setItemChecked(position, true);
         lst_city.setOnItemClickListener(onItemClickListener_city_select);
-
-        return view_root;
     }
 
     AdapterView.OnItemClickListener onItemClickListener_city_select = new AdapterView.OnItemClickListener() {
@@ -96,6 +98,7 @@ public class TabCityFragment extends Fragment {
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putInt(MainActivity.CITY_SELECT, id_city_select);
+
         return editor.commit();
     }
 

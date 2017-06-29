@@ -3,7 +3,6 @@ package by.lovata.a2doc.screenDoctor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,6 +33,8 @@ import java.util.Set;
 
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewFragment;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.Reviews;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
@@ -45,6 +46,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
     private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
     private static final String ID_ORGANIZATION_SAVE = "ID_ORGANIZATION_SAVE";
     private static final String ID_SERVICE_SAVE = "ID_SERVICE_SAVE";
+
 
     private SaveParameter saveParameter;
     private int id_organization;

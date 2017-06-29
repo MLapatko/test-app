@@ -7,10 +7,6 @@ import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 
-/**
- * Created by kroos on 6/26/17.
- */
-
 class CustomClusterRenderer<T extends AbstractMarker> extends DefaultClusterRenderer<T> implements
         GoogleMap.OnCameraMoveListener {
 

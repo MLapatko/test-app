@@ -39,7 +39,7 @@ public class MenuSortFragment extends DialogFragment {
         View screen_sort = inflater.inflate(R.layout.fragment_menu_sort, null);
 
         ListView lst_sort = (ListView) screen_sort.findViewById(R.id.lst_sort);
-        lst_sort.setAdapter(new ArrayAdapter<String>(
+        lst_sort.setAdapter(new ArrayAdapter<>(
                 getActivity(),
                 android.R.layout.simple_list_item_single_choice,
                 menu_sort_items
@@ -50,7 +50,7 @@ public class MenuSortFragment extends DialogFragment {
         lst_sort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ((ListDoctorFragment) getParentFragment()).setId_sort(position);
+                ((ListDoctorFragment) getParentFragment()).setId_sort(position, false);
                 alertDialog.cancel();
             }
         });

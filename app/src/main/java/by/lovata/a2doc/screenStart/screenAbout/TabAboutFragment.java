@@ -12,15 +12,12 @@ import by.lovata.a2doc.R;
 public class TabAboutFragment extends Fragment {
 
 
-    public TabAboutFragment() {
-        // Required empty public constructor
-    }
+    public TabAboutFragment() {}
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_tab_about, container, false);
     }
 

@@ -34,55 +34,27 @@ import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortPriceUp;
  */
 public class ListDoctorFragment extends Fragment implements MenuFilterFragment.AccessFilter {
 
-    public static interface InformationInterfaceList {
-        public void setId_sort(int id_sort_selected);
-        public void setFilters(int id_filter, boolean metro, boolean baby);
-    }
-
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
 
-    public static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
+    private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
     SaveParameter saveParameter;
     RecyclerView recyclerView;
-    InformationInterfaceList informationInterface;
 
-    public ListDoctorFragment() {
-    }
+    public ListDoctorFragment() {}
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View root_view = inflater.inflate(R.layout.fragment_list_doctor, container, false);
 
-        if (savedInstanceState == null) {
-            initializeData();
-        } else {
-            restoreData(savedInstanceState);
-        }
+        initializeData();
 
-        DoctorsAdapter doctorAdapter = new DoctorsAdapter(getContext(),
-                saveParameter.getServices(),
-                saveParameter.getOrganizations());
-        doctorAdapter.setArray_doctors(createArrayWithFilter(saveParameter.getDoctorsInfo(),
-                saveParameter.getId_filter(), saveParameter.isMetro(), saveParameter.isBaby()));
-        doctorAdapter.setId_filter(saveParameter.getId_filter());
-        doctorAdapter.setListener(new ClickOnCard());
-
-        recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerview_doctor);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(doctorAdapter);
+        initializeView(root_view);
 
         setHasOptionsMenu(true);
 
         return root_view;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.informationInterface = (InformationInterfaceList) activity;
     }
 
     @Override
@@ -111,14 +83,32 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         }
     }
 
-    public void setId_sort(int position) {
-        if (saveParameter.getId_sort() != position) {
+    private void initializeView(View root_view) {
+        DoctorsAdapter doctorAdapter = new DoctorsAdapter(getContext(),
+                saveParameter.getServices(),
+                saveParameter.getOrganizations());
+
+        DoctorInfo[] doctorInfos = createArrayWithFilter(saveParameter.getDoctorsInfo(),
+                saveParameter.getId_filter(), saveParameter.isMetro(), saveParameter.isBaby());
+        doctorAdapter.setArray_doctors(doctorInfos);
+        doctorAdapter.setId_filter(saveParameter.getId_filter());
+        doctorAdapter.setListener(new ClickOnCard());
+
+        recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerview_doctor);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(doctorAdapter);
+        setId_sort(saveParameter.getId_sort(), true);
+    }
+
+    public void setId_sort(int position, boolean status) {
+        if (saveParameter.getId_sort() != position || status) {
             saveParameter.setId_sort(position);
             DoctorInfo[] Array_doctors = ((DoctorsAdapter) recyclerView.getAdapter()).getArray_doctors();
             if (Array_doctors.length > 1) {
                 switch (position) {
                     case 0:
-                        Arrays.sort(saveParameter.getDoctorsInfo(), new SortDefault());
+                        Arrays.sort(Array_doctors, new SortDefault());
                         break;
                     case 1:
                          SortPriceUp sortPriceUp = new SortPriceUp(saveParameter.getId_filter());
@@ -129,37 +119,29 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
                         Arrays.sort(Array_doctors, sortPriceDown);
                         break;
                     case 3:
-                        Arrays.sort(saveParameter.getDoctorsInfo(), new SortExperience());
+                        Arrays.sort(Array_doctors, new SortExperience());
                         break;
                 }
-                informationInterface.setId_sort(position);
-                synchronizedDoctors();
             }
+            synchronizedDoctors();
         }
     }
 
     @Override
     public void setFilters(int id_filter, boolean metro, boolean baby) {
-        saveParameter.setId_sort(0);
         saveParameter.setId_filter(id_filter);
         saveParameter.setMetro(metro);
         saveParameter.setBaby(baby);
 
-        informationInterface.setFilters(id_filter, metro, baby);
-        informationInterface.setId_sort(0);
-
-        if (saveParameter.getDoctorsInfo().length > 1) {
-            Arrays.sort(saveParameter.getDoctorsInfo(), new SortDefault());
-        }
         ((DoctorsAdapter) recyclerView.getAdapter()).setId_filter(id_filter);
         ((DoctorsAdapter) recyclerView.getAdapter()).
                 setArray_doctors(createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby));
 
-        synchronizedDoctors();
+        setId_sort(saveParameter.getId_sort(), true);
     }
 
     @Override
-    public Map<Integer, String> getSevices() {
+    public Map<Integer, String> getServices() {
         return saveParameter.getServices();
     }
 
@@ -192,18 +174,22 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
 
     private void showMenuFilter() {
         MenuFilterFragment dialog_filter = new MenuFilterFragment();
+
         Bundle bundle_filter = new Bundle();
         bundle_filter.putInt(MenuFilterFragment.ID_FILTER_SELECTED, saveParameter.getId_filter());
         bundle_filter.putBoolean(MenuFilterFragment.IS_METRO, saveParameter.isMetro());
         bundle_filter.putBoolean(MenuFilterFragment.IS_BABY, saveParameter.isBaby());
+
         dialog_filter.setArguments(bundle_filter);
         dialog_filter.show(getChildFragmentManager(), "filter");
     }
 
     private void showMenuSort() {
         MenuSortFragment dialog_sort = new MenuSortFragment();
+
         Bundle bundle_sort = new Bundle();
         bundle_sort.putInt(MenuSortFragment.ID_SORT_SELECTED, saveParameter.getId_sort());
+
         dialog_sort.setArguments(bundle_sort);
         dialog_sort.show(getChildFragmentManager(), "sort");
     }
@@ -212,24 +198,12 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         saveParameter = getArguments().getParcelable(SAVEPARAMETER_PARSALABEL);
     }
 
-    private void restoreData(Bundle savedInstanceState) {
-        saveParameter = savedInstanceState.getParcelable(SAVEPARAMETER_PARSALABEL_SAVE);
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putParcelable(SAVEPARAMETER_PARSALABEL_SAVE, saveParameter);
-    }
-
     private class ClickOnCard implements DoctorsAdapter.Listener {
 
         @Override
         public void onClickRecord(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), RecordDoctorActivity.class);
             DoctorInfo doctorInfo = getDoctor(id_doctor);
-            //saveParameter.setDoctorsInfo(null);
             saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null, doctorInfo));
             intent.putExtra(RecordDoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
 
@@ -240,7 +214,6 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         public void onClickDoctor(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), DoctorActivity.class);
             DoctorInfo doctorInfo = getDoctor(id_doctor);
-            //saveParameter.setDoctorsInfo(null);
             saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null, doctorInfo));
             intent.putExtra(DoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
 

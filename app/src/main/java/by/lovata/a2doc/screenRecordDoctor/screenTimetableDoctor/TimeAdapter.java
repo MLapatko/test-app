@@ -101,9 +101,6 @@ class TimeAdapter extends BaseAdapter {
     }
 
     private void setLayoutParamsToButton(Button button) {
-        //button.setWidth(30);
-        //button.setHeight(30);
-        //button.setPadding(10, 10, 10, 10);
         button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
         button.setBackground(ContextCompat.getDrawable(context, R.drawable.time_selector));
     }

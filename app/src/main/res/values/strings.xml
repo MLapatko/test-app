@@ -35,6 +35,12 @@
     <string name="about_doctor_review">Отзывы</string>
     <string name="about_doctor_qualification">Квалификация</string>
 
+    /*list_profession*/
+    <string name="list_profession">Специализации</string>
+
+    /*list_doctors*/
+    <string name="list_doctors">Врачи</string>
+
     /*profile*/
     <string name="profile">Доктор</string>
     <string name="profile_record_label">Записаться на приём</string>

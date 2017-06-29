@@ -1,15 +1,12 @@
 package by.lovata.a2doc.screenViewDoctor.screenMapDoctor;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -29,14 +26,13 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
-import com.google.maps.android.MarkerManager;
 import com.google.maps.android.clustering.Cluster;
 import com.google.maps.android.clustering.ClusterItem;
 import com.google.maps.android.clustering.ClusterManager;
-import com.google.maps.android.clustering.view.DefaultClusterRenderer;
 import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -62,34 +58,14 @@ import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         MenuFilterFragment.AccessFilter {
 
-
-    public interface InformationInterfaceMap {
-        void setId_sort(int id_sort_selected);
-
-        void setFilters(int id_filter, boolean metro, boolean baby);
-    }
-
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
-
-    public static final String ID_FILTER_SELECTED = "ID_FILTER_SELECTED";
-    public static final String IS_METRO = "IS_METRO";
-    public static final String IS_BABY = "IS_BABY";
-
-    public static final String ID_FILTER_SELECTED_SAVE = "ID_FILTER_SELECTED_SAVE";
-    public static final String IS_METRO_SAVE = "IS_METRO_SAVE";
-    public static final String IS_BABY_SAVE = "IS_BABY_SAVE";
 
     static final float COORDINATE_OFFSET = 0.00002f;
 
     private AbstractMarker clickedClusterItem = null;
     DoctorInfo[] doctorsInfo;
     Map<Integer, OrganizationInfo> organizations;
-    InformationInterfaceMap informationInterface;
     SaveParameter saveParameter;
-
-    int id_filter;
-    boolean metro;
-    boolean baby;
 
     MapView mMapView;
     GoogleMap gMap;
@@ -106,14 +82,10 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        if (savedInstanceState == null) {
-            initializeData();
-        }
 
         View view = inflater.inflate(R.layout.fragment_map_doctor, container, false);
-        saveParameter = (SaveParameter) getArguments().get(SAVEPARAMETER_PARSALABEL);
-        doctorsInfo = saveParameter.getDoctorsInfo();
-        organizations = saveParameter.getOrganizations();
+
+        initializeData();
 
         mMapView = (MapView) view.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
@@ -135,10 +107,13 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         return view;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        this.informationInterface = (InformationInterfaceMap) activity;
+    private void initializeData() {
+        saveParameter = (SaveParameter) getArguments().get(SAVEPARAMETER_PARSALABEL);
+        int id_filter = saveParameter.getId_filter();
+        boolean metro = saveParameter.isMetro();
+        boolean baby = saveParameter.isBaby();
+        doctorsInfo = createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby);
+        organizations = saveParameter.getOrganizations();
     }
 
     @Override
@@ -180,8 +155,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
                 if (clickedClusterItem != null) {
                     Intent intent = new Intent(getActivity(), DoctorActivity.class);
                     DoctorInfo doctorInfo = clickedClusterItem.getDoctorInfo();
-                    //saveParameter.setDoctorsInfo(null);
-                    saveParameter.setSelectDoctor(new SelectDoctor(doctorInfo.getId(), 1,
+                    saveParameter.setSelectDoctor(new SelectDoctor(doctorInfo.getId(), saveParameter.getId_filter(),
                             clickedClusterItem.getOrg_id(), null, null, doctorInfo));
                     intent.putExtra(DoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
                     getActivity().startActivity(intent);
@@ -257,6 +231,29 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         return (markerLocations.contains(location));
     }
 
+    private DoctorInfo[] createArrayWithFilter(DoctorInfo[] doctorsInfo, int id_filter,
+                                               boolean is_metro, boolean is_baby) {
+        ArrayList<DoctorInfo> arrayList = new ArrayList<>();
+        for (DoctorInfo doctorInfo: doctorsInfo) {
+            if (doctorInfo.getService_list().containsKey(id_filter)) {
+                if (!is_metro) {
+                    if (!is_baby) {
+                        arrayList.add(doctorInfo);
+                    } else {
+                        if (doctorInfo.isBaby()) {
+                            arrayList.add(doctorInfo);
+                        }
+                    }
+                } else {
+                    if (doctorInfo.isMerto()) {
+                        arrayList.add(doctorInfo);
+                    }
+                }
+            }
+        }
+        return arrayList.toArray(new DoctorInfo[arrayList.size()]);
+    }
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
@@ -281,42 +278,31 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
 
     @Override
     public void setFilters(int id_filter, boolean metro, boolean baby) {
-        this.id_filter = id_filter;
-        this.metro = metro;
-        this.baby = baby;
+        saveParameter.setId_filter(id_filter);
+        saveParameter.setMetro(metro);
+        saveParameter.setBaby(baby);
 
-        informationInterface.setFilters(id_filter, metro, baby);
-        informationInterface.setId_sort(0);
+        doctorsInfo = createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby);
 
-        if (doctorsInfo.length > 1) {
-            Arrays.sort(doctorsInfo, new SortDefault());
-        }
-        /*((DoctorsAdapter) recyclerView.getAdapter()).
-                setArray_doctors(createArrayWithFilter(doctorsInfo, id_filter, metro, baby));
-
-        synchronizedDoctors();*/
+        gMap.clear();
+        mMapView.getMapAsync(this);
     }
 
     @Override
-    public Map<Integer, String> getSevices() {
-        return null;
-        //return informationInterface.getServices();
+    public Map<Integer, String> getServices() {
+        return saveParameter.getServices();
     }
 
     private void showMenuFilter() {
         MenuFilterFragment dialog_filter = new MenuFilterFragment();
+
         Bundle bundle_filter = new Bundle();
-        bundle_filter.putInt(MenuFilterFragment.ID_FILTER_SELECTED, id_filter);
-        bundle_filter.putBoolean(MenuFilterFragment.IS_METRO, metro);
-        bundle_filter.putBoolean(MenuFilterFragment.IS_BABY, baby);
+        bundle_filter.putInt(MenuFilterFragment.ID_FILTER_SELECTED, saveParameter.getId_filter());
+        bundle_filter.putBoolean(MenuFilterFragment.IS_METRO, saveParameter.isMetro());
+        bundle_filter.putBoolean(MenuFilterFragment.IS_BABY, saveParameter.isBaby());
+
         dialog_filter.setArguments(bundle_filter);
         dialog_filter.show(getChildFragmentManager(), "filter");
-    }
-
-    private void initializeData() {
-        //id_filter = getArguments().getInt(ID_FILTER_SELECTED);
-        //metro = getArguments().getBoolean(IS_METRO);
-        //baby = getArguments().getBoolean(IS_BABY);
     }
 
     private class DoctorInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
