@@ -552,53 +552,8 @@ public class APIMethods {
     }
 
     private void load() {
-        if (!hasConnection()) {
-            //showDialog();
-        }
+
 
     }
 
-    private void showDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        builder.setTitle(context.getString(R.string.API_connect_title));
-        builder.setMessage(context.getString(R.string.API_connect_message));
-        builder.setCancelable(false);
-        builder.setPositiveButton(context.getString(R.string.API_connect_positive_btn),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        ((Activity) context).finish();
-                    }
-                });
-        builder.setNegativeButton(context.getString(R.string.API_connect_negative_btn),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                        ((Activity) context).moveTaskToBack(true);
-                    }
-                });
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-    }
-
-    private boolean hasConnection() {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
-        if (wifiInfo != null && wifiInfo.isConnected()) {
-            return true;
-        }
-        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
-        if (wifiInfo != null && wifiInfo.isConnected()) {
-            return true;
-        }
-        wifiInfo = cm.getActiveNetworkInfo();
-        if (wifiInfo != null && wifiInfo.isConnected()) {
-            return true;
-        }
-        return false;
-    }
 }

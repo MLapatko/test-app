@@ -1,12 +1,17 @@
 package by.lovata.a2doc.screenStart;
 
 
+import android.bluetooth.BluetoothAdapter;
+import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 
+import by.lovata.a2doc.InternetReceiver;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.screenAbout.TabAboutFragment;
 import by.lovata.a2doc.screenStart.screenCity.TabCityFragment;
@@ -22,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String PHONE = "PHONE";
 
 
+    private InternetReceiver receiver;
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private String phone;
@@ -39,6 +45,22 @@ public class MainActivity extends AppCompatActivity {
 
         initializeView();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        receiver = new InternetReceiver();
+        IntentFilter filter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
+        registerReceiver(receiver, new IntentFilter(filter));
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        unregisterReceiver(receiver);
     }
 
     private void initializeView() {
