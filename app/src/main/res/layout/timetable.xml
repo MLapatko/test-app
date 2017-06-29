@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root_timetable"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    android:orientation="vertical"
+    android:padding="@dimen/timetable_padding"
     android:weightSum="1">
 
     <RelativeLayout
@@ -14,20 +14,20 @@
 
         <TextView
             android:id="@+id/timetable_day"
-            android:textSize="15sp"
-            android:textColor="@color/colorPrimaryDark"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"/>
+            android:layout_alignParentLeft="true"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="15sp" />
 
         <TextView
             android:id="@+id/timetable_border"
-            android:textSize="15sp"
-            android:textColor="@color/textColorPrimary"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_alignTop="@id/timetable_day"/>
+            android:layout_alignTop="@id/timetable_day"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="15sp" />
 
     </RelativeLayout>
 

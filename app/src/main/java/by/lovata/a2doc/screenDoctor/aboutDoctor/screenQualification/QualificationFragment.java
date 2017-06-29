@@ -26,7 +26,8 @@ public class QualificationFragment extends Fragment {
 
     private Qualification qualification;
 
-    public QualificationFragment() {}
+    public QualificationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -99,7 +100,7 @@ public class QualificationFragment extends Fragment {
 
     private void createGroupView(View view_root,
                                  String[] updatequalification_label,
-                                 String[]updatequalification_text,
+                                 String[] updatequalification_text,
                                  int id, int id_img) {
         LinearLayout linearLayout = (LinearLayout) view_root.findViewById(id);
 

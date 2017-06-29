@@ -1,33 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal"
-    android:paddingBottom="10sp"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:paddingBottom="@dimen/qualification_padding">
 
     <ImageView
         android:id="@+id/qualification_img"
+        android:layout_width="@dimen/qualification_img_size"
+        android:layout_height="@dimen/qualification_img_size"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:layout_width="30sp"
-        android:layout_height="30sp" />
+        android:layout_alignParentTop="true" />
 
     <TextView
         android:id="@+id/qualification_period"
-        android:layout_marginLeft="20sp"
-        android:layout_toRightOf="@id/qualification_img"
-        android:layout_alignTop="@id/qualification_img"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/qualification_img"
+        android:layout_marginLeft="20sp"
+        android:layout_toRightOf="@id/qualification_img" />
 
     <TextView
         android:id="@+id/qualification_discription"
-        android:layout_marginTop="15sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignLeft="@id/qualification_period"
         android:layout_below="@id/qualification_period"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:layout_marginTop="15sp" />
 
 
 </RelativeLayout>

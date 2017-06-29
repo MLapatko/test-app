@@ -8,19 +8,19 @@
     card_view:cardCornerRadius="15dp">
 
     <RelativeLayout
-        android:padding="5sp"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:padding="5sp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/img_infoWindow"
@@ -29,42 +29,42 @@
 
                 <TextView
                     android:id="@+id/review_infoWindow"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10sp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10sp">
 
                 <TextView
                     android:id="@+id/fio_infoWindow"
-                    android:textColor="@color/list_doctors_text"
-                    android:textStyle="bold"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text"
+                    android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/speciality_infoWindow"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
                 <TextView
                     android:id="@+id/position_infoWindow"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
                 <TextView
                     android:id="@+id/price_infoWindow"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
             </LinearLayout>
 

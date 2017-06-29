@@ -53,18 +53,19 @@ public class SaveParameter implements Parcelable {
     }
 
 
-    private void writeServices(Parcel dest, int flags, Map<Integer, String> sevices){
+    private void writeServices(Parcel dest, int flags, Map<Integer, String> sevices) {
         int size = sevices.size();
         dest.writeInt(size);
-        for(Map.Entry<Integer, String> entry : sevices.entrySet()){
+        for (Map.Entry<Integer, String> entry : sevices.entrySet()) {
             dest.writeInt(entry.getKey());
             dest.writeString(entry.getValue());
         }
     }
-    private Map<Integer, String> readServices(Parcel in){
+
+    private Map<Integer, String> readServices(Parcel in) {
         Map<Integer, String> sevices = new TreeMap<>();
         int size = in.readInt();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             Integer key = in.readInt();
             String value = in.readString();
             sevices.put(key, value);
@@ -72,18 +73,19 @@ public class SaveParameter implements Parcelable {
         return sevices;
     }
 
-    private void writeOrganizations(Parcel dest, int flags, Map<Integer, OrganizationInfo> organizations){
+    private void writeOrganizations(Parcel dest, int flags, Map<Integer, OrganizationInfo> organizations) {
         int size = organizations.size();
         dest.writeInt(size);
-        for(Map.Entry<Integer, OrganizationInfo> entry : organizations.entrySet()){
+        for (Map.Entry<Integer, OrganizationInfo> entry : organizations.entrySet()) {
             dest.writeInt(entry.getKey());
             dest.writeParcelable(entry.getValue(), flags);
         }
     }
-    private Map<Integer, OrganizationInfo> readOrganizations(Parcel in){
+
+    private Map<Integer, OrganizationInfo> readOrganizations(Parcel in) {
         Map<Integer, OrganizationInfo> organizations = new TreeMap<>();
         int size = in.readInt();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             Integer key = in.readInt();
             OrganizationInfo value = OrganizationInfo.class.cast(in.readParcelable(OrganizationInfo.class.getClassLoader()));
             organizations.put(key, value);

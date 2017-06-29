@@ -48,51 +48,51 @@
 
     </LinearLayout>
 
-        <LinearLayout
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/accent_material_light_1"
+        android:orientation="vertical"
+        android:padding="@dimen/your_information_view_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/your_information_contacts"
+            android:textSize="@dimen/your_information_text_size_label" />
+
+        <EditText
+            android:id="@+id/edit_fio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/accent_material_light_1"
-            android:padding="@dimen/your_information_view_margin"
-            android:orientation="vertical">
+            android:hint="@string/your_information_hint_fio"
+            android:maxLines="1" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/your_information_contacts"
-                android:textSize="@dimen/your_information_text_size_label" />
+        <EditText
+            android:id="@+id/edit_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/your_information_hint_phone"
+            android:inputType="phone"
+            android:maxLines="1" />
 
-            <EditText
-                android:id="@+id/edit_fio"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/your_information_hint_fio"
-                android:maxLines="1" />
+        <EditText
+            android:id="@+id/edit_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/your_information_hint_email"
+            android:inputType="textWebEmailAddress"
+            android:maxLines="1" />
 
-            <EditText
-                android:id="@+id/edit_phone"
-                android:inputType="phone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/your_information_hint_phone"
-                android:maxLines="1" />
+        <Button
+            android:id="@+id/record_send_to_server"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_selector"
+            android:text="@string/your_information_btn_record"
+            android:textColor="@color/colorPrimary" />
 
-            <EditText
-                android:id="@+id/edit_email"
-                android:inputType="textWebEmailAddress"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/your_information_hint_email"
-                android:maxLines="1" />
-
-            <Button
-                android:id="@+id/record_send_to_server"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/button_selector"
-                android:text="@string/your_information_btn_record"
-                android:textColor="@color/colorPrimary" />
-
-        </LinearLayout>
+    </LinearLayout>
 
 
 </LinearLayout>

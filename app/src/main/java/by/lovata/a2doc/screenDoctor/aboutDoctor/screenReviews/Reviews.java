@@ -4,7 +4,7 @@ package by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Reviews implements Parcelable{
+public class Reviews implements Parcelable {
 
     private int id;
     private String name;

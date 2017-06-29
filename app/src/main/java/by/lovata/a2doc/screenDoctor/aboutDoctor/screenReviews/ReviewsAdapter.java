@@ -25,6 +25,7 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
+
         ViewHolder(CardView v) {
             super(v);
             cardView = v;

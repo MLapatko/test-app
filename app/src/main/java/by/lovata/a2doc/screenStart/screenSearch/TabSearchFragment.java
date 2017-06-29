@@ -20,7 +20,8 @@ public class TabSearchFragment extends Fragment {
 
     private String phone;
 
-    public TabSearchFragment() {}
+    public TabSearchFragment() {
+    }
 
 
     @Override

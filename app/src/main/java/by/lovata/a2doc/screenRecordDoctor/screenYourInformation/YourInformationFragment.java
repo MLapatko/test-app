@@ -25,41 +25,26 @@ public class YourInformationFragment extends Fragment {
 
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
 
-    private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
     SaveParameter saveParameter;
 
-    public YourInformationFragment() {}
+    public YourInformationFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root_view =  inflater.inflate(R.layout.fragment_your_information, container, false);
+        View root_view = inflater.inflate(R.layout.fragment_your_information, container, false);
 
-        if (savedInstanceState == null) {
-            initializeData();
-        } else {
-            restoreData(savedInstanceState);
-        }
+        initializeData();
 
         initializeView(root_view);
 
         return root_view;
     }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        outState.putParcelable(SAVEPARAMETER_PARSALABEL_SAVE, saveParameter);
-    }
-
     private void initializeData() {
         saveParameter = getArguments().getParcelable(SAVEPARAMETER_PARSALABEL);
-    }
-
-    private void restoreData(Bundle savedInstanceState) {
-        saveParameter = savedInstanceState.getParcelable(SAVEPARAMETER_PARSALABEL_SAVE);
     }
 
     private void initializeView(View root_view) {

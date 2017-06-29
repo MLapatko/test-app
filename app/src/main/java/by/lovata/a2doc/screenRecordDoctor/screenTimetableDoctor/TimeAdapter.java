@@ -119,7 +119,7 @@ class TimeAdapter extends BaseAdapter {
     private String createBorder(String start, String stop) {
         String start_label = context.getResources().getString(R.string.timetable_start);
         String stop_label = context.getResources().getString(R.string.timetable_stop);
-        return String.format("%s %s\n%s %s",start_label, start, stop_label, stop);
+        return String.format("%s %s\n%s %s", start_label, start, stop_label, stop);
     }
 
     private void setEmptyView(View view) {

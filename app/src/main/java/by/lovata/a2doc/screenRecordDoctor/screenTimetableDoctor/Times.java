@@ -4,7 +4,7 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class Times implements Parcelable{
+public class Times implements Parcelable {
 
     String day;
     String[] times;

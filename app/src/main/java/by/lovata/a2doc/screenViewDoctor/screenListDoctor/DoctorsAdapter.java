@@ -36,11 +36,12 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     public static interface Listener {
         public void onClickRecord(int id_doctor, int id_filter, int id_organization);
+
         public void onClickDoctor(int id_doctor, int id_filter, int id_organization);
     }
 
     DoctorsAdapter(Context context, Map<Integer, String> sevices,
-                    Map<Integer, OrganizationInfo> organizations) {
+                   Map<Integer, OrganizationInfo> organizations) {
         this.context = context;
         this.sevices = sevices;
         this.organizations = organizations;
@@ -60,26 +61,27 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
     static class ViewHolder extends RecyclerView.ViewHolder {
         private CardView cardView;
+
         ViewHolder(CardView v) {
             super(v);
             cardView = v;
         }
     }
 
-    public void setListener(Listener listener){
+    public void setListener(Listener listener) {
         this.listener = listener;
     }
 
     @Override
     public DoctorsAdapter.ViewHolder onCreateViewHolder(
-            ViewGroup parent, int viewType){
+            ViewGroup parent, int viewType) {
         CardView cv = (CardView) LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.card_doctor, parent, false);
         return new ViewHolder(cv);
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, final int position){
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         CardView cardView = holder.cardView;
         final ClickDoctor clickDoctor = new ClickDoctor(array_doctors[position].getId(), id_filter);
         final ClickRecord clickRecord = new ClickRecord(array_doctors[position].getId(), id_filter);
@@ -156,14 +158,14 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     }
 
     @Override
-    public int getItemCount(){
+    public int getItemCount() {
         return array_doctors.length;
     }
 
     private int getPositionService(int id_filter) {
         int position_service = 0;
 
-        for (int key: array_doctors[0].getService_list().keySet()) {
+        for (int key : array_doctors[0].getService_list().keySet()) {
             if (key == id_filter) {
                 break;
             }
@@ -176,7 +178,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private String[] getServicesName(int position) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id: array_doctors[position].getService_list().keySet()) {
+        for (int id : array_doctors[position].getService_list().keySet()) {
             arrayList.add(sevices.get(id));
         }
 
@@ -186,7 +188,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private String[] getOrganizationName(int position) {
         ArrayList<String> arrayList = new ArrayList<>();
 
-        for (int id: array_doctors[position].getId_organization()) {
+        for (int id : array_doctors[position].getId_organization()) {
             arrayList.add(organizations.get(id).getName());
         }
 

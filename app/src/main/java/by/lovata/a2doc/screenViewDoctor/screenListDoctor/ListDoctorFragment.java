@@ -41,7 +41,8 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     SaveParameter saveParameter;
     RecyclerView recyclerView;
 
-    public ListDoctorFragment() {}
+    public ListDoctorFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -111,8 +112,8 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
                         Arrays.sort(Array_doctors, new SortDefault());
                         break;
                     case 1:
-                         SortPriceUp sortPriceUp = new SortPriceUp(saveParameter.getId_filter());
-                         Arrays.sort(Array_doctors, sortPriceUp);
+                        SortPriceUp sortPriceUp = new SortPriceUp(saveParameter.getId_filter());
+                        Arrays.sort(Array_doctors, sortPriceUp);
                         break;
                     case 2:
                         SortPriceDown sortPriceDown = new SortPriceDown(saveParameter.getId_filter());
@@ -148,7 +149,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     private DoctorInfo[] createArrayWithFilter(DoctorInfo[] doctorsInfo, int id_filter,
                                                boolean is_metro, boolean is_baby) {
         ArrayList<DoctorInfo> arrayList = new ArrayList<>();
-        for (DoctorInfo doctorInfo: doctorsInfo) {
+        for (DoctorInfo doctorInfo : doctorsInfo) {
             if (doctorInfo.getService_list().containsKey(id_filter)) {
                 if (!is_metro) {
                     if (!is_baby) {
@@ -221,7 +222,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         }
 
         private DoctorInfo getDoctor(int id_doctor) {
-            for (DoctorInfo doctorInfo: saveParameter.getDoctorsInfo()) {
+            for (DoctorInfo doctorInfo : saveParameter.getDoctorsInfo()) {
                 if (doctorInfo.getId() == id_doctor) {
                     return doctorInfo;
                 }

@@ -158,7 +158,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         id_filter = savedInstanceState.getInt(ID_SERVICE_SAVE);
     }
 
-    private void changeCoordinate(){
+    private void changeCoordinate() {
         if (markers != null) {
             markers.get(id_organization).showInfoWindow();
         }
@@ -199,6 +199,16 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
         String experience = getExperience();
         TextView expirience_profile = (TextView) findViewById(R.id.expirience_profile);
         expirience_profile.setText(experience);
+
+        if (saveParameter.getSelectDoctor().getDoctorInfo().isMerto()) {
+            ImageView is_metro = (ImageView) findViewById(R.id.profile_ismetro);
+            is_metro.setImageResource(R.drawable.ic_directions_transit_24dp);
+        }
+
+        if (saveParameter.getSelectDoctor().getDoctorInfo().isBaby()) {
+            ImageView is_baby = (ImageView) findViewById(R.id.profile_isbaby);
+            is_baby.setImageResource(R.drawable.ic_child_friendly_24dp);
+        }
 
         String[] organizations_name = getOrganizationName();
         int posotion_organization = getPositionOrganization();

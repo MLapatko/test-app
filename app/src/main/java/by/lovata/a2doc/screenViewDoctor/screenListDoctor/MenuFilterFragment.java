@@ -34,6 +34,7 @@ public class MenuFilterFragment extends DialogFragment {
 
     public static interface AccessFilter {
         public void setFilters(int id_filter, boolean metro, boolean baby);
+
         public Map<Integer, String> getServices();
     }
 
@@ -62,9 +63,9 @@ public class MenuFilterFragment extends DialogFragment {
         metro = getArguments().getBoolean(IS_METRO);
         baby = getArguments().getBoolean(IS_BABY);
 
-        final CheckBox checkBox_metro = (CheckBox)screen_filter.findViewById(R.id.filterCheckBox2);
+        final CheckBox checkBox_metro = (CheckBox) screen_filter.findViewById(R.id.filterCheckBox2);
         checkBox_metro.setChecked(metro);
-        final CheckBox checkBox_baby = (CheckBox)screen_filter.findViewById(R.id.filterCheckBox1);
+        final CheckBox checkBox_baby = (CheckBox) screen_filter.findViewById(R.id.filterCheckBox1);
         checkBox_baby.setChecked(baby);
 
         Set<Integer> set_key_services = services.keySet();
@@ -98,7 +99,7 @@ public class MenuFilterFragment extends DialogFragment {
 
     private int getPosition(Integer[] key_services) {
         int position = 0;
-        for (Integer key: key_services) {
+        for (Integer key : key_services) {
             if (key == id_filter) {
                 break;
             }

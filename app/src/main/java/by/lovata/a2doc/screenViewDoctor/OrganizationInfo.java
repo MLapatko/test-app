@@ -4,7 +4,7 @@ package by.lovata.a2doc.screenViewDoctor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class OrganizationInfo implements Parcelable{
+public class OrganizationInfo implements Parcelable {
 
     private int id;
     private String name;

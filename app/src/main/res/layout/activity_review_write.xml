@@ -2,8 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewWriteActivity">
 
 
@@ -16,10 +16,10 @@
 
     <EditText
         android:layout_width="match_parent"
-        android:layout_weight="1"
-        android:gravity="start"
         android:layout_height="0dp"
         android:layout_margin="@dimen/add_review_margin_view"
+        android:layout_weight="1"
+        android:gravity="start"
         android:hint="@string/review_hint_discription" />
 
     <LinearLayout
@@ -37,19 +37,19 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_weight="3"
-            android:textSize="@dimen/add_review_text_size"
             android:text="@string/review_checkbox_text"
-            android:textColor="@color/colorRecommend" />
+            android:textColor="@color/colorRecommend"
+            android:textSize="@dimen/add_review_text_size" />
 
         <ImageView
             android:id="@+id/recommend_send"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="@string/add_review_send"
             android:layout_margin="@dimen/add_review_margin_view"
-            android:clickable="true"
             android:layout_weight="1"
-            android:src="@drawable/ic_send_24dp"/>
+            android:clickable="true"
+            android:contentDescription="@string/add_review_send"
+            android:src="@drawable/ic_send_24dp" />
 
     </LinearLayout>
 

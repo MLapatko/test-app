@@ -7,8 +7,8 @@
 
     <com.google.android.gms.maps.MapView
         android:id="@+id/map_profile"
-        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/doctor_map_height" />
+        android:layout_height="@dimen/doctor_map_height"
+        android:focusableInTouchMode="true" />
 
 </FrameLayout>

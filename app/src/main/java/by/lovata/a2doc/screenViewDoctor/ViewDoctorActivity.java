@@ -42,7 +42,6 @@ public class ViewDoctorActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_doctor);
-
         if (savedInstanceState == null) {
             initializeData();
 
@@ -50,6 +49,7 @@ public class ViewDoctorActivity extends AppCompatActivity {
         } else {
             restoreData(savedInstanceState);
         }
+
 
         setTitle(getString(R.string.list_doctors));
     }
@@ -98,8 +98,8 @@ public class ViewDoctorActivity extends AppCompatActivity {
         Set<Integer> services_list = new TreeSet<>();
         APIMethods apiMethods = new APIMethods(this);
 
-        for (DoctorInfo doctorInfo: doctorsInfo) {
-            for (int id_service: doctorInfo.getService_list().keySet()) {
+        for (DoctorInfo doctorInfo : doctorsInfo) {
+            for (int id_service : doctorInfo.getService_list().keySet()) {
                 services_list.add(id_service);
             }
         }
@@ -127,7 +127,7 @@ public class ViewDoctorActivity extends AppCompatActivity {
         Map<Integer, String> sevices = getServices(id_city, doctorsInfo);
         int id_filter = initId_filter(doctorsInfo);
         saveParameter = new SaveParameter(id_city, id_spiciality, id_filter, id_sort, doctorsInfo,
-                                    organizations, sevices, metro, baby);
+                organizations, sevices, metro, baby);
     }
 
     private int initId_filter(DoctorInfo[] doctorsInfo) {

@@ -44,7 +44,7 @@ public class LogoActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         Handler handler = new Handler();
-        handler.post(new Runnable() {
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
 
@@ -67,7 +67,7 @@ public class LogoActivity extends AppCompatActivity {
 
                 finish();
             }
-        });
+        }, 1000);
     }
 
     public static void setSpecialities(Map<Integer, String> specialities) {

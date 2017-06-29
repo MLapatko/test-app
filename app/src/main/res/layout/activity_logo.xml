@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/accent_material_light_1"
+    android:orientation="vertical"
     tools:context="by.lovata.a2doc.LogoActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:gravity="bottom|center_horizontal"
+        android:text="@string/logo_title"
+        android:textSize="@dimen/logo_label_size" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.77"
+        android:gravity="top|center_horizontal"
+        android:text="@string/logo_text"
+        android:textSize="@dimen/logo_text_size" />
+
+    <ImageView
+        android:layout_width="@dimen/logo_logo_size"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_weight="2.73"
+        android:contentDescription="@string/logo"
+        android:src="@drawable/logo_img" />
+
+</LinearLayout>

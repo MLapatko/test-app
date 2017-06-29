@@ -22,6 +22,9 @@
 
     <dimen name="doctor_map_height">300dp</dimen>
 
+    /*profile*/
+    <dimen name="profile_img_size">25dp</dimen>
+
     /*reviews*/
     <dimen name="reviews_fab_size">56dp</dimen>
     <dimen name="reviews_fab_margin">10dp</dimen>
@@ -42,14 +45,14 @@
     /*tab_about*/
     <dimen name="tab_about_padding_top">20dp</dimen>
     <dimen name="tab_about_text_size">20sp</dimen>
-    <dimen name="tab_about_label_size">50sp</dimen>
+    <dimen name="tab_about_label_size">25sp</dimen>
     <dimen name="tab_about_view_margin">20dp</dimen>
     <dimen name="tab_about_size_phone">20dp</dimen>
 
     /*tab_search*/
     <dimen name="tab_search_padding_top">20dp</dimen>
     <dimen name="tab_search_text_size">20sp</dimen>
-    <dimen name="tab_search_label_size">30sp</dimen>
+    <dimen name="tab_search_label_size">40sp</dimen>
 
     /*your_information*/
     <dimen name="your_information_view_margin">20dp</dimen>
@@ -65,7 +68,14 @@
     <dimen name="qualification_text_marginTop">15sp</dimen>
 
     <dimen name="qualification_layout_padding">20sp</dimen>
-
+    <dimen name="logo_logo_size">300dp</dimen>
+    <dimen name="logo_text_size">20sp</dimen>
+    <dimen name="logo_label_size">40sp</dimen>
+    <dimen name="speciality_item_padding">20sp</dimen>
+    <dimen name="speciality_item_text_size">30sp</dimen>
+    <dimen name="timetable_padding">20dp</dimen>
+    <dimen name="qualification_padding">10sp</dimen>
+    <dimen name="qualification_img_size">30sp</dimen>
 
 
 </resources>

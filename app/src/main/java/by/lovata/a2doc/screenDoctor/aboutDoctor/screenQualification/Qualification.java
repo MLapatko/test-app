@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class Qualification implements Parcelable{
+public class Qualification implements Parcelable {
 
     private String treatment;
 

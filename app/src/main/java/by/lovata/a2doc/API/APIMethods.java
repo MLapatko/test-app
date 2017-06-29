@@ -1,8 +1,14 @@
 package by.lovata.a2doc.API;
 
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.res.Resources;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
+import android.support.v7.app.AlertDialog;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -57,6 +63,7 @@ public class APIMethods {
     }
 
     private String loadCitiesFromAPI(int choice_id) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(choice_id);
@@ -90,6 +97,7 @@ public class APIMethods {
     }
 
     private String loadPhoneFromAPI(int choice_id) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(choice_id);
@@ -132,6 +140,7 @@ public class APIMethods {
     }
 
     private String loadSpecialitiesFromAPI(int id_city) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -210,6 +219,7 @@ public class APIMethods {
     }
 
     private String loadDoctorsInfoFromAPI(int id_city, int id_speciality) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -266,6 +276,7 @@ public class APIMethods {
     }
 
     private String loadOrganizationsInfoFromAPI(int id_city, int id_speciality) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -320,6 +331,7 @@ public class APIMethods {
     }
 
     private String loadServicesFromAPI(int id_city, Set<Integer> services_list) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -383,6 +395,7 @@ public class APIMethods {
     }
 
     private String loadTimesFromAPI(int id_doctor, int id_filter, int id_organization, int week) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = null;
@@ -438,6 +451,7 @@ public class APIMethods {
     }
 
     private String loadReviewsFromAPI(int id_doctor) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(R.raw.reviews);
@@ -508,6 +522,7 @@ public class APIMethods {
     }
 
     private String loadQualificationFromAPI(int id_doctor) {
+        load();
 
         Resources r = context.getResources();
         InputStream is = r.openRawResource(R.raw.qualification);
@@ -534,5 +549,56 @@ public class APIMethods {
             i = is.read();
         }
         return baos.toString();
+    }
+
+    private void load() {
+        if (!hasConnection()) {
+            //showDialog();
+        }
+
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        builder.setTitle(context.getString(R.string.API_connect_title));
+        builder.setMessage(context.getString(R.string.API_connect_message));
+        builder.setCancelable(false);
+        builder.setPositiveButton(context.getString(R.string.API_connect_positive_btn),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        ((Activity) context).finish();
+                    }
+                });
+        builder.setNegativeButton(context.getString(R.string.API_connect_negative_btn),
+                new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                        ((Activity) context).moveTaskToBack(true);
+                    }
+                });
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+    }
+
+    private boolean hasConnection() {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        wifiInfo = cm.getActiveNetworkInfo();
+        if (wifiInfo != null && wifiInfo.isConnected()) {
+            return true;
+        }
+        return false;
     }
 }

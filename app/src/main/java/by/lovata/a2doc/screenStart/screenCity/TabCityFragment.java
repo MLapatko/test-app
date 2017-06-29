@@ -35,7 +35,8 @@ public class TabCityFragment extends Fragment {
     Integer[] key_cities;
 
 
-    public TabCityFragment() {}
+    public TabCityFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,7 +55,7 @@ public class TabCityFragment extends Fragment {
         int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, key_cities[0]);
         int position = getPosition(id_city);
 
-        ListView lst_city = (ListView)view_root.findViewById(R.id.list_city);
+        ListView lst_city = (ListView) view_root.findViewById(R.id.list_city);
         lst_city.setAdapter(new ArrayAdapter<>(getActivity(),
                 android.R.layout.select_dialog_singlechoice, cities));
         lst_city.setItemChecked(position, true);
@@ -84,7 +85,7 @@ public class TabCityFragment extends Fragment {
 
     private int getPosition(int key_city) {
         int position = 0;
-        for (int key: key_cities) {
+        for (int key : key_cities) {
             if (key == key_city) {
                 break;
             }

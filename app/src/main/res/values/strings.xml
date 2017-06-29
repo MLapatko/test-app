@@ -41,6 +41,19 @@
     /*list_doctors*/
     <string name="list_doctors">Врачи</string>
 
+    /*API*/
+    <string name="API_connect_positive_btn">Повторить попытку</string>
+    <string name="API_connect_negative_btn">Выйти из приложения</string>
+    <string name="API_connect_title">Отсутствует подключение к интернету</string>
+    <string name="API_connect_message">
+        Включите интернет и повторите попытку,
+        в противном случае приложение будет закрыто.
+    </string>
+
+    /*logo*/
+    <string name="logo_title">Нужен хороший врач?</string>
+    <string name="logo_text">Ищите и записывайтесь здесь, на удобное для вас время!</string>
+
     /*profile*/
     <string name="profile">Доктор</string>
     <string name="profile_record_label">Записаться на приём</string>
@@ -49,6 +62,8 @@
     <string name="profile_year">лет </string>
     <string name="profile_price">Стоимость услуги </string>
     <string name="profile_money">р. </string>
+    <string name="profile_img_discr_metro">Возле метро </string>
+    <string name="profile_img_discr_baby">Для детей </string>
 
     /*your_information*/
     <string name="your_information_contacts">Контактные данные: </string>

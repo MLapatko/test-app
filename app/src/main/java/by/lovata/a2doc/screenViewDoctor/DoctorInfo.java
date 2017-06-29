@@ -11,7 +11,7 @@ import java.util.TreeMap;
 
 import by.lovata.a2doc.LogoActivity;
 
-public class DoctorInfo implements Parcelable{
+public class DoctorInfo implements Parcelable {
 
     private int id;
     private int count_reviews;
@@ -56,18 +56,19 @@ public class DoctorInfo implements Parcelable{
         baby = in.readByte() != 0;
     }
 
-    private void writeServices(Parcel out, int flags, Map<Integer, Integer> service_list){
+    private void writeServices(Parcel out, int flags, Map<Integer, Integer> service_list) {
         int size = service_list.size();
         out.writeInt(size);
-        for(Map.Entry<Integer, Integer> entry : service_list.entrySet()){
+        for (Map.Entry<Integer, Integer> entry : service_list.entrySet()) {
             out.writeInt(entry.getKey());
             out.writeInt(entry.getValue());
         }
     }
-    private Map<Integer, Integer> readServices(Parcel in){
+
+    private Map<Integer, Integer> readServices(Parcel in) {
         Map<Integer, Integer> service_list = new TreeMap<>();
         int size = in.readInt();
-        for(int i = 0; i < size; i++){
+        for (int i = 0; i < size; i++) {
             Integer key = in.readInt();
             Integer value = in.readInt();
             service_list.put(key, value);

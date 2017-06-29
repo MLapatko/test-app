@@ -8,19 +8,19 @@
     card_view:cardCornerRadius="15dp">
 
     <RelativeLayout
-        android:padding="5sp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:padding="5sp">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
 
                 <ImageView
                     android:id="@+id/img_card_doctor"
@@ -29,35 +29,35 @@
 
                 <TextView
                     android:id="@+id/review_card_doctor"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:paddingLeft="10sp"
-                android:orientation="vertical"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingLeft="10sp">
 
                 <TextView
                     android:id="@+id/fio_card_doctor"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
                 <TextView
                     android:id="@+id/speciality_card_doctor"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
                 <TextView
                     android:id="@+id/price_of_consultation_card_doctor"
-                    android:textColor="@color/list_doctors_text"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/list_doctors_text" />
 
                 <Spinner
                     android:id="@+id/services_card_doctor"
@@ -75,12 +75,12 @@
 
         <Button
             android:id="@+id/btn_card_doctor"
-            android:layout_alignParentBottom="true"
-            android:text="@string/list_doctors_btn_record"
-            android:textColor="@color/colorPrimary"
-            android:background="@drawable/button_selector"
             android:layout_width="match_parent"
-            android:layout_height="50dp" />
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/button_selector"
+            android:text="@string/list_doctors_btn_record"
+            android:textColor="@color/colorPrimary" />
 
     </RelativeLayout>
 

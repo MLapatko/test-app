@@ -20,7 +20,7 @@ import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
  * A simple {@link Fragment} subclass.
  */
 public class TimetableDoctorFragment extends Fragment implements
-                        TimeAdapter.RecordTime{
+        TimeAdapter.RecordTime {
 
     public static interface RecordDoctor {
         public void setYourInformationFragment(String day_selected, String time_selected);
@@ -37,7 +37,8 @@ public class TimetableDoctorFragment extends Fragment implements
     ArrayList<Integer> list_weeks;
     TimeAdapter timeAdapter;
 
-    public TimetableDoctorFragment() {}
+    public TimetableDoctorFragment() {
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
