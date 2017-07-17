@@ -15,17 +15,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 import java.util.TreeSet;
 
 import by.lovata.a2doc.API.APIMethods;
-import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.ListDoctorFragment;
-import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
-import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuSortFragment;
-import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.MapDoctorFragment;
 
 public class ViewDoctorActivity extends AppCompatActivity {
@@ -37,7 +32,6 @@ public class ViewDoctorActivity extends AppCompatActivity {
     private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
     SaveParameter saveParameter;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,17 +87,16 @@ public class ViewDoctorActivity extends AppCompatActivity {
         }
     }
 
-    private Map<Integer, String> getServices(int id_city, DoctorInfo[] doctorsInfo) {
-        Map<Integer, String> services = null;
+    public static Map<Integer, String> getServices(int id_city, ArrayList<DoctorInfo> doctorsInfo, APIMethods apiMethods, int idSpeciality) {
+        Map<Integer, String> services;
         Set<Integer> services_list = new TreeSet<>();
-        APIMethods apiMethods = new APIMethods(this);
 
         for (DoctorInfo doctorInfo : doctorsInfo) {
             for (int id_service : doctorInfo.getService_list().keySet()) {
                 services_list.add(id_service);
             }
         }
-        services = apiMethods.getServicesFromJSON(id_city, services_list);
+        services = apiMethods.getServicesFromJSON(id_city, idSpeciality);
 
         return services;
     }
@@ -122,18 +115,19 @@ public class ViewDoctorActivity extends AppCompatActivity {
         boolean baby = false;
 
         APIMethods apiMethods = new APIMethods(this);
-        DoctorInfo[] doctorsInfo = apiMethods.getDoctorsInfoFromJSON(id_city, id_spiciality);
+        ArrayList<DoctorInfo> doctorsInfo = apiMethods.getDoctorsInfoFromJSON(id_city, id_spiciality);
         Map<Integer, OrganizationInfo> organizations = apiMethods.getOrganizationsInfoFromJSON(id_city, id_spiciality);
-        Map<Integer, String> sevices = getServices(id_city, doctorsInfo);
-        int id_filter = initId_filter(doctorsInfo);
+        Map<Integer, String> sevices = getServices(id_city, doctorsInfo,apiMethods,id_spiciality);
+        int id_filter =  initIdFilter(doctorsInfo,0);
         saveParameter = new SaveParameter(id_city, id_spiciality, id_filter, id_sort, doctorsInfo,
                 organizations, sevices, metro, baby);
     }
 
-    private int initId_filter(DoctorInfo[] doctorsInfo) {
-        Set<Integer> set_keys_services = doctorsInfo[0].getService_list().keySet();
-        Integer[] keys_services = set_keys_services.toArray(new Integer[set_keys_services.size()]);
-        return keys_services[0];
+    public static int initIdFilter(ArrayList<DoctorInfo> doctorsInfo,int position) {
+        //получаем ключи услуг, выбранного доктора
+        Set<Integer> setKeysServices = doctorsInfo.get(position).getService_list().keySet();
+        //возвращаем 1-ый элемент setKeysServices
+        return setKeysServices.iterator().next();
     }
 
     private void setListDoctorsFragment() {
