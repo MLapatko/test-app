@@ -3,6 +3,7 @@
   [
     {
       "id": "4",
+      "id_specialities":["14"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/Anastasiya Olegovna-136-0-558-799-1479907032.jpg",
       "fullname": "Михейкина Ирина Ивановна",
@@ -10,15 +11,15 @@
       "service_list":
       [
         {
-          "id": "5",
+          "id": "9",
           "price": "15"
         },
         {
-          "id": "6",
+          "id": "10",
           "price": "20"
         },
         {
-          "id": "7",
+          "id": "11",
           "price": "25"
         }
       ],
@@ -29,6 +30,7 @@
     },
     {
       "id": "5",
+      "id_specialities":["14"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/mavricheva-119-0-557-799-1479906730.jpg",
       "fullname": "Мавричева Наталья Анатольевна",
@@ -36,11 +38,11 @@
       "service_list":
       [
         {
-          "id": "5",
+          "id": "9",
           "price": "8"
         },
         {
-          "id": "8",
+          "id": "11",
           "price": "27"
         }
       ],
@@ -51,10 +53,61 @@
     },
     {
       "id": "6",
+      "id_specialities":["14"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/KORONA/cropped-images/micheikina-38-1-213-306-1483698158.png",
       "fullname": "Гайдаленок Анастасия Олеговна",
       "speciality": "врач - косметолог",
+      "service_list":
+      [
+        {
+          "id": "9",
+          "price": "11"
+        },
+        {
+          "id": "10",
+          "price": "21"
+        }
+      ],
+      "count_reviews": "0",
+      "experience": "99",
+      "merto": "false",
+      "baby": "true"
+    },
+    {
+      "id": "7",
+      "id_specialities":["16"],
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/arsValeo/cropped-images/cheklombitko-248-16-283-405-1485103221.jpg",
+      "fullname": "Челомбитько Андрей Анатольевич",
+      "speciality": "врач - оториноларинголог",
+      "service_list":
+      [
+        {
+          "id": "5",
+          "price": "21"
+        },
+        {
+          "id": "8",
+          "price": "11"
+        },
+        {
+          "id": "6",
+          "price": "21"
+        }
+      ],
+      "count_reviews": "0",
+      "experience": "7",
+      "merto": "false",
+      "baby": "true"
+    },
+    {
+      "id": "8",
+      "id_specialities":["16"],
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/7%20%D0%BD%D0%B5%D0%B1%D0%BE/cropped-images/eshenko-90-2-398-570-1499867519.jpg",
+      "fullname": "Ешенко Сергей Владимирович",
+      "speciality": "врач - оториноларинголог",
       "service_list":
       [
         {
@@ -67,9 +120,67 @@
         }
       ],
       "count_reviews": "0",
-      "experience": "99",
+      "experience": "15",
       "merto": "false",
       "baby": "true"
+    },
+    {
+      "id": "9",
+      "id_specialities":["17"],
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/Multirezonans/cropped-images/fedor-aleksandrovich-mini-74-24-244-350-1475844679.jpg",
+      "fullname": "Кушнеров Федор Алесандрович",
+      "speciality": "мануальный терапевт",
+      "service_list":
+      [
+        {
+          "id": "12",
+          "price": "11"
+        },
+        {
+          "id": "13",
+          "price": "21"
+        },
+        {
+          "id": "14",
+          "price": "23"
+        },
+        {
+          "id": "15",
+          "price": "24"
+        }
+      ],
+      "count_reviews": "0",
+      "experience": "6",
+      "merto": "true",
+      "baby": "true"
+    },
+    {
+      "id": "10",
+      "id_specialities":["17"],
+      "id_organization": ["4"],
+      "img": "https://2doc.by/storage/app/media/Multirezonans/cropped-images/kononovicj-206-0-703-1008-1486630129.jpg",
+      "fullname": "Кононович Владимир Ильич",
+      "speciality": "мануальный терапевт",
+      "service_list":
+      [
+        {
+          "id": "12",
+          "price": "11"
+        },
+        {
+          "id": "14",
+          "price": "21"
+        },
+        {
+          "id": "15",
+          "price": "22"
+        }
+      ],
+      "count_reviews": "0",
+      "experience": "10",
+      "merto": "true",
+      "baby": "false"
     }
   ]
 }

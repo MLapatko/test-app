@@ -3,6 +3,7 @@
   [
     {
       "id": "1",
+      "id_specialities":["1"],
       "id_organization": ["1", "2"],
       "img": "https://2doc.by/storage/app/media/santana/cropped-images/Chaika-334-17-416-596-1487231848.jpg",
       "fullname": "Чайка Ирина Ивановна",
@@ -23,12 +24,13 @@
         }
       ],
       "count_reviews": "3",
-      "experience": "5",
+      "experience": "9",
       "merto": "true",
       "baby": "false"
     },
     {
       "id": "2",
+      "id_specialities":["1"],
       "id_organization": ["2"],
       "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/vra4-kosmetolog-v-minske-ptitskaya-elena-136-0-558-799-1480407624.jpg",
       "fullname": "Птицкая Елена Евгеньевна",
@@ -42,6 +44,10 @@
         {
           "id": "3",
           "price": "27"
+        },
+        {
+          "id": "4",
+          "price": "21"
         }
       ],
       "count_reviews": "6",
@@ -51,6 +57,7 @@
     },
     {
       "id": "3",
+      "id_specialities":["1"],
       "id_organization": ["3"],
       "img": "https://2doc.by/storage/app/media/7 небо/cropped-images/bobkova-53-0-343-492-1496152273.jpg",
       "fullname": "Бобкова Светлана Андреевна",
