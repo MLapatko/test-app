@@ -1,16 +1,12 @@
 package by.lovata.a2doc.API;
 
 
-import android.app.Activity;
+
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
-import android.support.v7.app.AlertDialog;
-import android.util.Log;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
@@ -170,18 +166,27 @@ public class APIMethods {
         return specialities_JSON;
     }
 
-    public DoctorInfo[] getDoctorsInfoFromJSON(int id_city, int id_speciality) {
-        DoctorInfo[] item_set = null;
-        JSONObject dataJsonObj = null;
-        String doctorsInfo_JSON = loadDoctorsInfoFromAPI(id_city, id_speciality);
+    public boolean isSpecBelongToDoctor(int idSpec, JSONArray doctorIdsSpec) throws JSONException {
 
+        for (int i = 0; i <doctorIdsSpec.length() ; i++) {
+            if (doctorIdsSpec.getInt(i)==idSpec)
+                return true;
+        }
+        return false;
+    }
+    public ArrayList<DoctorInfo> getDoctorsInfoFromJSON(int id_city, int id_speciality) {
+        ArrayList<DoctorInfo> item_set=new ArrayList<>();
+        JSONObject dataJsonObj;
+        String doctorsInfo_JSON = loadDoctorsInfoFromAPI(id_city);
         try {
             dataJsonObj = new JSONObject(doctorsInfo_JSON);
             JSONArray items = dataJsonObj.getJSONArray("doctors");
-            item_set = new DoctorInfo[items.length()];
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-
+                if (id_speciality!=-1){
+                    if (!isSpecBelongToDoctor(id_speciality,item.getJSONArray("id_specialities")))
+                    continue;
+                }
                 int id = item.getInt("id");
 
                 JSONArray id_organizationArray = item.getJSONArray("id_organization");
@@ -207,8 +212,8 @@ public class APIMethods {
                 int experience = item.getInt("experience");
                 boolean merto = item.getBoolean("merto");
                 boolean baby = item.getBoolean("baby");
-                item_set[i] = new DoctorInfo(id, id_organization, img, fullname, speciality,
-                        service_list, count_reviews, experience, merto, baby);
+                item_set.add(new DoctorInfo(id, id_organization, img, fullname, speciality,
+                        service_list, count_reviews, experience, merto, baby));
             }
 
         } catch (Exception e) {
@@ -218,7 +223,7 @@ public class APIMethods {
         return item_set;
     }
 
-    private String loadDoctorsInfoFromAPI(int id_city, int id_speciality) {
+    private String loadDoctorsInfoFromAPI(int id_city) {
         load();
 
         Resources r = context.getResources();
@@ -305,32 +310,37 @@ public class APIMethods {
         }
         return doctorsInfo_JSON;
     }
-
-    public Map<Integer, String> getServicesFromJSON(int id_city, Set<Integer> services_list) {
-        Map<Integer, String> services_map = new TreeMap<>();
-        JSONObject dataJsonObj = null;
-        String services_JSON = loadServicesFromAPI(id_city, services_list);
-
+    // получает услуги из json
+    public Map<Integer, String> getServicesFromJSON(int idCity, int idSpeciality) {
+        Map<Integer, String> servicesMap = new TreeMap<>();
+        JSONObject dataJsonObj;
+        //loadServicesFromAPI(id_city) по id_city открывает нужный json со списком услуг
+        String servicesJSON = loadServicesFromAPI(idCity);
         try {
-            dataJsonObj = new JSONObject(services_JSON);
+            dataJsonObj = new JSONObject(servicesJSON);
             JSONArray items = dataJsonObj.getJSONArray("services");
-
             for (int i = 0; i < items.length(); i++) {
+                //получаем услугу из json
                 JSONObject item = items.getJSONObject(i);
-
-                String service_name = item.getString("name");
-                int service_id = item.getInt("id");
-                services_map.put(service_id, service_name);
+                //если улуга не оказывается на специальности, id которой =idSpeciality, то пропускаем ее
+                //иначе добавляем в servicesMap
+                 if(idSpeciality!=-1){
+                        if (!isSpecBelongToDoctor(idSpeciality, item.getJSONArray("id_speciality")))
+                        continue;
+                 }
+                String serviceName = item.getString("name");
+                int serviceId = item.getInt("id");
+                servicesMap.put(serviceId, serviceName);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return services_map;
+        return servicesMap;
     }
 
-    private String loadServicesFromAPI(int id_city, Set<Integer> services_list) {
+    private String loadServicesFromAPI(int id_city) {
         load();
 
         Resources r = context.getResources();
