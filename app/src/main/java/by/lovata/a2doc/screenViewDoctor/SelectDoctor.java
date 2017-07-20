@@ -60,6 +60,18 @@ public class SelectDoctor implements Parcelable {
         dest.writeParcelable(doctorInfo, flags);
     }
 
+    @Override
+    public String toString() {
+        return "SelectDoctor{" +
+                "id_doctor=" + id_doctor +
+                ", id_filter=" + id_filter +
+                ", id_organization=" + id_organization +
+                ", day='" + day + '\'' +
+                ", time='" + time + '\'' +
+                ", doctorInfo=" + doctorInfo +
+                '}';
+    }
+
     public void setId_doctor(int id_doctor) {
 
         this.id_doctor = id_doctor;

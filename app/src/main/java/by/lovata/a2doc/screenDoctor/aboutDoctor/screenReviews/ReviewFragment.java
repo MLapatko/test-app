@@ -13,6 +13,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import java.util.ArrayList;
 
 import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
@@ -26,9 +29,9 @@ public class ReviewFragment extends Fragment {
 
     private static final String REVIEWS_SAVE = "REVIEWS_SAVE";
 
-    private Reviews[] reviews;
+    private ArrayList<Reviews> reviews;
     private AboutDoctorActivity listener;
-
+    private TextView textView;
     public ReviewFragment() {
     }
 
@@ -36,7 +39,7 @@ public class ReviewFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view_root = inflater.inflate(R.layout.fragment_review, container, false);
-
+        textView= (TextView) view_root.findViewById(R.id.notFound);
         if (savedInstanceState == null) {
             initializeData();
         } else {
@@ -53,7 +56,7 @@ public class ReviewFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelableArray(REVIEWS_SAVE, reviews);
+        outState.putParcelableArrayList(REVIEWS_SAVE, reviews);
     }
 
     private void initializeView(View view_root) {
@@ -73,18 +76,19 @@ public class ReviewFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(reviewsAdapter);
+        if(reviews.size()==0)
+            textView.setText("Нет отзывов");
+
     }
 
     private void restoreData(Bundle savedInstanceState) {
-        reviews = (Reviews[]) savedInstanceState.getParcelableArray(REVIEWS_SAVE);
+        reviews = savedInstanceState.getParcelableArrayList(REVIEWS_SAVE);
     }
 
     private void initializeData() {
         int id_doctor = getArguments().getInt(AboutDoctorActivity.ID_SELECTED_DOCTOR);
-
         APIMethods apiMethods = new APIMethods(getContext());
         reviews = apiMethods.getReviewsFromJSON(id_doctor);
-
     }
 
 }

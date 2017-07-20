@@ -2,7 +2,7 @@
   "doctors":
   [
     {
-      "id": "4",
+      "id": "214",
       "id_specialities":["14"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/Anastasiya Olegovna-136-0-558-799-1479907032.jpg",
@@ -23,13 +23,12 @@
           "price": "25"
         }
       ],
-      "count_reviews": "1",
       "experience": "3",
       "merto": "false",
       "baby": "false"
     },
     {
-      "id": "5",
+      "id": "215",
       "id_specialities":["14"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/mavricheva-119-0-557-799-1479906730.jpg",
@@ -46,13 +45,12 @@
           "price": "27"
         }
       ],
-      "count_reviews": "2",
       "experience": "1",
       "merto": "false",
       "baby": "true"
     },
     {
-      "id": "6",
+      "id": "216",
       "id_specialities":["14"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/KORONA/cropped-images/micheikina-38-1-213-306-1483698158.png",
@@ -75,7 +73,7 @@
       "baby": "true"
     },
     {
-      "id": "7",
+      "id": "217",
       "id_specialities":["16"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/arsValeo/cropped-images/cheklombitko-248-16-283-405-1485103221.jpg",
@@ -96,13 +94,12 @@
           "price": "21"
         }
       ],
-      "count_reviews": "0",
       "experience": "7",
       "merto": "false",
       "baby": "true"
     },
     {
-      "id": "8",
+      "id": "218",
       "id_specialities":["16"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/7%20%D0%BD%D0%B5%D0%B1%D0%BE/cropped-images/eshenko-90-2-398-570-1499867519.jpg",
@@ -119,13 +116,12 @@
           "price": "21"
         }
       ],
-      "count_reviews": "0",
       "experience": "15",
       "merto": "false",
       "baby": "true"
     },
     {
-      "id": "9",
+      "id": "219",
       "id_specialities":["17"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/Multirezonans/cropped-images/fedor-aleksandrovich-mini-74-24-244-350-1475844679.jpg",
@@ -150,13 +146,12 @@
           "price": "24"
         }
       ],
-      "count_reviews": "0",
       "experience": "6",
       "merto": "true",
       "baby": "true"
     },
     {
-      "id": "10",
+      "id": "210",
       "id_specialities":["17"],
       "id_organization": ["4"],
       "img": "https://2doc.by/storage/app/media/Multirezonans/cropped-images/kononovicj-206-0-703-1008-1486630129.jpg",
@@ -177,7 +172,6 @@
           "price": "22"
         }
       ],
-      "count_reviews": "0",
       "experience": "10",
       "merto": "true",
       "baby": "false"

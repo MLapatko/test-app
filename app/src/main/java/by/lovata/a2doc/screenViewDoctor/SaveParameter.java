@@ -4,6 +4,7 @@ package by.lovata.a2doc.screenViewDoctor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -18,15 +19,15 @@ public class SaveParameter implements Parcelable {
     private boolean metro;
     private boolean baby;
 
-    private DoctorInfo[] doctorsInfo;
+    private ArrayList<DoctorInfo> doctorsInfo;
     private Map<Integer, String> services;
     private Map<Integer, OrganizationInfo> organizations;
     private SelectDoctor selectDoctor;
 
 
-    SaveParameter(int id_city, int id_spiciality, int id_filter, int id_sort,
-                  DoctorInfo[] doctorsInfo, Map<Integer, OrganizationInfo> organizations,
-                  Map<Integer, String> sevices, boolean metro, boolean baby) {
+    public SaveParameter(int id_city, int id_spiciality, int id_filter, int id_sort,
+                         ArrayList<DoctorInfo> doctorsInfo, Map<Integer, OrganizationInfo> organizations,
+                         Map<Integer, String> sevices, boolean metro, boolean baby) {
         this.id_city = id_city;
         this.id_spiciality = id_spiciality;
         this.id_filter = id_filter;
@@ -46,7 +47,7 @@ public class SaveParameter implements Parcelable {
         metro = in.readByte() != 0;
         baby = in.readByte() != 0;
 
-        doctorsInfo = in.createTypedArray(DoctorInfo.CREATOR);
+        doctorsInfo=in.createTypedArrayList(DoctorInfo.CREATOR);
         services = readServices(in);
         organizations = readOrganizations(in);
         selectDoctor = SelectDoctor.class.cast(in.readParcelable(SelectDoctor.class.getClassLoader()));
@@ -118,8 +119,7 @@ public class SaveParameter implements Parcelable {
         dest.writeInt(id_filter);
         dest.writeByte((byte) (metro ? 1 : 0));
         dest.writeByte((byte) (baby ? 1 : 0));
-
-        dest.writeTypedArray(doctorsInfo, flags);
+        dest.writeTypedList(doctorsInfo);
         writeServices(dest, flags, services);
         writeOrganizations(dest, flags, organizations);
         dest.writeParcelable(selectDoctor, flags);
@@ -158,7 +158,7 @@ public class SaveParameter implements Parcelable {
         this.baby = baby;
     }
 
-    public void setDoctorsInfo(DoctorInfo[] doctorsInfo) {
+    public void setDoctorsInfo(ArrayList<DoctorInfo>doctorsInfo) {
         this.doctorsInfo = doctorsInfo;
     }
 
@@ -195,7 +195,7 @@ public class SaveParameter implements Parcelable {
         return baby;
     }
 
-    public DoctorInfo[] getDoctorsInfo() {
+    public ArrayList<DoctorInfo> getDoctorsInfo() {
         return doctorsInfo;
     }
 
@@ -205,5 +205,21 @@ public class SaveParameter implements Parcelable {
 
     public Map<Integer, OrganizationInfo> getOrganizations() {
         return organizations;
+    }
+
+    @Override
+    public String toString() {
+        return "SaveParameter{" +
+                "id_spiciality=" + id_spiciality +
+                ", id_city=" + id_city +
+                ", id_sort=" + id_sort +
+                ", id_filter=" + id_filter +
+                ", metro=" + metro +
+                ", baby=" + baby +
+                ", doctorsInfo=" + doctorsInfo +
+                ", services=" + services +
+                ", organizations=" + organizations +
+                ", selectDoctor=" + selectDoctor +
+                '}';
     }
 }

@@ -7,13 +7,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification.QualificationFragment;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewFragment;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.Reviews;
 
-public class AboutDoctorActivity extends AppCompatActivity {
+public class AboutDoctorActivity extends BaseMenuActivity {
 
     public static final String ID_SELECTED_DOCTOR = "ID_SELECTED_DOCTOR";
 

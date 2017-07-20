@@ -10,15 +10,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.Times;
 
 class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
-    private Reviews[] reviews;
+    private ArrayList<Reviews> reviews;
     private Context context;
 
-    ReviewsAdapter(Context context, Reviews[] review) {
+    ReviewsAdapter(Context context, ArrayList<Reviews> review) {
         this.context = context;
         this.reviews = review;
     }
@@ -44,17 +46,17 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
         CardView cardView = holder.cardView;
 
         TextView name = (TextView) cardView.findViewById(R.id.review_name);
-        name.setText(reviews[position].getName());
+        name.setText(reviews.get(position).getName());
 
         TextView date = (TextView) cardView.findViewById(R.id.review_date);
-        date.setText(reviews[position].getDate());
+        date.setText(reviews.get(position).getDate());
 
-        String discription_text = getDiscription(reviews[position].getDiscription(),
-                reviews[position].isStatus());
+        String discription_text = getDiscription(reviews.get(position).getDiscription(),
+                reviews.get(position).isStatus());
         final TextView discription = (TextView) cardView.findViewById(R.id.review_discription);
         discription.setText(discription_text);
 
-        if (reviews[position].isRecommend()) {
+        if (reviews.get(position).isRecommend()) {
             TextView recommend = (TextView) cardView.findViewById(R.id.review_recommend);
             recommend.setText(context.getString(R.string.review_recommend));
 
@@ -65,10 +67,10 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
         cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                boolean status_opposite = !reviews[position].isStatus();
-                reviews[position].setStatus(status_opposite);
+                boolean status_opposite = !reviews.get(position).isStatus();
+                reviews.get(position).setStatus(status_opposite);
 
-                String discription_text = getDiscription(reviews[position].getDiscription(), status_opposite);
+                String discription_text = getDiscription(reviews.get(position).getDiscription(), status_opposite);
                 discription.setText(discription_text);
             }
         });
@@ -77,7 +79,7 @@ class ReviewsAdapter extends RecyclerView.Adapter<ReviewsAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return reviews.length;
+        return reviews.size();
     }
 
     private String getDiscription(String full_discription, boolean status) {

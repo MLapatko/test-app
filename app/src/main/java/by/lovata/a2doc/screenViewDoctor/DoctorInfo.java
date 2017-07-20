@@ -17,7 +17,6 @@ public class DoctorInfo implements Parcelable {
     private int count_reviews;
     private int experience;
     private int[] id_organization;
-
     private String url_img;
     private String full_name;
     private String speciality;
@@ -185,5 +184,10 @@ public class DoctorInfo implements Parcelable {
 
     public void setBaby(boolean baby) {
         this.baby = baby;
+    }
+
+    @Override
+    public String toString() {
+        return  full_name ;
     }
 }

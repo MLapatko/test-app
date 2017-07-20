@@ -79,7 +79,6 @@ public class MenuFilterFragment extends DialogFragment {
                 getContext(),
                 android.R.layout.simple_list_item_1,
                 array_services));
-
         int position = getPosition(key_services);
         spinner.setSelection(position);
 

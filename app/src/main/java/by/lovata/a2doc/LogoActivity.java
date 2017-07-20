@@ -60,7 +60,7 @@ public class LogoActivity extends AppCompatActivity {
                 setCitySelectId(id_city);
 
                 specialities = apiMethods.getSpecialitiesFromJSON(id_city);
-
+                Log.e("spec","specialities"+specialities);
                 Intent intent = new Intent(LogoActivity.this, MainActivity.class);
                 intent.putExtra(MainActivity.PHONE, phone);
                 startActivity(intent);

@@ -4,30 +4,29 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import by.lovata.a2doc.API.APIMethods;
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.MainActivity;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.ListDoctorFragment;
 import by.lovata.a2doc.screenViewDoctor.screenMapDoctor.MapDoctorFragment;
 
-public class ViewDoctorActivity extends AppCompatActivity {
+public class ViewDoctorActivity extends BaseMenuActivity {
 
     public static final String ID_SPECIALITY_SELECTED = "ID_SPECIALITY_SELECTED";
     public static final String LIST_VIEW_FRAGMENT = "LIST_VIEW_FRAGMENT";
     public static final String MAP_VIEW_FRAGMENT = "MAP_VIEW_FRAGMENT";
+    public static final String ID_FILTER="ID_FILTER";
 
     private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
@@ -109,6 +108,7 @@ public class ViewDoctorActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
 
         int id_spiciality = getIntent().getIntExtra(ID_SPECIALITY_SELECTED, 0);
+        int id_filter = getIntent().getIntExtra(ID_FILTER, -1);
         int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, 0);
         int id_sort = 0;
         boolean metro = false;
@@ -118,7 +118,8 @@ public class ViewDoctorActivity extends AppCompatActivity {
         ArrayList<DoctorInfo> doctorsInfo = apiMethods.getDoctorsInfoFromJSON(id_city, id_spiciality);
         Map<Integer, OrganizationInfo> organizations = apiMethods.getOrganizationsInfoFromJSON(id_city, id_spiciality);
         Map<Integer, String> sevices = getServices(id_city, doctorsInfo,apiMethods,id_spiciality);
-        int id_filter =  initIdFilter(doctorsInfo,0);
+        if (id_filter==-1)
+        id_filter =  initIdFilter(doctorsInfo,0);
         saveParameter = new SaveParameter(id_city, id_spiciality, id_filter, id_sort, doctorsInfo,
                 organizations, sevices, metro, baby);
     }

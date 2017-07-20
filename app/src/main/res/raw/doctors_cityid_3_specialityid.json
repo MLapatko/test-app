@@ -2,7 +2,7 @@
   "doctors":
   [
     {
-      "id": "7",
+      "id": "317",
       "id_specialities":["3"],
       "id_organization": ["5"],
       "img": "https://2doc.by/storage/app/media/MoiLogoped/cropped-images/imgonline-com-ua-Compressed-dFdC7Fch4Gi-152-209-407-583-1492430652.jpg",
@@ -23,13 +23,12 @@
           "price": "25"
         }
       ],
-      "count_reviews": "6",
       "experience": "10",
       "merto": "false",
       "baby": "true"
     },
     {
-      "id": "8",
+      "id": "318",
       "id_specialities":["3"],
       "id_organization": ["5"],
       "img": "https://2doc.by/storage/app/media/artmed/cropped-images/Desyatnichenko-47-37-292-418-1485435211.jpg",
@@ -46,13 +45,12 @@
           "price": "27"
         }
       ],
-      "count_reviews": "5",
       "experience": "9",
       "merto": "false",
       "baby": "false"
     },
     {
-      "id": "9",
+      "id": "319",
       "id_specialities":["3"],
       "id_organization": ["6"],
       "img": "https://2doc.by/storage/app/media/cropped-images/ot_celulitai_0001-82-32-192-275-1496153938.jpg",
@@ -69,7 +67,6 @@
           "price": "21"
         }
       ],
-      "count_reviews": "0",
       "experience": "22",
       "merto": "true",
       "baby": "true"

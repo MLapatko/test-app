@@ -63,6 +63,9 @@
         <activity
             android:name=".screenDoctor.aboutDoctor.screenReviews.ReviewWriteActivity"
             android:parentActivityName=".screenDoctor.aboutDoctor.AboutDoctorActivity" />
+        <activity
+            android:name=".search.SearchActivity"
+            android:parentActivityName=".screenStart.MainActivity"/>
     </application>
 
 </manifest>

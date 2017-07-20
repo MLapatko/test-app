@@ -3,6 +3,7 @@ package by.lovata.a2doc.screenDoctor;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -31,6 +32,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewFragment;
@@ -39,7 +41,7 @@ import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 
-public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallback {
+public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallback {
 
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
 
@@ -148,6 +150,7 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private void initializeData() {
         saveParameter = getIntent().getParcelableExtra(SAVEPARAMETER_PARSALABEL);
+        Log.e("spec",saveParameter.toString());
         id_organization = saveParameter.getSelectDoctor().getId_organization();
         id_filter = saveParameter.getSelectDoctor().getId_filter();
     }
@@ -299,6 +302,9 @@ public class DoctorActivity extends AppCompatActivity implements OnMapReadyCallb
 
     private String getPrice() {
         int id_service = id_filter;
+        Log.e("mylog","getPrice"+saveParameter.getSelectDoctor().
+                        getDoctorInfo().getService_list());
+        Log.e("mylog","id_service"+id_service);
         String price = Integer.toString(saveParameter.getSelectDoctor().
                 getDoctorInfo().getService_list().get(id_service));
         String price_label = getString(R.string.profile_price);

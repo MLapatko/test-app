@@ -3,20 +3,23 @@ package by.lovata.a2doc.screenStart.screenSearch;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Set;
 
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.LogoActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenViewDoctor.ViewDoctorActivity;
 
-public class ListProfessionActivity extends AppCompatActivity {
+public class ListProfessionActivity extends BaseMenuActivity {
 
     private static final String SPECIALITIES_SAVE = "SPECIALITIES_SAVE";
     private static final String KEY_SPECIALITIES_SAVE = "KEY_SPECIALITIES_SAVE";
@@ -81,9 +84,9 @@ public class ListProfessionActivity extends AppCompatActivity {
     }
 
     private void initializeData() {
+        Log.e("spec","LogoActivity.getSpecialities().values()"+LogoActivity.getSpecialities().values());
         Collection<String> set_specialities = LogoActivity.getSpecialities().values();
         specialities = set_specialities.toArray(new String[set_specialities.size()]);
-
         Set<Integer> set_key_specialities = LogoActivity.getSpecialities().keySet();
         Integer[] key_specialities = set_key_specialities.toArray(new Integer[set_key_specialities.size()]);
         this.key_specialities = integerToPrimitive(key_specialities);

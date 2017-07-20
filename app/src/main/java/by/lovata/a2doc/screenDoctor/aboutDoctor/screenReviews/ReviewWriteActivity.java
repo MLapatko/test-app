@@ -8,9 +8,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 
-public class ReviewWriteActivity extends AppCompatActivity {
+public class ReviewWriteActivity extends BaseMenuActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

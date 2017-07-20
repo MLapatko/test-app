@@ -4,6 +4,7 @@ package by.lovata.a2doc.API;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -174,7 +175,8 @@ public class APIMethods {
         }
         return false;
     }
-    public ArrayList<DoctorInfo> getDoctorsInfoFromJSON(int id_city, int id_speciality) {
+
+        public ArrayList<DoctorInfo> getDoctorsInfoFromJSON(int id_city, int id_speciality) {
         ArrayList<DoctorInfo> item_set=new ArrayList<>();
         JSONObject dataJsonObj;
         String doctorsInfo_JSON = loadDoctorsInfoFromAPI(id_city);
@@ -208,7 +210,7 @@ public class APIMethods {
                     service_list.put(key_service, price_service);
                 }
 
-                int count_reviews = item.getInt("count_reviews");
+                int count_reviews = getReviewsFromJSON(id).size();
                 int experience = item.getInt("experience");
                 boolean merto = item.getBoolean("merto");
                 boolean baby = item.getBoolean("baby");
@@ -336,7 +338,6 @@ public class APIMethods {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return servicesMap;
     }
 
@@ -369,6 +370,28 @@ public class APIMethods {
             e.printStackTrace();
         }
         return specialities_JSON;
+    }
+    public  int findIdSpeciality(int id,int idCity){
+        int ind=-1;
+        JSONObject dataJsonObj;
+        String servicesJSON = loadServicesFromAPI(idCity);
+        try {
+            dataJsonObj = new JSONObject(servicesJSON);
+            JSONArray items = dataJsonObj.getJSONArray("services");
+            for (int i = 0; i < items.length(); i++) {
+                //получаем услугу из json
+                JSONObject item = items.getJSONObject(i);
+                if (item.getInt("id")==id) {
+                   ind=item.getJSONArray("id_speciality").getInt(0);
+                    break;
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ind;
+
     }
 
     public Times[] getTimesFromJSON(int id_doctor, int id_filter, int id_organization, int week) {
@@ -432,25 +455,24 @@ public class APIMethods {
         return doctorsInfo_JSON;
     }
 
-    public Reviews[] getReviewsFromJSON(int id_doctor) {
-        Reviews[] reviews = null;
+    public ArrayList<Reviews> getReviewsFromJSON(int id_doctor) {
+        ArrayList<Reviews> reviews = new ArrayList<>();
         JSONObject dataJsonObj = null;
-        String reviewses_JSON = loadReviewsFromAPI(id_doctor);
+        String reviewses_JSON = loadReviewsFromAPI();
 
         try {
             dataJsonObj = new JSONObject(reviewses_JSON);
             JSONArray items = dataJsonObj.getJSONArray("reviews");
-            reviews = new Reviews[items.length()];
-
             for (int i = 0; i < items.length(); i++) {
                 JSONObject item = items.getJSONObject(i);
-
+                if (!(item.getInt("id_doctor") ==id_doctor))
+                    continue;
                 int id = item.getInt("id");
                 String name = item.getString("name");
                 String date = item.getString("date");
                 String discription = item.getString("discription");
                 boolean recommend = item.getBoolean("recommend");
-                reviews[i] = new Reviews(id, name, date, discription, recommend);
+                reviews.add(new Reviews(id, name, date, discription, recommend));
             }
 
         } catch (Exception e) {
@@ -460,7 +482,7 @@ public class APIMethods {
         return reviews;
     }
 
-    private String loadReviewsFromAPI(int id_doctor) {
+    private String loadReviewsFromAPI() {
         load();
 
         Resources r = context.getResources();

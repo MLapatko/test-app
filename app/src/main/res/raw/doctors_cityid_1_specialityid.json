@@ -2,7 +2,7 @@
   "doctors":
   [
     {
-      "id": "1",
+      "id": "111",
       "id_specialities":["1"],
       "id_organization": ["1", "2"],
       "img": "https://2doc.by/storage/app/media/santana/cropped-images/Chaika-334-17-416-596-1487231848.jpg",
@@ -23,13 +23,12 @@
           "price": "25"
         }
       ],
-      "count_reviews": "3",
       "experience": "9",
       "merto": "true",
       "baby": "false"
     },
     {
-      "id": "2",
+      "id": "112",
       "id_specialities":["1"],
       "id_organization": ["2"],
       "img": "https://2doc.by/storage/app/media/7nebo/cropped-images/vra4-kosmetolog-v-minske-ptitskaya-elena-136-0-558-799-1480407624.jpg",
@@ -50,13 +49,12 @@
           "price": "21"
         }
       ],
-      "count_reviews": "6",
       "experience": "8",
       "merto": "false",
       "baby": "true"
     },
     {
-      "id": "3",
+      "id": "113",
       "id_specialities":["1"],
       "id_organization": ["3"],
       "img": "https://2doc.by/storage/app/media/7 небо/cropped-images/bobkova-53-0-343-492-1496152273.jpg",
@@ -73,7 +71,6 @@
           "price": "21"
         }
       ],
-      "count_reviews": "2",
       "experience": "2",
       "merto": "true",
       "baby": "true"

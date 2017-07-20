@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 
 import by.lovata.a2doc.R;
@@ -89,7 +91,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
                 saveParameter.getServices(),
                 saveParameter.getOrganizations());
 
-        DoctorInfo[] doctorInfos = createArrayWithFilter(saveParameter.getDoctorsInfo(),
+        ArrayList<DoctorInfo> doctorInfos = createArrayWithFilter(saveParameter.getDoctorsInfo(),
                 saveParameter.getId_filter(), saveParameter.isMetro(), saveParameter.isBaby());
         doctorAdapter.setArray_doctors(doctorInfos);
         doctorAdapter.setId_filter(saveParameter.getId_filter());
@@ -105,22 +107,22 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     public void setId_sort(int position, boolean status) {
         if (saveParameter.getId_sort() != position || status) {
             saveParameter.setId_sort(position);
-            DoctorInfo[] Array_doctors = ((DoctorsAdapter) recyclerView.getAdapter()).getArray_doctors();
-            if (Array_doctors.length > 1) {
+            ArrayList<DoctorInfo> Array_doctors = ((DoctorsAdapter) recyclerView.getAdapter()).getArray_doctors();
+            if (Array_doctors.size() > 1) {
                 switch (position) {
                     case 0:
-                        Arrays.sort(Array_doctors, new SortDefault());
+                        Collections.sort(Array_doctors, new SortDefault());
                         break;
                     case 1:
                         SortPriceUp sortPriceUp = new SortPriceUp(saveParameter.getId_filter());
-                        Arrays.sort(Array_doctors, sortPriceUp);
+                        Collections.sort(Array_doctors, sortPriceUp);
                         break;
                     case 2:
                         SortPriceDown sortPriceDown = new SortPriceDown(saveParameter.getId_filter());
-                        Arrays.sort(Array_doctors, sortPriceDown);
+                        Collections.sort(Array_doctors, sortPriceDown);
                         break;
                     case 3:
-                        Arrays.sort(Array_doctors, new SortExperience());
+                        Collections.sort(Array_doctors, new SortExperience());
                         break;
                 }
             }
@@ -133,11 +135,9 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         saveParameter.setId_filter(id_filter);
         saveParameter.setMetro(metro);
         saveParameter.setBaby(baby);
-
         ((DoctorsAdapter) recyclerView.getAdapter()).setId_filter(id_filter);
         ((DoctorsAdapter) recyclerView.getAdapter()).
                 setArray_doctors(createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby));
-
         setId_sort(saveParameter.getId_sort(), true);
     }
 
@@ -146,7 +146,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         return saveParameter.getServices();
     }
 
-    private DoctorInfo[] createArrayWithFilter(DoctorInfo[] doctorsInfo, int id_filter,
+    private ArrayList<DoctorInfo> createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
                                                boolean is_metro, boolean is_baby) {
         ArrayList<DoctorInfo> arrayList = new ArrayList<>();
         for (DoctorInfo doctorInfo : doctorsInfo) {
@@ -166,7 +166,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
                 }
             }
         }
-        return arrayList.toArray(new DoctorInfo[arrayList.size()]);
+        return arrayList;
     }
 
     private void synchronizedDoctors() {

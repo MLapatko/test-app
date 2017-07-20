@@ -2,19 +2,17 @@ package by.lovata.a2doc.screenRecordDoctor;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.os.PersistableBundle;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.TimetableDoctorFragment;
 import by.lovata.a2doc.screenRecordDoctor.screenYourInformation.YourInformationFragment;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 
-public class RecordDoctorActivity extends AppCompatActivity implements
+public class RecordDoctorActivity extends BaseMenuActivity implements
         TimetableDoctorFragment.RecordDoctor {
 
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";

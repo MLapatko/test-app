@@ -231,7 +231,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         return (markerLocations.contains(location));
     }
 
-    private DoctorInfo[] createArrayWithFilter(DoctorInfo[] doctorsInfo, int id_filter,
+    private DoctorInfo[] createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
                                                boolean is_metro, boolean is_baby) {
         ArrayList<DoctorInfo> arrayList = new ArrayList<>();
         for (DoctorInfo doctorInfo : doctorsInfo) {

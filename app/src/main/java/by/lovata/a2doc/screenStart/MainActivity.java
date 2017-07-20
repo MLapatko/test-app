@@ -1,16 +1,15 @@
 package by.lovata.a2doc.screenStart;
 
 
-import android.bluetooth.BluetoothAdapter;
+
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 
+import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.InternetReceiver;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenStart.screenAbout.TabAboutFragment;
@@ -20,7 +19,7 @@ import by.lovata.a2doc.screenStart.screenSearch.TabSearchFragment;
 
 import static by.lovata.a2doc.R.id.tabs;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseMenuActivity {
 
     public static final String NAME_PREFERENCES = "TwoDocBY";
     public static final String CITY_SELECT = "CITY";
