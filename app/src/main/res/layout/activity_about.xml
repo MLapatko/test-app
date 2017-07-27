@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start" >
+
+    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context="com.example.user.myapplication.screenAbout.AboutActivity">
+
+        <include layout="@layout/main_toolbar_menu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/accent_material_light_1"
+            android:paddingTop="@dimen/activity_vertical_margin">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="@dimen/activity_vertical_margin">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/tab_about_padding_top"
+                android:text="@string/fragment_about_block1_label"
+                android:textSize="@dimen/tab_about_label_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/tab_about_padding_top"
+                android:text="@string/fragment_about_block1_info"
+                android:textSize="@dimen/tab_about_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/tab_about_padding_top"
+                android:text="@string/fragment_about_block2_label"
+                android:textSize="@dimen/tab_about_label_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/tab_about_padding_top"
+                android:text="@string/fragment_about_block2_info"
+                android:textSize="@dimen/tab_about_text_size" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="@dimen/tab_about_padding_top"
+                android:text="@string/fragment_about_block3_label"
+                android:textSize="@dimen/tab_about_label_size" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/tab_about_padding_top"
+                    android:text="@string/fragment_about_block3_info1"
+                    android:textSize="@dimen/tab_about_text_size" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="@dimen/tab_about_padding_top"
+                    android:text="@string/fragment_about_block3_info2"
+                    android:textSize="@dimen/tab_about_text_size" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="@dimen/tab_about_padding_top"
+                android:text="@string/fragment_about_block4_info"
+                android:textSize="@dimen/tab_about_text_size" />
+
+        </LinearLayout>
+
+
+    </ScrollView>
+    </android.support.design.widget.CoordinatorLayout>
+    <include layout="@layout/navigation_view" />
+</android.support.v4.widget.DrawerLayout>
