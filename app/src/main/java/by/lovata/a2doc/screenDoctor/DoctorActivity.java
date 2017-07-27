@@ -1,6 +1,7 @@
 package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,6 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
@@ -56,7 +58,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
 
     private GoogleMap googleMap;
     private Map<Integer, Marker> markers;
-
+    private APIMethods apiMethods;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -150,7 +152,6 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
 
     private void initializeData() {
         saveParameter = getIntent().getParcelableExtra(SAVEPARAMETER_PARSALABEL);
-        Log.e("spec",saveParameter.toString());
         id_organization = saveParameter.getSelectDoctor().getId_organization();
         id_filter = saveParameter.getSelectDoctor().getId_filter();
     }
@@ -213,8 +214,8 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
             is_baby.setImageResource(R.drawable.ic_child_friendly_24dp);
         }
 
-        String[] organizations_name = getOrganizationName();
-        int posotion_organization = getPositionOrganization();
+        String[] organizations_name = getOrganizationName(saveParameter);
+        int posotion_organization = getPositionOrganization(saveParameter);
         Spinner organizations_profile = (Spinner) findViewById(R.id.organizations_profile);
         organizations_profile.setAdapter(new ArrayAdapter<>(
                 this,
@@ -240,7 +241,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         price_profile.setText(price);
 
         String[] services_name = getServicesName();
-        int posotion_service = getPositionService();
+        int posotion_service = getPositionService(saveParameter);
         Spinner services_profile = (Spinner) findViewById(R.id.services_profile);
         services_profile.setAdapter(new ArrayAdapter<>(
                 this,
@@ -260,8 +261,15 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
 
             }
         });
-
+        apiMethods=new APIMethods(this);
         Button btn_record = (Button) findViewById(R.id.btn_record);
+        if(apiMethods.getTimesFromJSON( saveParameter.getSelectDoctor().getId_doctor(),
+                saveParameter.getIdSpeciality()).size()==0){
+            btn_record.setEnabled(false);
+            btn_record.setBackgroundColor(Color.parseColor("#ececec"));
+            btn_record.setTextColor(Color.parseColor("#000000"));
+            btn_record.setText("Нет приема");
+        }
         btn_record.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -300,11 +308,8 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         return String.format("%s %s %s", experience, count_year, year);
     }
 
-    private String getPrice() {
+    public String getPrice() {
         int id_service = id_filter;
-        Log.e("mylog","getPrice"+saveParameter.getSelectDoctor().
-                        getDoctorInfo().getService_list());
-        Log.e("mylog","id_service"+id_service);
         String price = Integer.toString(saveParameter.getSelectDoctor().
                 getDoctorInfo().getService_list().get(id_service));
         String price_label = getString(R.string.profile_price);
@@ -334,7 +339,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         mapView.getMapAsync(this);
     }
 
-    private String[] getOrganizationName() {
+    public static String[] getOrganizationName(SaveParameter saveParameter) {
         ArrayList<String> arrayList = new ArrayList<>();
 
         for (int id : saveParameter.getSelectDoctor().getDoctorInfo().getId_organization()) {
@@ -344,7 +349,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         return arrayList.toArray(new String[arrayList.size()]);
     }
 
-    private int getPositionOrganization() {
+    public static int getPositionOrganization(SaveParameter saveParameter) {
         int position = 0;
         int id_organization = saveParameter.getSelectDoctor().getId_organization();
 
@@ -368,7 +373,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         return arrayList.toArray(new String[arrayList.size()]);
     }
 
-    private int getPositionService() {
+    public static  int getPositionService(SaveParameter saveParameter) {
         int position_service = 0;
         int id_filter = saveParameter.getSelectDoctor().getId_filter();
 

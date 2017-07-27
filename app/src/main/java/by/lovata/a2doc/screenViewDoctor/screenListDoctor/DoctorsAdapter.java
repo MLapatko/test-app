@@ -2,6 +2,8 @@ package by.lovata.a2doc.screenViewDoctor.screenListDoctor;
 
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -23,6 +25,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 
+import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
@@ -34,10 +37,9 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
     private Map<Integer, OrganizationInfo> organizations;
     private Listener listener;
     private Context context;
-
+    private  APIMethods apiMethods;
     private int id_filter;
-
-
+    private int idSpeciality;
 
     public static interface Listener {
         public void onClickRecord(int id_doctor, int id_filter, int id_organization);
@@ -51,6 +53,10 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         this.services = sevices;
         this.organizations = organizations;
     }
+
+    public void setApiMethods(APIMethods apiMethods) {this.apiMethods = apiMethods;}
+
+    public void setIdSpeciality(int idSpeciality) {this.idSpeciality = idSpeciality;}
 
     public void setArray_doctors(ArrayList<DoctorInfo> doctors) {
         this.array_doctors = doctors;
@@ -93,7 +99,14 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         clickDoctor.setId_organization(array_doctors.get(position).getId_organization()[0]);
         clickRecord.setId_organization(array_doctors.get(position).getId_organization()[0]);
 
+
         final Button btn_record_doctor = (Button) cardView.findViewById(R.id.btn_card_doctor);
+        if(apiMethods.getTimesFromJSON(array_doctors.get(position).getId(),idSpeciality).size()==0){
+            btn_record_doctor.setEnabled(false);
+            btn_record_doctor.setBackgroundColor(Color.parseColor("#ececec"));
+            btn_record_doctor.setTextColor(Color.parseColor("#000000"));
+            btn_record_doctor.setText("Нет приема");
+        }
         btn_record_doctor.setOnClickListener(clickRecord);
 
         ImageView image_doctor = (ImageView) cardView.findViewById(R.id.img_card_doctor);
@@ -112,6 +125,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
         speciality_doctor.setText(array_doctors.get(position).getSpeciality());
 
         final TextView price_doctor = (TextView) cardView.findViewById(R.id.price_of_consultation_card_doctor);
+        Log.e("mylog","array_doctors.get(position).getService_list()"+array_doctors.get(position).getService_list());
         price_doctor.setText(String.format("%s %s", context.getString(R.string.list_doctors_price),
                 Integer.toString(array_doctors.get(position).getService_list().get(id_filter))));
 

@@ -84,7 +84,6 @@ public class ListProfessionActivity extends BaseMenuActivity {
     }
 
     private void initializeData() {
-        Log.e("spec","LogoActivity.getSpecialities().values()"+LogoActivity.getSpecialities().values());
         Collection<String> set_specialities = LogoActivity.getSpecialities().values();
         specialities = set_specialities.toArray(new String[set_specialities.size()]);
         Set<Integer> set_key_specialities = LogoActivity.getSpecialities().keySet();

@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
 import by.lovata.a2doc.R;
@@ -196,26 +195,31 @@ public class APIMethods {
                 for (int j = 0; j < id_organizationArray.length(); j++) {
                     id_organization[j] = id_organizationArray.getInt(j);
                 }
+                JSONArray idSpecArray = item.getJSONArray("id_specialities");
+                int[] idSpecialities = new int[idSpecArray.length()];
+                for (int j = 0; j < idSpecArray.length(); j++) {
+                    idSpecialities[j] = idSpecArray.getInt(j);
+                }
 
                 String img = item.getString("img");
                 String fullname = item.getString("fullname");
                 String speciality = item.getString("speciality");
 
                 JSONArray service_listArray = item.getJSONArray("service_list");
-                Map<Integer, Integer> service_list = new TreeMap<>();
+                Map<Integer, Integer> serviceList = new TreeMap<>();
                 for (int j = 0; j < service_listArray.length(); j++) {
                     JSONObject item_service_list = service_listArray.getJSONObject(j);
-                    int key_service = item_service_list.getInt("id");
-                    int price_service = item_service_list.getInt("price");
-                    service_list.put(key_service, price_service);
+                    int idService = item_service_list.getInt("id");
+                    int priceService = item_service_list.getInt("price");
+                    serviceList.put(idService,priceService);
                 }
 
                 int count_reviews = getReviewsFromJSON(id).size();
                 int experience = item.getInt("experience");
                 boolean merto = item.getBoolean("merto");
                 boolean baby = item.getBoolean("baby");
-                item_set.add(new DoctorInfo(id, id_organization, img, fullname, speciality,
-                        service_list, count_reviews, experience, merto, baby));
+                item_set.add(new DoctorInfo(id, id_organization,idSpecialities, img, fullname,
+                        speciality, serviceList, count_reviews, experience, merto, baby));
             }
 
         } catch (Exception e) {
@@ -394,36 +398,46 @@ public class APIMethods {
 
     }
 
-    public Times[] getTimesFromJSON(int id_doctor, int id_filter, int id_organization, int week) {
+  /*  public Times[] getTimesFromJSON(int idDoctor, int id_filter, int id_organization, int week) {
         Times[] time = null;
         JSONObject dataJsonObj = null;
-        String doctorsInfo_JSON = loadTimesFromAPI(id_doctor, id_filter, id_organization, week);
+        String doctorsInfo_JSON = loadTimesFromAPI(idDoctor, id_filter, id_organization, week);
 
         try {
             dataJsonObj = new JSONObject(doctorsInfo_JSON);
             JSONArray items = dataJsonObj.getJSONArray("dates");
-            time = new Times[items.length()];
             for (int i = 0; i < items.length(); i++) {
+
                 JSONObject item = items.getJSONObject(i);
+                JSONArray timetables=item.getJSONArray("timetable");
+                int idDoctorJSON=item.getInt("id_doctor");
+                if (idDoctorJSON!=idDoctor)
+                    continue;
+                time = new Times[timetables.length()];
+                for (int j = 0; j <timetables.length() ; j++) {
 
-                String day = item.getString("day");
+                    JSONObject timetable = timetables.getJSONObject(j);
 
-                JSONArray times = item.getJSONArray("times");
-                String[] times_array = new String[times.length()];
-                for (int j = 0; j < times.length(); j++) {
-                    times_array[j] = times.getString(j);
+                    String day = timetable.getString("day");
+
+                    JSONArray times = timetable.getJSONArray("times");
+                    String[] times_array = new String[times.length()];
+                    for (int k = 0; k < times.length(); k++) {
+                        times_array[k] = times.getString(k);
+                    }
+
+                    String start = timetable.getString("start");
+                    String stop = timetable.getString("stop");
+
+                    time[j] = new Times(day, times_array, start, stop);
+                    Log.e("mylog","time[i]"+time[i]);
                 }
-
-                String start = item.getString("start");
-                String stop = item.getString("stop");
-
-                time[i] = new Times(day, times_array, start, stop);
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        Log.e("mylog","time[]"+ Arrays.toString(time));
         return time;
     }
 
@@ -453,8 +467,75 @@ public class APIMethods {
             e.printStackTrace();
         }
         return doctorsInfo_JSON;
+    }*/
+
+    public ArrayList<Times> getTimesFromJSON(int idDoctor, int idSpeciality) {
+        ArrayList<Times> time = new ArrayList<>();
+        JSONObject dataJsonObj;
+        String doctorsInfoJSON = loadTimesFromAPI(idSpeciality);
+        if (doctorsInfoJSON.equals(""))
+            return time;
+            try {
+            dataJsonObj = new JSONObject(doctorsInfoJSON);
+            JSONArray items = dataJsonObj.getJSONArray("dates");
+            for (int i = 0; i < items.length(); i++) {
+
+                JSONObject item = items.getJSONObject(i);
+                JSONArray timetables=item.getJSONArray("timetable");
+                int idDoctorJSON=item.getInt("id_doctor");
+                if (idDoctorJSON!=idDoctor)
+                    continue;
+                for (int j = 0; j <timetables.length() ; j++) {
+
+                    JSONObject timetable = timetables.getJSONObject(j);
+
+                    String day = timetable.getString("day");
+
+                    JSONArray times = timetable.getJSONArray("times");
+                    String[] times_array = new String[times.length()];
+                    for (int k = 0; k < times.length(); k++) {
+                        times_array[k] = times.getString(k);
+                    }
+
+                    String start = timetable.getString("start");
+                    String stop = timetable.getString("stop");
+
+                    time.add(new Times(day, times_array, start, stop));
+                }
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        Log.e("mylog","time[]"+time.toString());
+        return time;
     }
 
+    private String loadTimesFromAPI(int idSpeciality) {
+        load();
+
+        Resources r = context.getResources();
+        InputStream is=null;
+        switch (idSpeciality) {
+            case 14:
+                is = r.openRawResource(R.raw.timetable_id_speciality_14);
+                break;
+            default: return "";
+        }
+
+        String doctorsInfo_JSON = null;
+        try {
+            doctorsInfo_JSON = convertStreamToString(is);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            is.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return doctorsInfo_JSON;
+    }
     public ArrayList<Reviews> getReviewsFromJSON(int id_doctor) {
         ArrayList<Reviews> reviews = new ArrayList<>();
         JSONObject dataJsonObj = null;

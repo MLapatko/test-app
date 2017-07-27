@@ -20,6 +20,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
 
+import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.DoctorActivity;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
@@ -42,7 +43,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
 
     SaveParameter saveParameter;
     RecyclerView recyclerView;
-
+    private APIMethods apiMethods;
     public ListDoctorFragment() {
     }
 
@@ -87,16 +88,18 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     }
 
     private void initializeView(View root_view) {
+
+        apiMethods=new APIMethods(getActivity());
         DoctorsAdapter doctorAdapter = new DoctorsAdapter(getContext(),
                 saveParameter.getServices(),
                 saveParameter.getOrganizations());
-
         ArrayList<DoctorInfo> doctorInfos = createArrayWithFilter(saveParameter.getDoctorsInfo(),
                 saveParameter.getId_filter(), saveParameter.isMetro(), saveParameter.isBaby());
         doctorAdapter.setArray_doctors(doctorInfos);
         doctorAdapter.setId_filter(saveParameter.getId_filter());
         doctorAdapter.setListener(new ClickOnCard());
-
+        doctorAdapter.setApiMethods(apiMethods);
+        doctorAdapter.setIdSpeciality(saveParameter.getIdSpeciality());
         recyclerView = (RecyclerView) root_view.findViewById(R.id.recyclerview_doctor);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         recyclerView.setLayoutManager(layoutManager);
@@ -146,8 +149,8 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         return saveParameter.getServices();
     }
 
-    private ArrayList<DoctorInfo> createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
-                                               boolean is_metro, boolean is_baby) {
+    public static ArrayList<DoctorInfo> createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
+                                                              boolean is_metro, boolean is_baby) {
         ArrayList<DoctorInfo> arrayList = new ArrayList<>();
         for (DoctorInfo doctorInfo : doctorsInfo) {
             if (doctorInfo.getService_list().containsKey(id_filter)) {
@@ -215,7 +218,9 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         public void onClickDoctor(int id_doctor, int id_filter, int id_organization) {
             Intent intent = new Intent(getActivity(), DoctorActivity.class);
             DoctorInfo doctorInfo = getDoctor(id_doctor);
+
             saveParameter.setSelectDoctor(new SelectDoctor(id_doctor, id_filter, id_organization, null, null, doctorInfo));
+
             intent.putExtra(DoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
 
             getActivity().startActivity(intent);

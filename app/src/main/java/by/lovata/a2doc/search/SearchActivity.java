@@ -143,9 +143,10 @@ public class SearchActivity extends AppCompatActivity {
                 DoctorInfo selectedDoctor = doctorsInfo.get(ind);
                 ArrayList<DoctorInfo>doctorsInfo = apiMethods.getDoctorsInfoFromJSON(idCity,-1);
                 int idFilter = ViewDoctorActivity.initIdFilter(doctorsInfo, ind);
-                saveParameter = new SaveParameter(idCity, 15, idFilter, 0, doctorsInfo,
+                saveParameter = new SaveParameter(idCity, idFilter, 0,
+                        selectedDoctor.getIdSpecialities()[0], doctorsInfo,
                         apiMethods.getOrganizationsInfoFromJSON(idCity, 15),
-                        ViewDoctorActivity.getServices(idCity, doctorsInfo,apiMethods,-1), false, false);
+                        apiMethods.getServicesFromJSON(idCity, -1), false, false);
                 saveParameter.setSelectDoctor(new SelectDoctor(searchResultNames.get(position).getId(), idFilter,
                         selectedDoctor.getId_organization()[0], null, null, selectedDoctor));
 
@@ -166,7 +167,7 @@ public class SearchActivity extends AppCompatActivity {
             }
         });
     }
-    private int findIdMap(Map<Integer,String>map,String str){
+    public static int findIdMap(Map<Integer,String>map,String str){
         for (Map.Entry<Integer, String> entry : map.entrySet()) {
             if (entry.getValue().equals(str))
                return entry.getKey();

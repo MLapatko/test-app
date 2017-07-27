@@ -15,6 +15,7 @@ import android.widget.GridLayout;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -26,11 +27,11 @@ class TimeAdapter extends BaseAdapter {
         void record(String day_selected, String time_selected);
     }
 
-    private Times[] times;
+    private ArrayList<Times> times;
     private Context context;
     private RecordTime recordTime;
 
-    TimeAdapter(Context context, Times[] times) {
+    TimeAdapter(Context context, ArrayList<Times> times) {
         this.context = context;
         this.times = times;
     }
@@ -41,12 +42,12 @@ class TimeAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return times.length;
+        return times.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return times[position];
+        return times.get(position);
     }
 
     @Override
@@ -132,7 +133,7 @@ class TimeAdapter extends BaseAdapter {
         ((ViewGroup) view.findViewById(R.id.root_timetable)).addView(textView);
     }
 
-    void setTimes(Times[] times) {
+    void setTimes(ArrayList<Times> times) {
         this.times = times;
         notifyDataSetInvalidated();
     }

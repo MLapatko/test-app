@@ -49,6 +49,7 @@ import by.lovata.a2doc.screenViewDoctor.DoctorInfo;
 import by.lovata.a2doc.screenViewDoctor.OrganizationInfo;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
+import by.lovata.a2doc.screenViewDoctor.screenListDoctor.ListDoctorFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 
@@ -63,7 +64,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     static final float COORDINATE_OFFSET = 0.00002f;
 
     private AbstractMarker clickedClusterItem = null;
-    DoctorInfo[] doctorsInfo;
+    ArrayList<DoctorInfo> doctorsInfo;
     Map<Integer, OrganizationInfo> organizations;
     SaveParameter saveParameter;
 
@@ -112,7 +113,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         int id_filter = saveParameter.getId_filter();
         boolean metro = saveParameter.isMetro();
         boolean baby = saveParameter.isBaby();
-        doctorsInfo = createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby);
+        doctorsInfo = ListDoctorFragment.createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby);
         organizations = saveParameter.getOrganizations();
     }
 
@@ -231,7 +232,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         return (markerLocations.contains(location));
     }
 
-    private DoctorInfo[] createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
+   /* private DoctorInfo[] createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
                                                boolean is_metro, boolean is_baby) {
         ArrayList<DoctorInfo> arrayList = new ArrayList<>();
         for (DoctorInfo doctorInfo : doctorsInfo) {
@@ -252,7 +253,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
             }
         }
         return arrayList.toArray(new DoctorInfo[arrayList.size()]);
-    }
+    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
@@ -282,7 +283,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         saveParameter.setMetro(metro);
         saveParameter.setBaby(baby);
 
-        doctorsInfo = createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby);
+        doctorsInfo = ListDoctorFragment.createArrayWithFilter(saveParameter.getDoctorsInfo(), id_filter, metro, baby);
 
         gMap.clear();
         mMapView.getMapAsync(this);
@@ -336,7 +337,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
                         .into(image);
                 review.setText(String.valueOf(doctorInfo.getCount_reviews()).concat(" отз."));
                 int minPrice, maxPrice;
-                minPrice = Collections.min(doctorInfo.getService_list().values());
+                minPrice =  Collections.min(doctorInfo.getService_list().values());
                 maxPrice = Collections.max(doctorInfo.getService_list().values());
                 if (minPrice == maxPrice) {
                     price.setText("Цена: ".concat(String.valueOf(minPrice)).concat(" руб."));

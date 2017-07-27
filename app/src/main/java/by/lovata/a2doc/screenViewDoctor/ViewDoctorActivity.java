@@ -12,7 +12,6 @@ import android.view.MenuItem;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.BaseMenuActivity;
@@ -86,19 +85,7 @@ public class ViewDoctorActivity extends BaseMenuActivity {
         }
     }
 
-    public static Map<Integer, String> getServices(int id_city, ArrayList<DoctorInfo> doctorsInfo, APIMethods apiMethods, int idSpeciality) {
-        Map<Integer, String> services;
-        Set<Integer> services_list = new TreeSet<>();
 
-        for (DoctorInfo doctorInfo : doctorsInfo) {
-            for (int id_service : doctorInfo.getService_list().keySet()) {
-                services_list.add(id_service);
-            }
-        }
-        services = apiMethods.getServicesFromJSON(id_city, idSpeciality);
-
-        return services;
-    }
 
     private void restoreData(Bundle savedInstanceState) {
         saveParameter = savedInstanceState.getParcelable(SAVEPARAMETER_PARSALABEL_SAVE);
@@ -117,10 +104,10 @@ public class ViewDoctorActivity extends BaseMenuActivity {
         APIMethods apiMethods = new APIMethods(this);
         ArrayList<DoctorInfo> doctorsInfo = apiMethods.getDoctorsInfoFromJSON(id_city, id_spiciality);
         Map<Integer, OrganizationInfo> organizations = apiMethods.getOrganizationsInfoFromJSON(id_city, id_spiciality);
-        Map<Integer, String> sevices = getServices(id_city, doctorsInfo,apiMethods,id_spiciality);
+        Map<Integer, String> sevices = apiMethods.getServicesFromJSON(id_city, id_spiciality);
         if (id_filter==-1)
         id_filter =  initIdFilter(doctorsInfo,0);
-        saveParameter = new SaveParameter(id_city, id_spiciality, id_filter, id_sort, doctorsInfo,
+        saveParameter = new SaveParameter(id_city, id_filter, id_sort,id_spiciality, doctorsInfo,
                 organizations, sevices, metro, baby);
     }
 

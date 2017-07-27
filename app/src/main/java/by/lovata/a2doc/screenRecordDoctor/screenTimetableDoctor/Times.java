@@ -4,6 +4,8 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Arrays;
+
 public class Times implements Parcelable {
 
     String day;
@@ -48,5 +50,15 @@ public class Times implements Parcelable {
         dest.writeStringArray(times);
         dest.writeString(start);
         dest.writeString(stop);
+    }
+
+    @Override
+    public String toString() {
+        return "Times{" +
+                "day='" + day + '\'' +
+                ", times=" + Arrays.toString(times) +
+                ", start='" + start + '\'' +
+                ", stop='" + stop + '\'' +
+                '}';
     }
 }

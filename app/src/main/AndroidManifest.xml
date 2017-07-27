@@ -49,8 +49,8 @@
             android:parentActivityName=".screenViewDoctor.ViewDoctorActivity" />
         <activity
             android:name=".LogoActivity"
-            android:theme="@style/AppThemeNoActionBar"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppThemeNoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -65,7 +65,13 @@
             android:parentActivityName=".screenDoctor.aboutDoctor.AboutDoctorActivity" />
         <activity
             android:name=".search.SearchActivity"
-            android:parentActivityName=".screenStart.MainActivity"/>
+            android:parentActivityName=".screenStart.MainActivity" />
+        <activity
+            android:name=".NewMainActivity"
+            android:theme="@style/AppThemeNoActionBar" />
+        <activity
+            android:name=".screenStart.screenAbout.AboutActivity"
+            android:theme="@style/AppThemeNoActionBar"/>
     </application>
 
 </manifest>

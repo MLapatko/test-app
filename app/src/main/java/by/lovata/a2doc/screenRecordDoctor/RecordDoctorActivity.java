@@ -78,7 +78,7 @@ public class RecordDoctorActivity extends BaseMenuActivity implements
         Fragment fragment = new TimetableDoctorFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putParcelable(TimetableDoctorFragment.SELECT_DOCTOR, saveParameter.getSelectDoctor());
+        bundle.putParcelable(TimetableDoctorFragment.SAVE_PARAMETER, saveParameter);
         fragment.setArguments(bundle);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

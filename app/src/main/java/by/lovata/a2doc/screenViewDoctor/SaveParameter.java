@@ -10,11 +10,10 @@ import java.util.TreeMap;
 
 public class SaveParameter implements Parcelable {
 
-    private int id_spiciality;
     private int id_city;
 
     private int id_sort;
-
+    private int idSpeciality;
     private int id_filter;
     private boolean metro;
     private boolean baby;
@@ -25,13 +24,13 @@ public class SaveParameter implements Parcelable {
     private SelectDoctor selectDoctor;
 
 
-    public SaveParameter(int id_city, int id_spiciality, int id_filter, int id_sort,
+    public SaveParameter(int id_city, int id_filter, int id_sort,int idSpeciality,
                          ArrayList<DoctorInfo> doctorsInfo, Map<Integer, OrganizationInfo> organizations,
                          Map<Integer, String> sevices, boolean metro, boolean baby) {
         this.id_city = id_city;
-        this.id_spiciality = id_spiciality;
         this.id_filter = id_filter;
         this.id_sort = id_sort;
+        this.idSpeciality=idSpeciality;
         this.doctorsInfo = doctorsInfo;
         this.organizations = organizations;
         this.services = sevices;
@@ -40,10 +39,10 @@ public class SaveParameter implements Parcelable {
     }
 
     protected SaveParameter(Parcel in) {
-        id_spiciality = in.readInt();
         id_city = in.readInt();
         id_sort = in.readInt();
         id_filter = in.readInt();
+        idSpeciality=in.readInt();
         metro = in.readByte() != 0;
         baby = in.readByte() != 0;
 
@@ -113,10 +112,10 @@ public class SaveParameter implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeInt(id_spiciality);
         dest.writeInt(id_city);
         dest.writeInt(id_sort);
         dest.writeInt(id_filter);
+        dest.writeInt(idSpeciality);
         dest.writeByte((byte) (metro ? 1 : 0));
         dest.writeByte((byte) (baby ? 1 : 0));
         dest.writeTypedList(doctorsInfo);
@@ -132,10 +131,6 @@ public class SaveParameter implements Parcelable {
     public SelectDoctor getSelectDoctor() {
 
         return selectDoctor;
-    }
-
-    public void setId_spiciality(int id_spiciality) {
-        this.id_spiciality = id_spiciality;
     }
 
     public void setId_city(int id_city) {
@@ -170,9 +165,8 @@ public class SaveParameter implements Parcelable {
         this.organizations = organizations;
     }
 
-    public int getId_spiciality() {
-
-        return id_spiciality;
+    public int getIdSpeciality() {
+        return idSpeciality;
     }
 
     public int getId_city() {
@@ -210,7 +204,6 @@ public class SaveParameter implements Parcelable {
     @Override
     public String toString() {
         return "SaveParameter{" +
-                "id_spiciality=" + id_spiciality +
                 ", id_city=" + id_city +
                 ", id_sort=" + id_sort +
                 ", id_filter=" + id_filter +

@@ -4,17 +4,27 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
+import android.widget.Spinner;
 
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.Set;
 
 import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.R;
-import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
+import by.lovata.a2doc.screenDoctor.DoctorActivity;
+import by.lovata.a2doc.screenViewDoctor.SaveParameter;
+import by.lovata.a2doc.search.SearchActivity;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,23 +37,27 @@ public class TimetableDoctorFragment extends Fragment implements
     }
 
     public static final String TIMES_PARCELABLE = "TIMES_PARCELABLE";
-    public static final String SELECT_DOCTOR = "SELECT_DOCTOR";
+    public static final String SAVE_PARAMETER = "SAVE_PARAMETER";
 
     private static final String SELECT_DOCTOR_SAVE = "SELECT_DOCTOR_SAVE";
-
-    Times[] times;
-    SelectDoctor selectDoctor;
+    private int idSpeciality;
+    ArrayList<Times> currentTimetable;
+    SaveParameter saveParpmeter;
     RecordDoctor recordDoctor;
-    ArrayList<Integer> list_weeks;
     TimeAdapter timeAdapter;
-
+    private ArrayList<Times>timetable;
+    private int idDoctor;
+    private int position=7;
+    private ImageButton btnPrevious;
+    private ImageButton btnNext;
+    private Spinner spinnerServices;
     public TimetableDoctorFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root_view = inflater.inflate(R.layout.fragment_timetable_doctor, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_timetable_doctor, container, false);
 
         if (savedInstanceState == null) {
             initializeData();
@@ -51,9 +65,9 @@ public class TimetableDoctorFragment extends Fragment implements
             restoreData(savedInstanceState);
         }
 
-        initializeView(root_view);
+        initializeView(rootView);
 
-        return root_view;
+        return rootView;
     }
 
     @Override
@@ -71,102 +85,106 @@ public class TimetableDoctorFragment extends Fragment implements
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putParcelableArray(TIMES_PARCELABLE, times);
-        outState.putParcelable(SELECT_DOCTOR_SAVE, selectDoctor);
+        outState.putParcelableArrayList(TIMES_PARCELABLE, currentTimetable);
+        outState.putParcelable(SELECT_DOCTOR_SAVE, saveParpmeter);
     }
 
     private void initializeData() {
-        selectDoctor = getArguments().getParcelable(SELECT_DOCTOR);
-
-        int week = 0;
-        times = getTimes(week);
+        saveParpmeter = getArguments().getParcelable(SAVE_PARAMETER);
+        idDoctor = saveParpmeter.getSelectDoctor().getId_doctor();
+        currentTimetable=new ArrayList<>();
+        idSpeciality=saveParpmeter.getIdSpeciality();
+         APIMethods apiMethods = new APIMethods(getActivity());
+        timetable=apiMethods.getTimesFromJSON(idDoctor, idSpeciality);
+        currentTimetable.addAll(timetable.subList(0,7));
     }
 
-    private Times[] getTimes(int week) {
-        APIMethods apiMethods = new APIMethods(getActivity());
-
-        int id_doctor = selectDoctor.getId_doctor();
-        int id_filter = selectDoctor.getId_filter();
-        int id_organization = selectDoctor.getId_organization();
-
-        return apiMethods.getTimesFromJSON(id_doctor, id_filter, id_organization, week);
-    }
 
     private void restoreData(Bundle savedInstanceState) {
-        selectDoctor = savedInstanceState.getParcelable(SELECT_DOCTOR_SAVE);
-        times = (Times[]) savedInstanceState.getParcelableArray(TIMES_PARCELABLE);
+        saveParpmeter = savedInstanceState.getParcelable(SELECT_DOCTOR_SAVE);
+        currentTimetable = savedInstanceState.getParcelableArrayList(TIMES_PARCELABLE);
     }
 
-    private void initializeView(View root_view) {
-        timeAdapter = new TimeAdapter(getActivity(), times);
+    private void initializeView(View rootView) {
+        timeAdapter = new TimeAdapter(getActivity(), currentTimetable);
         timeAdapter.setListener(this);
-        ListView timetable_lst = (ListView) root_view.findViewById(R.id.timetable_lst);
-        timetable_lst.setAdapter(timeAdapter);
+        ListView timetableList = (ListView) rootView.findViewById(R.id.timetable_lst);
+        timetableList.setAdapter(timeAdapter);
+        btnPrevious = (ImageButton) rootView.findViewById(R.id.btn_previous);
+        btnPrevious.setEnabled(false);
+        btnPrevious.setOnClickListener(onClickListenerBtnListner);
+        btnNext = (ImageButton) rootView.findViewById(R.id.btn_next);
+        btnNext.setOnClickListener(onClickListenerBtnListner);
+        spinnerServices=(Spinner)rootView.findViewById(R.id.spinner_services);
+        final ArrayList<String> services= getServicesNames(saveParpmeter.getServices(),
+                saveParpmeter.getSelectDoctor().getDoctorInfo().getService_list().keySet());
+        spinnerServices.setAdapter(new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_activated_1,
+                services));
 
-        list_weeks = new ArrayList<>();
-        list_weeks.add(0);
+        spinnerServices.setSelection(DoctorActivity.getPositionService(saveParpmeter));
+        spinnerServices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                saveParpmeter.getSelectDoctor().setId_filter(SearchActivity.findIdMap(saveParpmeter.getServices(),
+                        services.get(position)));
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+        String[] organizations_name = DoctorActivity.getOrganizationName(saveParpmeter);
+        int posotion_organization =DoctorActivity.getPositionOrganization(saveParpmeter);
+        Spinner organizations_profile = (Spinner) rootView.findViewById(R.id.organizations_profile);
+        organizations_profile.setAdapter(new ArrayAdapter<>(
+                getActivity(),
+                android.R.layout.simple_list_item_activated_1,
+                organizations_name));
+        organizations_profile.setSelection(posotion_organization);
+        organizations_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                saveParpmeter.getSelectDoctor().setId_organization(saveParpmeter.getSelectDoctor().
+                        getDoctorInfo().getId_organization()[position]);
+            }
 
-        Button button_week_1 = (Button) root_view.findViewById(R.id.btn_week_1);
-        button_week_1.setOnClickListener(onClickListener_btn_week);
-        Button button_week_2 = (Button) root_view.findViewById(R.id.btn_week_2);
-        button_week_2.setOnClickListener(onClickListener_btn_week);
-        Button button_week_3 = (Button) root_view.findViewById(R.id.btn_week_3);
-        button_week_3.setOnClickListener(onClickListener_btn_week);
-        Button button_week_4 = (Button) root_view.findViewById(R.id.btn_week_4);
-        button_week_4.setOnClickListener(onClickListener_btn_week);
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
     }
 
-    View.OnClickListener onClickListener_btn_week = new View.OnClickListener() {
-        int btn_week_old = 0;
+    private ArrayList<String> getServicesNames(Map<Integer, String> services, Set<Integer> serviceList) {
+    ArrayList<String> servicesNames=new ArrayList<>();
+        for (Map.Entry<Integer, String> entry : services.entrySet()) {
+            if (serviceList.contains(entry.getKey()))
+                servicesNames.add(entry.getValue());
+        }
+        return servicesNames;
+    }
 
+    View.OnClickListener onClickListenerBtnListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-            int btn_week = 0;
             switch (v.getId()) {
-                case R.id.btn_week_1:
-                    btn_week = 0;
+                case R.id.btn_previous:
+                    btnNext.setEnabled(true);
+                    OnButtonClick (btnPrevious,position-14,position-7,7);
                     break;
-                case R.id.btn_week_2:
-                    btn_week = 1;
+                case R.id.btn_next:
+                    btnPrevious.setEnabled(true);
+                    OnButtonClick (btnNext,position,position+7,timetable.size());
                     break;
-                case R.id.btn_week_3:
-                    btn_week = 2;
-                    break;
-                case R.id.btn_week_4:
-                    btn_week = 3;
-                    break;
-            }
-
-            getNewTime(btn_week);
-
-        }
-
-        private void getNewTime(int btn_week) {
-            if (btn_week_old != btn_week) {
-                btn_week_old = btn_week;
-                if (!list_weeks.contains(btn_week)) {
-                    list_weeks.add(btn_week);
-
-                    times = concatArray(times, getTimes(btn_week));
-                }
-
-                int position = list_weeks.indexOf(btn_week);
-                Times[] times_current = new Times[7];
-                System.arraycopy(times, position * 7, times_current, 0, 7);
-                timeAdapter.setTimes(times_current);
             }
         }
 
-        private Times[] concatArray(Times[] a, Times[] b) {
-            if (a == null)
-                return b;
-            if (b == null)
-                return a;
-            Times[] r = new Times[a.length + b.length];
-            System.arraycopy(a, 0, r, 0, a.length);
-            System.arraycopy(b, 0, r, a.length, b.length);
-            return r;
+        public void OnButtonClick (View button,int start,int end,int extremePosition){
+            currentTimetable=new ArrayList<>();
+            currentTimetable.addAll(timetable.subList(start,end));
+            if (button.equals(btnPrevious))position-=7;
+            else position+=7;
+            if (position==extremePosition)
+                button.setEnabled(false);
+            timeAdapter.setTimes(currentTimetable);
         }
     };
 }

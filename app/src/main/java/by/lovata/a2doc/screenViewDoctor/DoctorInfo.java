@@ -4,6 +4,7 @@ package by.lovata.a2doc.screenViewDoctor;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 import java.util.Set;
@@ -17,6 +18,7 @@ public class DoctorInfo implements Parcelable {
     private int count_reviews;
     private int experience;
     private int[] id_organization;
+    private int []idSpecialities;
     private String url_img;
     private String full_name;
     private String speciality;
@@ -26,12 +28,14 @@ public class DoctorInfo implements Parcelable {
     private boolean merto;
     private boolean baby;
 
-    public DoctorInfo(int id, int[] id_organization, String url_img, String full_name,
+    public DoctorInfo(int id, int[] id_organization, int []idSpecialities,
+                      String url_img, String full_name,
                       String speciality, Map<Integer, Integer> service_list,
                       int count_reviews, int experience,
                       boolean merto, boolean baby) {
         this.id = id;
         this.id_organization = id_organization;
+        this.idSpecialities=idSpecialities;
         this.url_img = url_img;
         this.full_name = full_name;
         this.speciality = speciality;
@@ -45,6 +49,7 @@ public class DoctorInfo implements Parcelable {
     public DoctorInfo(Parcel in) {
         id = in.readInt();
         id_organization = in.createIntArray();
+        idSpecialities=in.createIntArray();
         url_img = in.readString();
         full_name = in.readString();
         speciality = in.readString();
@@ -96,6 +101,7 @@ public class DoctorInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(id);
         dest.writeIntArray(id_organization);
+        dest.writeIntArray(idSpecialities);
         dest.writeString(url_img);
         dest.writeString(full_name);
         dest.writeString(speciality);
@@ -184,6 +190,10 @@ public class DoctorInfo implements Parcelable {
 
     public void setBaby(boolean baby) {
         this.baby = baby;
+    }
+
+    public int[] getIdSpecialities() {
+        return idSpecialities;
     }
 
     @Override
