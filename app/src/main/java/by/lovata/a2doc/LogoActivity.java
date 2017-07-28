@@ -53,14 +53,16 @@ public class LogoActivity extends AppCompatActivity {
                 String phone = apiMethods.getPhoneFromJSON();
 
                 cities = apiMethods.getCitiesFromJSON();
+                Log.e("mylog","cities"+cities);
 
-                SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
+               /* SharedPreferences sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
                 List<Integer> cities_id = new ArrayList<>(cities.keySet());
-                int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, cities_id.get(0));
+                int id_city = sharedPreferences.getInt(MainActivity.CITY_SELECT, cities_id.get(1));
+                Log.e("mylog","id_city"+id_city);
                 setCitySelectId(id_city);
 
                 specialities = apiMethods.getSpecialitiesFromJSON(id_city);
-                Log.e("spec","specialities"+specialities);
+                Log.e("spec","specialities"+specialities);*/
                 Intent intent = new Intent(LogoActivity.this, NewMainActivity.class);
                 intent.putExtra(MainActivity.PHONE, phone);
                 startActivity(intent);

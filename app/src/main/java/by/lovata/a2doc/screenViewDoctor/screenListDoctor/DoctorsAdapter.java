@@ -101,6 +101,7 @@ class DoctorsAdapter extends RecyclerView.Adapter<DoctorsAdapter.ViewHolder> {
 
 
         final Button btn_record_doctor = (Button) cardView.findViewById(R.id.btn_card_doctor);
+        //если у врача нет расписания, делаем кнопку неактивной и изменяем Background
         if(apiMethods.getTimesFromJSON(array_doctors.get(position).getId(),idSpeciality).size()==0){
             btn_record_doctor.setEnabled(false);
             btn_record_doctor.setBackgroundColor(Color.parseColor("#ececec"));

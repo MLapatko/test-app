@@ -175,8 +175,11 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
+    <!--Гланое меню-->
     <string name="find_doctors">Подобрать специалиста</string>
     <string name="about_us">О нас</string>
     <string name="main_page">Главная</string>
+    <!--Кнопки timetable-->
+    <string name="previous">Пред.неделя</string>
+    <string name="next">След.неделя</string>
 </resources>

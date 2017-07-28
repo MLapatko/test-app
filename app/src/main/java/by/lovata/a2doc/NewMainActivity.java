@@ -25,11 +25,11 @@ public class NewMainActivity extends BaseMenuActivity {
     private APIMethods apiMethods=new APIMethods(this);;
     private Map<Integer,String> cities;
     private Map<Integer,String> specialities=new HashMap<>();
-    private int idCity=-1;
+    private int idCity=0;
     private int idSpeciality;
     private ArrayList<String>citiesNames=new ArrayList<>();
     private ArrayList<String> specialitiesNames=new ArrayList<>();
-    private String defaultMassegeCities="Выберите город...";
+    private String defaultMassegeCities="";
     private String defaultMassegeSpecialities="Выберите специализацию...";
     private Button findDoctor;
 
@@ -49,20 +49,16 @@ public class NewMainActivity extends BaseMenuActivity {
         apiMethods=new APIMethods(this);
         cities=apiMethods.getCitiesFromJSON();
         initialiseListsForSpinners(citySpinner,citiesNames,cities,defaultMassegeCities);
+        setCitySelectId(idCity);
         citySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position!=0) {
-                    specialitySpinner.setEnabled(true);
                     idCity = SearchActivity.findIdMap(cities, citiesNames.get(position));
                     specialities=apiMethods.getSpecialitiesFromJSON(idCity);
                     initialiseListsForSpinners(specialitySpinner,specialitiesNames,
                             specialities,defaultMassegeSpecialities);
-                }
-                else {
-                    specialitySpinner.setEnabled(false);
-                    idCity=-1;
-                }
+                setCitySelectId(idCity);
+                   // idCity=0;
             }
 
             @Override
@@ -91,7 +87,6 @@ public class NewMainActivity extends BaseMenuActivity {
         findDoctor.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setCitySelectId(idCity);
                 Intent i=new Intent(NewMainActivity.this, ViewDoctorActivity.class);
                 i.putExtra(ViewDoctorActivity.ID_SPECIALITY_SELECTED, idSpeciality);
                 startActivity(i);
@@ -102,6 +97,7 @@ public class NewMainActivity extends BaseMenuActivity {
     private void initialiseListsForSpinners(Spinner spinner,ArrayList<String> array,Map<Integer,String>map,
                                             String defaultMassege){
         array.clear();
+        if(!defaultMassege.equals(""))
         array.add(0,defaultMassege);
         if (map.size()!=0)
         array.addAll(map.values());

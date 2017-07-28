@@ -25,11 +25,10 @@ import by.lovata.a2doc.search.SearchActivity;
 /**
  * Created by user on 19.07.2017.
  */
-
+//Главное меню
 public class BaseMenuActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
-    final String TAB_ABOUT_FRAGMENT="TAB_ABOUT_FRAGMENT";
     protected void initialToolBarMenu(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -62,6 +61,9 @@ public class BaseMenuActivity extends AppCompatActivity
             case R.id.view_search:
                 Intent i=new Intent(this, SearchActivity.class);
                 startActivity(i);
+                return true;
+            case android.R.id.home:
+                onBackPressed();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

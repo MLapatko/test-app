@@ -4,17 +4,33 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.TimetableDoctorFragment">
-
-    <Spinner
-        android:id="@+id/spinner_services"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
-    <Spinner
-        android:id="@+id/organizations_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="90dp"
+            android:layout_height="90dp"
+            android:layout_gravity="center"
+            android:contentDescription="@string/profile" />
+      <LinearLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:orientation="vertical">
+        <Spinner
+            android:id="@+id/spinner_services"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
+        <Spinner
+            android:id="@+id/organizations_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+      </LinearLayout>
+
+    </LinearLayout>
     <ListView
         android:id="@+id/timetable_lst"
         android:layout_width="match_parent"
@@ -28,41 +44,40 @@
         android:orientation="horizontal"
         android:background="#fff"
         android:weightSum="1">
-    <ImageButton
-        android:id="@+id/btn_previous"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:background="@drawable/arrow_left"
-        android:layout_marginBottom="10dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="10dp"
-        tools:ignore="ContentDescription" />
-       <ImageButton
-           android:id="@+id/btn_next"
+       <!--    <ImageButton
+           android:id="@+id/btn_previous"
            android:layout_width="wrap_content"
            android:layout_height="45dp"
-           android:text="next"
-           android:background="@drawable/arrow_right"
+           android:background="@drawable/arrow_left"
            android:layout_marginBottom="10dp"
-           android:layout_alignParentRight="true"
-           android:layout_marginRight="10dp"/>
-<!--        <Button
-            android:id="@+id/btn_previous"
-            android:layout_width="wrap_content"
-            android:layout_height="45dp"
-            android:text="privious"
-            android:background="@drawable/arrow_left"
-            android:layout_marginBottom="10dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="10dp"/>
-        <Button
-            android:id="@+id/btn_next"
-       android:layout_width="wrap_content"
-       android:layout_height="45dp"
-       android:text="next"
-       android:layout_marginBottom="10dp"
-       android:layout_alignParentRight="true"
-       android:layout_marginRight="10dp"/>-->
+           android:layout_alignParentLeft="true"
+           android:layout_marginLeft="10dp"
+           tools:ignore="ContentDescription" />
+          <ImageButton
+              android:id="@+id/btn_next"
+              android:layout_width="wrap_content"
+              android:layout_height="45dp"
+              android:text="next"
+              android:background="@drawable/arrow_right"
+              android:layout_marginBottom="10dp"
+              android:layout_alignParentRight="true"
+              android:layout_marginRight="10dp"/>-->
+       <Button
+               android:id="@+id/btn_previous"
+               android:layout_width="wrap_content"
+               android:layout_height="45dp"
+               android:text="@string/previous"
+               android:layout_marginBottom="10dp"
+               android:layout_alignParentLeft="true"
+               android:layout_marginLeft="10dp"/>
+           <Button
+               android:id="@+id/btn_next"
+          android:layout_width="wrap_content"
+          android:layout_height="45dp"
+          android:text="@string/next"
+          android:layout_marginBottom="10dp"
+          android:layout_alignParentRight="true"
+          android:layout_marginRight="10dp"/>
 
     </RelativeLayout>
 

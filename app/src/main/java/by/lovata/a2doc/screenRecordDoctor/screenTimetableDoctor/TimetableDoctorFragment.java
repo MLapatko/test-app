@@ -2,6 +2,7 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -12,8 +13,11 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Map;
@@ -47,10 +51,12 @@ public class TimetableDoctorFragment extends Fragment implements
     TimeAdapter timeAdapter;
     private ArrayList<Times>timetable;
     private int idDoctor;
+    //расписание отображается по неделям, поэтому position=7
     private int position=7;
-    private ImageButton btnPrevious;
-    private ImageButton btnNext;
+    private Button btnPrevious;
+    private Button btnNext;
     private Spinner spinnerServices;
+    private ListView timetableList;
     public TimetableDoctorFragment() {
     }
 
@@ -96,6 +102,7 @@ public class TimetableDoctorFragment extends Fragment implements
         idSpeciality=saveParpmeter.getIdSpeciality();
          APIMethods apiMethods = new APIMethods(getActivity());
         timetable=apiMethods.getTimesFromJSON(idDoctor, idSpeciality);
+        //в currentTimetable заносятся первые 7 дней
         currentTimetable.addAll(timetable.subList(0,7));
     }
 
@@ -106,22 +113,34 @@ public class TimetableDoctorFragment extends Fragment implements
     }
 
     private void initializeView(View rootView) {
+
+        ImageView image_doctor = (ImageView) rootView.findViewById(R.id.img_profile);
+        Picasso.with(rootView.getContext())
+                .load(saveParpmeter.getSelectDoctor().getDoctorInfo().getUrl_img())
+                .placeholder(R.drawable.ic_file_download_24dp)
+                .error(R.drawable.ic_error_24dp)
+                .into(image_doctor);
+
         timeAdapter = new TimeAdapter(getActivity(), currentTimetable);
         timeAdapter.setListener(this);
-        ListView timetableList = (ListView) rootView.findViewById(R.id.timetable_lst);
+        timetableList = (ListView) rootView.findViewById(R.id.timetable_lst);
         timetableList.setAdapter(timeAdapter);
-        btnPrevious = (ImageButton) rootView.findViewById(R.id.btn_previous);
+
+        btnPrevious = (Button) rootView.findViewById(R.id.btn_previous);
         btnPrevious.setEnabled(false);
         btnPrevious.setOnClickListener(onClickListenerBtnListner);
-        btnNext = (ImageButton) rootView.findViewById(R.id.btn_next);
+        btnNext = (Button) rootView.findViewById(R.id.btn_next);
         btnNext.setOnClickListener(onClickListenerBtnListner);
+
         spinnerServices=(Spinner)rootView.findViewById(R.id.spinner_services);
         final ArrayList<String> services= getServicesNames(saveParpmeter.getServices(),
                 saveParpmeter.getSelectDoctor().getDoctorInfo().getService_list().keySet());
-        spinnerServices.setAdapter(new ArrayAdapter<>(getActivity(),android.R.layout.simple_list_item_activated_1,
+        spinnerServices.setAdapter(new ArrayAdapter<>(getActivity()
+                ,android.R.layout.simple_list_item_activated_1,
                 services));
-
+        //по умолчанию выделяется элемент, который был выбран пользователем ранее
         spinnerServices.setSelection(DoctorActivity.getPositionService(saveParpmeter));
+        //при выборе услуги id_filter становится равным id услуги
         spinnerServices.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -139,6 +158,7 @@ public class TimetableDoctorFragment extends Fragment implements
                 android.R.layout.simple_list_item_activated_1,
                 organizations_name));
         organizations_profile.setSelection(posotion_organization);
+        //при выборе организации Id_organization становится равным id выбранной организации
         organizations_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -152,7 +172,8 @@ public class TimetableDoctorFragment extends Fragment implements
             }
         });
     }
-
+    // возвращает список названий услуг для данного врача
+    // получает Map всех услуг специальности и Set id услуг доктора
     private ArrayList<String> getServicesNames(Map<Integer, String> services, Set<Integer> serviceList) {
     ArrayList<String> servicesNames=new ArrayList<>();
         for (Map.Entry<Integer, String> entry : services.entrySet()) {
@@ -161,7 +182,7 @@ public class TimetableDoctorFragment extends Fragment implements
         }
         return servicesNames;
     }
-
+    //Обработка нажатий на кнопки вперед, назад
     View.OnClickListener onClickListenerBtnListner = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -176,14 +197,16 @@ public class TimetableDoctorFragment extends Fragment implements
                     break;
             }
         }
-
+        //после нажатия на кнопку (вперед или назад) формирует соответствующий ArrayList
+        //для отображения в listView
         public void OnButtonClick (View button,int start,int end,int extremePosition){
             currentTimetable=new ArrayList<>();
             currentTimetable.addAll(timetable.subList(start,end));
             if (button.equals(btnPrevious))position-=7;
             else position+=7;
-            if (position==extremePosition)
+            if (position==extremePosition) {
                 button.setEnabled(false);
+            }
             timeAdapter.setTimes(currentTimetable);
         }
     };

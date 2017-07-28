@@ -2,6 +2,9 @@ package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -37,6 +40,8 @@ import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.PagerAdapterAboutDoctor;
+import by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification.QualificationFragment;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewFragment;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.Reviews;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
@@ -50,15 +55,19 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
     private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
     private static final String ID_ORGANIZATION_SAVE = "ID_ORGANIZATION_SAVE";
     private static final String ID_SERVICE_SAVE = "ID_SERVICE_SAVE";
-
+    public static final String ID_SELECTED_DOCTOR = "ID_SELECTED_DOCTOR";
 
     private SaveParameter saveParameter;
     private int id_organization;
     private int id_filter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
+    private int idDoctor;
 
     private GoogleMap googleMap;
     private Map<Integer, Marker> markers;
     private APIMethods apiMethods;
+    private SlidingUpPanelLayout layout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,6 +81,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
 
         initialalizeConfigiguration();
         initialalizeView();
+        setupTabIcons();
         initialalizeMap(savedInstanceState);
     }
 
@@ -99,7 +109,8 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
                 onBackPressed();
                 return true;
             case R.id.view_about_doctor:
-                clickViewAboutDoctor();
+                layout.setPanelState(SlidingUpPanelLayout.PanelState.ANCHORED);
+               // clickViewAboutDoctor();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -184,6 +195,13 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
     }
 
     private void initialalizeView() {
+        idDoctor=saveParameter.getSelectDoctor().getId_doctor();
+        viewPager = (ViewPager) findViewById(R.id.viewpager_doctor_about);
+        setupViewPager(viewPager);
+
+        tabLayout = (TabLayout) findViewById(R.id.tabs_doctor_about);
+        tabLayout.setupWithViewPager(viewPager);
+
         String img = getIMG();
         ImageView img_profile = (ImageView) findViewById(R.id.img_profile);
         Picasso.with(this)
@@ -318,10 +336,11 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
     }
 
     private void initialalizeConfigiguration() {
-        SlidingUpPanelLayout layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
-        layout.setDragView(findViewById(R.id.sliding_title));
-        layout.setEnabled(true);
-
+        layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
+        layout.setPanelHeight(0);
+       //layout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+      layout.setDragView(findViewById(R.id.view_about_doctor));
+        //layout.setEnabled(true);
         setTitle(getString(R.string.profile));
     }
 
@@ -401,4 +420,31 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         startActivity(intent);
     }
 
+
+
+
+
+
+    private void setupViewPager(ViewPager viewPager) {
+        PagerAdapterAboutDoctor adapter = new PagerAdapterAboutDoctor(getSupportFragmentManager());
+
+        Fragment fragment_review = new ReviewFragment();
+        Fragment fragment_qualification = new QualificationFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt(ID_SELECTED_DOCTOR, idDoctor);
+
+        fragment_review.setArguments(bundle);
+        fragment_qualification.setArguments(bundle);
+
+        adapter.addFragment(fragment_qualification, "ONE");
+
+        adapter.addFragment(fragment_review, "TWO");
+        viewPager.setAdapter(adapter);
+    }
+
+    private void setupTabIcons() {
+
+        tabLayout.getTabAt(0).setText(R.string.about_doctor_qualification);
+        tabLayout.getTabAt(1).setText(R.string.about_doctor_review);
+    }
 }

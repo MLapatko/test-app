@@ -7,11 +7,11 @@ import android.support.v4.app.FragmentPagerAdapter;
 import java.util.ArrayList;
 import java.util.List;
 
-class PagerAdapterAboutDoctor extends FragmentPagerAdapter {
+public class PagerAdapterAboutDoctor extends FragmentPagerAdapter {
 
     private final List<Fragment> mFragmentList = new ArrayList<>();
 
-    PagerAdapterAboutDoctor(FragmentManager manager) {
+    public PagerAdapterAboutDoctor(FragmentManager manager) {
         super(manager);
     }
 
@@ -25,7 +25,7 @@ class PagerAdapterAboutDoctor extends FragmentPagerAdapter {
         return mFragmentList.size();
     }
 
-    void addFragment(Fragment fragment, String title) {
+    public void addFragment(Fragment fragment, String title) {
         mFragmentList.add(fragment);
     }
 

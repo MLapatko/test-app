@@ -38,10 +38,11 @@ public class SearchActivity extends AppCompatActivity {
     private ListView doctorsNamesList;
     private ListView servicesList;
     //данные об услкугах и о специальностях, которые получаются по API
+    private APIMethods apiMethods = new APIMethods(this);
     private Map<Integer,String>services;
-    private Map<Integer,String>specialities=LogoActivity.getSpecialities();
+    private Map<Integer,String>specialities;
     //списки названий специальностей и услуг
-    private ArrayList<String> specialitiesName=new ArrayList<>(specialities.values());
+    private ArrayList<String> specialitiesName;
     private ArrayList<String> servicesValues;
 
     private ArrayList<DoctorInfo> doctorsInfo;
@@ -51,7 +52,6 @@ public class SearchActivity extends AppCompatActivity {
     private ArrayList<String> searchResultServices;
     private ArrayList<DoctorInfo> searchResultNames;
 
-    private APIMethods apiMethods = new APIMethods(this);
     private  SharedPreferences sharedPreferences;
     private int idCity;
     private SaveParameter saveParameter;
@@ -63,7 +63,8 @@ public class SearchActivity extends AppCompatActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_24dp);
         sharedPreferences = getSharedPreferences(MainActivity.NAME_PREFERENCES, MODE_PRIVATE);
         idCity = sharedPreferences.getInt(MainActivity.CITY_SELECT, 0);
-
+        specialities=apiMethods.getSpecialitiesFromJSON(idCity);
+        specialitiesName=new ArrayList<>(specialities.values());
         editText=(EditText)findViewById(R.id.text_search);
         //ListView для отображения списка специальностей
         specList=(ListView)findViewById(R.id.search_result_list);
