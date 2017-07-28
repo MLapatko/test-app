@@ -16,7 +16,9 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -57,6 +59,8 @@ public class TimetableDoctorFragment extends Fragment implements
     private Button btnNext;
     private Spinner spinnerServices;
     private ListView timetableList;
+    private SlidingUpPanelLayout layout;
+    private TextView textView;
     public TimetableDoctorFragment() {
     }
 
@@ -113,7 +117,18 @@ public class TimetableDoctorFragment extends Fragment implements
     }
 
     private void initializeView(View rootView) {
+        textView=(TextView)rootView.findViewById(R.id.text);
+        textView.setText(saveParpmeter.getSelectDoctor().getDoctorInfo().getFull_name());
+        layout = (SlidingUpPanelLayout) rootView.findViewById(R.id.sliding_layout);
 
+        layout.setDragView(rootView.findViewById(R.id.text));
+        layout.setFadeOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                layout.setPanelState(SlidingUpPanelLayout.PanelState.COLLAPSED);
+            }
+        });
+        layout.setPanelHeight(0);
         ImageView image_doctor = (ImageView) rootView.findViewById(R.id.img_profile);
         Picasso.with(rootView.getContext())
                 .load(saveParpmeter.getSelectDoctor().getDoctorInfo().getUrl_img())
