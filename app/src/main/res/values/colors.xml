@@ -15,9 +15,14 @@
     <color name="accent_material_light_1">#addfeb</color>
 
     /*list_doctors/*
-    <color name="list_doctors_text">#000000</color>
+    <color name="list_doctors_text">#3f5f7c</color>
 
     /*filter_screen/*
     <color name="filterColorAccent">#c8e8ff</color>
 
+    <color name="mapColor">#5CC4EA</color>
+    <!--doctor's list colors-->
+    <color name="reviews_text_color">#ff7c12</color>
+    <color name="doctors_name">#3f5f7c</color>
+    <color name="button_record">#f03083</color>
 </resources>

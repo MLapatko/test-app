@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -195,72 +196,42 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
     }
 
     private void initialalizeView() {
-        idDoctor=saveParameter.getSelectDoctor().getId_doctor();
-        viewPager = (ViewPager) findViewById(R.id.viewpager_doctor_about);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs_doctor_about);
-        tabLayout.setupWithViewPager(viewPager);
-
-        String img = getIMG();
-        ImageView img_profile = (ImageView) findViewById(R.id.img_profile);
-        Picasso.with(this)
-                .load(img)
-                .placeholder(R.drawable.ic_file_download_24dp)
-                .error(R.drawable.ic_error_24dp)
-                .into(img_profile);
-
-        String name = getName();
-        TextView fio_profile = (TextView) findViewById(R.id.fio_profile);
-        fio_profile.setText(name);
-
-        String speciality = getSpeciality();
-        TextView speciality_profile = (TextView) findViewById(R.id.speciality_profile);
-        speciality_profile.setText(speciality);
-
-        String experience = getExperience();
-        TextView expirience_profile = (TextView) findViewById(R.id.expirience_profile);
-        expirience_profile.setText(experience);
-
-        if (saveParameter.getSelectDoctor().getDoctorInfo().isMerto()) {
-            ImageView is_metro = (ImageView) findViewById(R.id.profile_ismetro);
-            is_metro.setImageResource(R.drawable.ic_directions_transit_24dp);
-        }
-
-        if (saveParameter.getSelectDoctor().getDoctorInfo().isBaby()) {
-            ImageView is_baby = (ImageView) findViewById(R.id.profile_isbaby);
-            is_baby.setImageResource(R.drawable.ic_child_friendly_24dp);
-        }
 
         String[] organizations_name = getOrganizationName(saveParameter);
-        int posotion_organization = getPositionOrganization(saveParameter);
-        Spinner organizations_profile = (Spinner) findViewById(R.id.organizations_profile);
+        int positionOrganization = getPositionOrganization(saveParameter)+1;
+
+        ListView organizations_profile = (ListView)findViewById(R.id.organizations_profile);
+        setHeader(organizations_profile,saveParameter);
+        setFooter(organizations_profile);
+
         organizations_profile.setAdapter(new ArrayAdapter<>(
                 this,
-                android.R.layout.simple_list_item_activated_1,
+                R.layout.organization_item ,
                 organizations_name));
-        organizations_profile.setSelection(posotion_organization);
-        organizations_profile.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+        organizations_profile.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        organizations_profile.setItemChecked(positionOrganization,true);
+        organizations_profile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 id_organization = saveParameter.getSelectDoctor().
-                        getDoctorInfo().getId_organization()[position];
+                        getDoctorInfo().getId_organization()[position-1];
                 changeCoordinate();
             }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
         });
+    }
+    private void setFooter(ListView listView){
 
-        String price = getPrice();
-        final TextView price_profile = (TextView) findViewById(R.id.price_profile);
-        price_profile.setText(price);
+        View footer=getLayoutInflater().inflate(R.layout.footer_doctor_profile_main_content,null);
+        idDoctor=saveParameter.getSelectDoctor().getId_doctor();
+        viewPager = (ViewPager) footer.findViewById(R.id.viewpager_doctor_about);
+        setupViewPager(viewPager);
 
+        tabLayout = (TabLayout) footer.findViewById(R.id.tabs_doctor_about);
+        tabLayout.setupWithViewPager(viewPager);
         String[] services_name = getServicesName();
         int posotion_service = getPositionService(saveParameter);
-        Spinner services_profile = (Spinner) findViewById(R.id.services_profile);
+        Spinner services_profile = (Spinner) footer.findViewById(R.id.services_profile);
         services_profile.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -270,8 +241,6 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 id_filter = setService(position);
-                String price_of_service = getPrice();
-                price_profile.setText(price_of_service);
             }
 
             @Override
@@ -280,7 +249,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
             }
         });
         apiMethods=new APIMethods(this);
-        Button btn_record = (Button) findViewById(R.id.btn_record);
+        Button btn_record = (Button) footer.findViewById(R.id.btn_record);
         if(apiMethods.getTimesFromJSON( saveParameter.getSelectDoctor().getId_doctor(),
                 saveParameter.getIdSpeciality()).size()==0){
             btn_record.setEnabled(false);
@@ -305,8 +274,46 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
                 saveParameter.setSelectDoctor(selectDoctor);
             }
         });
-    }
 
+        listView.addFooterView(footer);
+    }
+    private void setHeader(ListView listView,SaveParameter saveParameter){
+        View header=getLayoutInflater().inflate(R.layout.header_doctor_profile_main_content,null);
+
+
+
+        String img = getIMG();
+        ImageView img_profile = (ImageView) header.findViewById(R.id.img_profile);
+        Picasso.with(this)
+                .load(img)
+                .placeholder(R.drawable.ic_file_download_24dp)
+                .error(R.drawable.ic_error_24dp)
+                .into(img_profile);
+
+        String name = getName();
+        TextView fio_profile = (TextView) header.findViewById(R.id.fio_profile);
+        fio_profile.setText(name);
+
+        String speciality = getSpeciality();
+        TextView speciality_profile = (TextView) header.findViewById(R.id.speciality_profile);
+        speciality_profile.setText(speciality);
+
+        String experience = getExperience();
+        TextView expirience_profile = (TextView) header.findViewById(R.id.expirience_profile);
+        expirience_profile.setText(experience);
+
+        if (saveParameter.getSelectDoctor().getDoctorInfo().isMerto()) {
+            ImageView is_metro = (ImageView) header.findViewById(R.id.profile_ismetro);
+            is_metro.setImageResource(R.drawable.ic_directions_transit_24dp);
+        }
+
+        if (saveParameter.getSelectDoctor().getDoctorInfo().isBaby()) {
+            ImageView is_baby = (ImageView) header.findViewById(R.id.profile_isbaby);
+            is_baby.setImageResource(R.drawable.ic_child_friendly_24dp);
+        }
+
+        listView.addHeaderView(header);
+    }
     private String getIMG() {
         return saveParameter.getSelectDoctor().getDoctorInfo().getUrl_img();
     }
@@ -325,16 +332,6 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         String year = getString(R.string.profile_year);
         return String.format("%s %s %s", experience, count_year, year);
     }
-
-    public String getPrice() {
-        int id_service = id_filter;
-        String price = Integer.toString(saveParameter.getSelectDoctor().
-                getDoctorInfo().getService_list().get(id_service));
-        String price_label = getString(R.string.profile_price);
-        String money = getString(R.string.profile_money);
-        return String.format("%s %s %s", price_label, price, money);
-    }
-
     private void initialalizeConfigiguration() {
         layout = (SlidingUpPanelLayout) findViewById(R.id.sliding_layout);
         layout.setPanelHeight(0);
@@ -371,7 +368,6 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
     public static int getPositionOrganization(SaveParameter saveParameter) {
         int position = 0;
         int id_organization = saveParameter.getSelectDoctor().getId_organization();
-
         for (int key : saveParameter.getSelectDoctor().getDoctorInfo().getId_organization()) {
             if (key == id_organization) {
                 break;
@@ -386,7 +382,8 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         ArrayList<String> arrayList = new ArrayList<>();
 
         for (int id : saveParameter.getSelectDoctor().getDoctorInfo().getService_list().keySet()) {
-            arrayList.add(saveParameter.getServices().get(id));
+            arrayList.add(saveParameter.getServices().get(id)+" "+(saveParameter.getSelectDoctor().
+                    getDoctorInfo().getService_list().get(id)+"руб"));
         }
 
         return arrayList.toArray(new String[arrayList.size()]);

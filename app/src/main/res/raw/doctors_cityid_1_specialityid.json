@@ -56,8 +56,8 @@
     {
       "id": "113",
       "id_specialities":["1"],
-      "id_organization": ["3"],
-      "img": "https://2doc.by/storage/app/media/7 небо/cropped-images/bobkova-53-0-343-492-1496152273.jpg",
+      "id_organization": ["2","3"],
+      "img": "https://2doc.by/storage/app/media/7небо/cropped-images/bobkova-53-0-343-492-1496152273.jpg",
       "fullname": "Бобкова Светлана Андреевна",
       "speciality": "врач акушер-генеколог",
       "service_list":

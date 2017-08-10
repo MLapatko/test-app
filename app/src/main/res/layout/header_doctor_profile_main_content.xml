@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/marging_layout_doctor_profile"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/img_profile"
+            android:layout_width="@dimen/doctor_layout_width"
+            android:layout_height="@dimen/doctor_layout_height"
+            android:layout_gravity="center_horizontal"
+            android:layout_margin="@dimen/marging_doctor_img"
+            android:contentDescription="@string/profile" />
+
+        <TextView
+            android:id="@+id/fio_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="@dimen/doctor_labels" />
+
+        <TextView
+            android:id="@+id/speciality_profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textColor="@color/textColorPrimary"
+            android:textSize="@dimen/doctor_other_info" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/profile_ismetro"
+                android:layout_width="@dimen/profile_img_size"
+                android:layout_height="@dimen/profile_img_size"
+                android:layout_gravity="bottom"
+                android:contentDescription="@string/profile_img_discr_metro" />
+
+            <ImageView
+                android:id="@+id/profile_isbaby"
+                android:layout_width="@dimen/profile_img_size"
+                android:layout_height="@dimen/profile_img_size"
+                android:layout_gravity="bottom"
+                android:contentDescription="@string/profile_img_discr_baby" />
+
+            <TextView
+                android:id="@+id/expirience_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:textColor="@color/textColorPrimary"
+                android:textSize="@dimen/doctor_other_info" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</LinearLayout>

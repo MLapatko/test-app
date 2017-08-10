@@ -26,6 +26,7 @@ public class ViewDoctorActivity extends BaseMenuActivity {
     public static final String LIST_VIEW_FRAGMENT = "LIST_VIEW_FRAGMENT";
     public static final String MAP_VIEW_FRAGMENT = "MAP_VIEW_FRAGMENT";
     public static final String ID_FILTER="ID_FILTER";
+    public static final String NAME_SPECIALITY="NAME_SPECIALITY";
 
     private static final String SAVEPARAMETER_PARSALABEL_SAVE = "SAVEPARAMETER_PARSALABEL_SAVE";
 
@@ -43,7 +44,7 @@ public class ViewDoctorActivity extends BaseMenuActivity {
         }
 
 
-        setTitle(getString(R.string.list_doctors));
+        setTitle(getIntent().getStringExtra("NAME_SPECIALITY"));
     }
 
     @Override
@@ -135,6 +136,7 @@ public class ViewDoctorActivity extends BaseMenuActivity {
 
         Bundle bundle = new Bundle();
         bundle.putParcelable(MapDoctorFragment.SAVEPARAMETER_PARSALABEL, saveParameter);
+        bundle.putInt(MapDoctorFragment.POSITION,-1);
         fragment.setArguments(bundle);
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();

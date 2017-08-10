@@ -8,6 +8,7 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -60,9 +61,9 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         MenuFilterFragment.AccessFilter {
 
     public static final String SAVEPARAMETER_PARSALABEL = "SAVEPARAMETER_PARSALABEL";
-
+    public static final String POSITION="POSITION";
     static final float COORDINATE_OFFSET = 0.00002f;
-
+    private int positionOrg;
     private AbstractMarker clickedClusterItem = null;
     ArrayList<DoctorInfo> doctorsInfo;
     Map<Integer, OrganizationInfo> organizations;
@@ -109,6 +110,8 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
     }
 
     private void initializeData() {
+        positionOrg=getArguments().getInt(POSITION);
+        Log.e("mylog","positionOrg"+positionOrg);
         saveParameter = (SaveParameter) getArguments().get(SAVEPARAMETER_PARSALABEL);
         int id_filter = saveParameter.getId_filter();
         boolean metro = saveParameter.isMetro();
@@ -186,16 +189,25 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
 
             String doctorName;
             int[] organizationIDs;
-
+            int start=0;
+            int end;
             for (DoctorInfo doctorInfo : doctorsInfo) {
                 doctorName = doctorInfo.getFull_name();
                 organizationIDs = doctorInfo.getId_organization();
-                for (int id : organizationIDs) {
-                    LatLng coords = coordinateForMarker(new LatLng(organizations.get(id).getLat(),
-                            organizations.get(id).getLng()));
+                if (positionOrg!=-1){
+                    start=positionOrg;
+                    end=positionOrg+1;
+                }
+                else {
+                    start = 0;
+                    end = organizationIDs.length;
+                }
+                for (int i = start; i <end ; i++) {
+                    LatLng coords = coordinateForMarker(new LatLng(organizations.get(organizationIDs[i]).getLat(),
+                            organizations.get(organizationIDs[i]).getLng()));
                     AbstractMarker offsetItem = new AbstractMarker(coords.latitude,
-                            coords.longitude, doctorName, doctorInfo, id,
-                            organizations.get(id).getName());
+                            coords.longitude, doctorName, doctorInfo, organizationIDs[i],
+                            organizations.get(organizationIDs[i]).getName());
                     clusterManager.addItem(offsetItem);
                 }
             }

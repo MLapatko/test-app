@@ -5,6 +5,7 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
+import android.text.Layout;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -81,15 +82,15 @@ class TimeAdapter extends BaseAdapter {
         setLayoutParams(gridLayout);
         root_view.addView(gridLayout);
 
-        for (final String time_coming : time.times) {
+        for (final String timeComing : time.times) {
             Button button = new Button(context);
-            button.setText(time_coming);
+            button.setText(timeComing);
 
             setLayoutParamsToButton(button);
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    recordTime.record(time.day, time_coming);
+                    recordTime.record(time.day, timeComing);
                 }
             });
 
@@ -103,7 +104,9 @@ class TimeAdapter extends BaseAdapter {
 
     private void setLayoutParamsToButton(Button button) {
         button.setTextColor(ContextCompat.getColor(context, R.color.colorPrimary));
-        button.setBackground(ContextCompat.getDrawable(context, R.drawable.time_selector));
+        button.setBackgroundResource(R.drawable.time_selector);
+        button.setHeight(37);
+        button.setTextSize(17);
     }
 
     private void setLayoutParams(GridLayout gridLayout) {
@@ -127,10 +130,10 @@ class TimeAdapter extends BaseAdapter {
         TextView textView = new TextView(context);
         textView.setText(context.getResources().getString(R.string.timetable_not_get));
         textView.setTextSize(20);
-        textView.setGravity(Gravity.CENTER);
-        textView.setPadding(0, 20, 0, 0);
+        textView.setGravity(Gravity.RIGHT);
+        textView.setPadding(20, 0, 0, 0);
         textView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        ((ViewGroup) view.findViewById(R.id.root_timetable)).addView(textView);
+        ((ViewGroup) view.findViewById(R.id.liner_layout_time_information)).addView(textView);
     }
 
     void setTimes(ArrayList<Times> times) {

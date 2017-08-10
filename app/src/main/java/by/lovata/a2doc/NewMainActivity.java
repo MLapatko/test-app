@@ -89,6 +89,8 @@ public class NewMainActivity extends BaseMenuActivity {
             public void onClick(View v) {
                 Intent i=new Intent(NewMainActivity.this, ViewDoctorActivity.class);
                 i.putExtra(ViewDoctorActivity.ID_SPECIALITY_SELECTED, idSpeciality);
+                i.putExtra(ViewDoctorActivity.NAME_SPECIALITY,
+                        specialitySpinner.getSelectedItem().toString());
                 startActivity(i);
             }
         });

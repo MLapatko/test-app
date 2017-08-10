@@ -132,6 +132,7 @@ public class SearchActivity extends AppCompatActivity {
                 int ind=findIdMap(specialities,searchResultSpecialities.get(position));
                 //передаем id специальности на ViewDoctorActivity
                 i.putExtra(ViewDoctorActivity.ID_SPECIALITY_SELECTED,ind);
+                i.putExtra(ViewDoctorActivity.NAME_SPECIALITY,searchResultSpecialities.get(position));
                 startActivity(i);
             }
         });

@@ -1,87 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/card_view"
-    android:layout_width="match_parent"
-    android:layout_height="250dp"
-    android:layout_margin="10dp"
-    card_view:cardCornerRadius="15dp">
 
-    <RelativeLayout
+
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:card_view="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/card_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="5sp">
+        android:layout_height="250dp"
+        android:layout_margin="10dp"
+        card_view:cardCornerRadius="15dp">
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:id="@+id/img_card_doctor"
-                    android:layout_width="100dp"
-                    android:layout_height="150dp" />
-
-                <TextView
-                    android:id="@+id/review_card_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/list_doctors_text" />
-
-            </LinearLayout>
+            android:layout_height="match_parent"
+            android:padding="5sp">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:paddingLeft="10sp">
+                android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/fio_card_doctor"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/list_doctors_text" />
+                    android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/speciality_card_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/list_doctors_text" />
+                    <ImageView
+                        android:id="@+id/img_card_doctor"
+                        android:layout_width="@dimen/doctors_photo_width"
+                        android:layout_height="@dimen/doctors_photo_height" />
 
-                <TextView
-                    android:id="@+id/price_of_consultation_card_doctor"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/list_doctors_text" />
+                    <TextView
+                        android:id="@+id/review_card_doctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/reviews_text_color"
+                        android:textSize="@dimen/add_review_text_size"
+                        android:textStyle="bold"/>
 
-                <Spinner
-                    android:id="@+id/services_card_doctor"
+                </LinearLayout>
+
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="10sp">
 
-                <Spinner
-                    android:id="@+id/gps_card_doctor"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    <TextView
+                        android:id="@+id/fio_card_doctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/doctors_name"
+                        android:textStyle="bold"
+                        android:textSize="@dimen/doctors_name_taxt_size"/>
+
+                    <TextView
+                        android:id="@+id/speciality_card_doctor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/list_doctors_text"
+                        android:textSize="@dimen/list_doctor_text_size"/>
+
+
+                    <Spinner
+                        android:id="@+id/services_card_doctor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/list_doctor_text_size"/>
+
+                  <!--  <Spinner
+                        android:id="@+id/gps_card_doctor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />-->
+                    <ListView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/gps_card_doctor"
+                        android:divider="@android:color/transparent"
+                        android:dividerHeight="5dp">
+                    </ListView>
+
+                </LinearLayout>
 
             </LinearLayout>
 
-        </LinearLayout>
+            <Button
+                android:id="@+id/btn_card_doctor"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_record_height"
+                android:layout_alignParentBottom="true"
+                android:background="@drawable/button_record"
+                android:text="@string/list_doctors_btn_record"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/button_record_text_size"/>
 
-        <Button
-            android:id="@+id/btn_card_doctor"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/button_selector"
-            android:text="@string/list_doctors_btn_record"
-            android:textColor="@color/colorPrimary" />
+        </RelativeLayout>
 
-    </RelativeLayout>
-
-</android.support.v7.widget.CardView>
+    </android.support.v7.widget.CardView>
