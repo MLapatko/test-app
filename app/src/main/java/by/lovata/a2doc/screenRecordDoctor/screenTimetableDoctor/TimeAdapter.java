@@ -2,15 +2,12 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 
 
 import android.content.Context;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v4.content.ContextCompat;
-import android.text.Layout;
+import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.LinearLayout;
@@ -22,7 +19,7 @@ import java.util.GregorianCalendar;
 
 import by.lovata.a2doc.R;
 
-class TimeAdapter extends BaseAdapter {
+class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder>{
 
     interface RecordTime {
         void record(String day_selected, String time_selected);
@@ -42,64 +39,54 @@ class TimeAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getCount() {
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(context).inflate(R.layout.timetable, null);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position) {
+
+        final Times time = times.get(position);
+        //holder.setIsRecyclable(false);
+        String date = getDate(time.day);
+        holder.day.setText(date);
+
+        if (time.times[0].equals("null")) {
+            setEmptyView(holder);
+        } else {
+            setFullView(holder, time);
+        }
+    }
+
+    @Override
+    public int getItemCount() {
         return times.size();
     }
 
-    @Override
-    public Object getItem(int position) {
-        return times.get(position);
-    }
+    private void setFullView(ViewHolder holder, final Times time) {
 
-    @Override
-    public long getItemId(int position) {
-        return position;
-    }
-
-    @NonNull
-    @Override
-    public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent) {
-        final Times time = (Times) getItem(position);
-        View view = LayoutInflater.from(context).inflate(R.layout.timetable, null);
-
-        String date = getDate(time.day);
-        final TextView day = (TextView) view.findViewById(R.id.timetable_day);
-        day.setText(date);
-
-        if (time.times[0].equals("null")) {
-            setEmptyView(view);
-        } else {
-            setFullView(view, time);
-        }
-
-        return view;
-    }
-
-    private void setFullView(View view, final Times time) {
-        ViewGroup root_view = ((ViewGroup) view.findViewById(R.id.root_timetable));
-
-        GridLayout gridLayout = new GridLayout(context);
-        setLayoutParams(gridLayout);
-        root_view.addView(gridLayout);
+        holder.gridLayout= new GridLayout(context);
+        setLayoutParams(holder.gridLayout);
+        holder.rootView.addView(holder.gridLayout);
 
         for (final String timeComing : time.times) {
-            Button button = new Button(context);
-            button.setText(timeComing);
+            holder.buttonTimetable = new Button(context);
+            holder.buttonTimetable.setText(timeComing);
 
-            setLayoutParamsToButton(button);
-            button.setOnClickListener(new View.OnClickListener() {
+            setLayoutParamsToButton(holder.buttonTimetable);
+            holder.buttonTimetable.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     recordTime.record(time.day, timeComing);
                 }
             });
 
-            gridLayout.addView(button);
+            holder.gridLayout.addView(holder.buttonTimetable);
         }
 
         String string_border = createBorder(time.start, time.stop);
-        TextView border = (TextView) view.findViewById(R.id.timetable_border);
-        border.setText(string_border);
+        holder.border.setText(string_border);
     }
 
     private void setLayoutParamsToButton(Button button) {
@@ -126,19 +113,18 @@ class TimeAdapter extends BaseAdapter {
         return String.format("%s %s\n%s %s", start_label, start, stop_label, stop);
     }
 
-    private void setEmptyView(View view) {
-        TextView textView = new TextView(context);
-        textView.setText(context.getResources().getString(R.string.timetable_not_get));
-        textView.setTextSize(20);
-        textView.setGravity(Gravity.RIGHT);
-        textView.setPadding(20, 0, 0, 0);
-        textView.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
-        ((ViewGroup) view.findViewById(R.id.liner_layout_time_information)).addView(textView);
+    private void setEmptyView(ViewHolder holder) {
+        holder.noTimetable = new TextView(context);
+        holder.noTimetable.setText(context.getResources().getString(R.string.timetable_not_get));
+        holder.noTimetable.setTextSize(20);
+        holder.noTimetable.setGravity(Gravity.RIGHT);
+        holder.noTimetable.setPadding(20, 0, 0, 0);
+        holder.noTimetable.setTextColor(ContextCompat.getColor(context, R.color.textColorPrimary));
+        holder.viewGroup.addView(holder.noTimetable);
     }
 
     void setTimes(ArrayList<Times> times) {
         this.times = times;
-        notifyDataSetInvalidated();
     }
 
     private String getDate(String day_of_year) {
@@ -176,5 +162,23 @@ class TimeAdapter extends BaseAdapter {
         }
 
         return String.format("%s (%s)", day_of_year, day);
+    }
+
+    public class ViewHolder  extends RecyclerView.ViewHolder {
+        public TextView day;
+        private ViewGroup rootView;
+        private TextView border;
+        private ViewGroup viewGroup;
+        private TextView noTimetable;
+        private GridLayout gridLayout;
+        private Button buttonTimetable;
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            day = (TextView) itemView.findViewById(R.id.timetable_day);
+            rootView = ((ViewGroup) itemView.findViewById(R.id.root_timetable));
+            border = (TextView) itemView.findViewById(R.id.timetable_border);
+            viewGroup=(ViewGroup)itemView.findViewById(R.id.liner_layout_time_information);
+        }
     }
 }

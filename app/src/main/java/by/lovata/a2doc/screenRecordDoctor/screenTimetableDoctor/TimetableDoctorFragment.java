@@ -4,6 +4,8 @@ package by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +58,7 @@ public class TimetableDoctorFragment extends Fragment implements
     private Button btnPrevious;
     private Button btnNext;
     private Spinner spinnerServices;
-    private ListView timetableList;
+    private RecyclerView timetableList;
     private TextView textView;
     public TimetableDoctorFragment() {
     }
@@ -118,9 +120,12 @@ public class TimetableDoctorFragment extends Fragment implements
 
         timeAdapter = new TimeAdapter(getActivity(), currentTimetable);
         timeAdapter.setListener(this);
-        timetableList = (ListView) rootView.findViewById(R.id.timetable_lst);
+        timetableList = (RecyclerView) rootView.findViewById(R.id.timetable_lst);
+        LinearLayoutManager mLayoutManager = new LinearLayoutManager(rootView.getContext());
+        timetableList.setLayoutManager(mLayoutManager);
 
-        setHeader(timetableList,saveParpmeter);
+        timetableList.setHasFixedSize(true);
+       // setHeader(timetableList,saveParpmeter);
         timetableList.setAdapter(timeAdapter);
 
         btnPrevious = (Button) rootView.findViewById(R.id.btn_previous);
