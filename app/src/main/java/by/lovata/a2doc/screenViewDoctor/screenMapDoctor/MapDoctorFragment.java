@@ -1,6 +1,5 @@
 package by.lovata.a2doc.screenViewDoctor.screenMapDoctor;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -34,7 +33,6 @@ import com.squareup.picasso.Picasso;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
@@ -52,7 +50,6 @@ import by.lovata.a2doc.screenViewDoctor.SaveParameter;
 import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.ListDoctorFragment;
 import by.lovata.a2doc.screenViewDoctor.screenListDoctor.MenuFilterFragment;
-import by.lovata.a2doc.screenViewDoctor.screenListDoctor.sorts.SortDefault;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -244,50 +241,17 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         return (markerLocations.contains(location));
     }
 
-   /* private DoctorInfo[] createArrayWithFilter(ArrayList<DoctorInfo> doctorsInfo, int id_filter,
-                                               boolean is_metro, boolean is_baby) {
-        ArrayList<DoctorInfo> arrayList = new ArrayList<>();
-        for (DoctorInfo doctorInfo : doctorsInfo) {
-            if (doctorInfo.getService_list().containsKey(id_filter)) {
-                if (!is_metro) {
-                    if (!is_baby) {
-                        arrayList.add(doctorInfo);
-                    } else {
-                        if (doctorInfo.isBaby()) {
-                            arrayList.add(doctorInfo);
-                        }
-                    }
-                } else {
-                    if (doctorInfo.isMerto()) {
-                        arrayList.add(doctorInfo);
-                    }
-                }
-            }
-        }
-        return arrayList.toArray(new DoctorInfo[arrayList.size()]);
-    }*/
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-
-        inflater.inflate(R.menu.view_filter, menu);
 
         MenuItem view_change = menu.findItem(R.id.view_change);
         view_change.setTitle(getResources().getString(R.string.view_change_map));
         view_change.setIcon(R.drawable.ic_format_align_justify_24dp);
     }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.menu_filter:
-                showMenuFilter();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
+
 
     @Override
     public void setFilters(int id_filter, boolean metro, boolean baby) {
@@ -306,17 +270,7 @@ public class MapDoctorFragment extends Fragment implements OnMapReadyCallback,
         return saveParameter.getServices();
     }
 
-    private void showMenuFilter() {
-        MenuFilterFragment dialog_filter = new MenuFilterFragment();
 
-        Bundle bundle_filter = new Bundle();
-        bundle_filter.putInt(MenuFilterFragment.ID_FILTER_SELECTED, saveParameter.getId_filter());
-        bundle_filter.putBoolean(MenuFilterFragment.IS_METRO, saveParameter.isMetro());
-        bundle_filter.putBoolean(MenuFilterFragment.IS_BABY, saveParameter.isBaby());
-
-        dialog_filter.setArguments(bundle_filter);
-        dialog_filter.show(getChildFragmentManager(), "filter");
-    }
 
     private class DoctorInfoWindowAdapter implements GoogleMap.InfoWindowAdapter {
 

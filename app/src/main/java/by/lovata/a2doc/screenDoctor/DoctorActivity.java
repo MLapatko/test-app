@@ -2,11 +2,12 @@ package by.lovata.a2doc.screenDoctor;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -16,7 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -34,20 +34,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import by.lovata.a2doc.API.APIMethods;
 import by.lovata.a2doc.BaseMenuActivity;
 import by.lovata.a2doc.R;
-import by.lovata.a2doc.screenDoctor.aboutDoctor.AboutDoctorActivity;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.PagerAdapterAboutDoctor;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenQualification.QualificationFragment;
 import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.ReviewFragment;
-import by.lovata.a2doc.screenDoctor.aboutDoctor.screenReviews.Reviews;
 import by.lovata.a2doc.screenRecordDoctor.RecordDoctorActivity;
+import by.lovata.a2doc.screenRecordDoctor.screenTimetableDoctor.OrganizationsAdapter;
 import by.lovata.a2doc.screenViewDoctor.SaveParameter;
-import by.lovata.a2doc.screenViewDoctor.SelectDoctor;
 
 public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallback {
 
@@ -197,41 +196,57 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
 
     private void initialalizeView() {
 
-        String[] organizations_name = getOrganizationName(saveParameter);
-        int positionOrganization = getPositionOrganization(saveParameter)+1;
+        List <String> organizationsName = getOrganizationName(saveParameter);
+        int positionOrganization = getPositionOrganization(saveParameter);
 
-        ListView organizations_profile = (ListView)findViewById(R.id.organizations_profile);
-        setHeader(organizations_profile,saveParameter);
-        setFooter(organizations_profile);
+        RecyclerView organizationsProfile = (RecyclerView)findViewById(R.id.organizations_profile);
+        Log.e("mylog","positionOrganization doctor  " +positionOrganization);
+        final OrganizationsAdapter organizationsAdapter=new OrganizationsAdapter(this.getBaseContext(),
+                organizationsName,positionOrganization,saveParameter);
+        LinearLayoutManager linearLayoutManager=new LinearLayoutManager(this.getBaseContext());
+        organizationsProfile.setLayoutManager(linearLayoutManager);
+        organizationsProfile.setAdapter(organizationsAdapter);
 
-        organizations_profile.setAdapter(new ArrayAdapter<>(
-                this,
-                R.layout.organization_item ,
-                organizations_name));
+        String img = getIMG();
+        ImageView img_profile = (ImageView) findViewById(R.id.img_profile);
+        Picasso.with(this)
+                .load(img)
+                .placeholder(R.drawable.ic_file_download_24dp)
+                .error(R.drawable.ic_error_24dp)
+                .into(img_profile);
 
-        organizations_profile.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-        organizations_profile.setItemChecked(positionOrganization,true);
-        organizations_profile.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                id_organization = saveParameter.getSelectDoctor().
-                        getDoctorInfo().getId_organization()[position-1];
-                changeCoordinate();
-            }
-        });
-    }
-    private void setFooter(ListView listView){
+        String name = getName();
+        TextView fio_profile = (TextView) findViewById(R.id.fio_profile);
+        fio_profile.setText(name);
 
-        View footer=getLayoutInflater().inflate(R.layout.footer_doctor_profile_main_content,null);
+        String speciality = getSpeciality();
+        TextView speciality_profile = (TextView) findViewById(R.id.speciality_profile);
+        speciality_profile.setText(speciality);
+
+        String experience = getExperience();
+        TextView expirience_profile = (TextView) findViewById(R.id.expirience_profile);
+        expirience_profile.setText(experience);
+
+        if (saveParameter.getSelectDoctor().getDoctorInfo().isMerto()) {
+            ImageView is_metro = (ImageView) findViewById(R.id.profile_ismetro);
+            is_metro.setImageResource(R.drawable.ic_directions_transit_24dp);
+        }
+
+        if (saveParameter.getSelectDoctor().getDoctorInfo().isBaby()) {
+            ImageView is_baby = (ImageView) findViewById(R.id.profile_isbaby);
+            is_baby.setImageResource(R.drawable.ic_child_friendly_24dp);
+        }
+
+
         idDoctor=saveParameter.getSelectDoctor().getId_doctor();
-        viewPager = (ViewPager) footer.findViewById(R.id.viewpager_doctor_about);
+        viewPager = (ViewPager) findViewById(R.id.viewpager_doctor_about);
         setupViewPager(viewPager);
 
-        tabLayout = (TabLayout) footer.findViewById(R.id.tabs_doctor_about);
+        tabLayout = (TabLayout) findViewById(R.id.tabs_doctor_about);
         tabLayout.setupWithViewPager(viewPager);
         String[] services_name = getServicesName();
         int posotion_service = getPositionService(saveParameter);
-        Spinner services_profile = (Spinner) footer.findViewById(R.id.services_profile);
+        Spinner services_profile = (Spinner) findViewById(R.id.services_profile);
         services_profile.setAdapter(new ArrayAdapter<>(
                 this,
                 android.R.layout.simple_list_item_activated_1,
@@ -249,7 +264,7 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
             }
         });
         apiMethods=new APIMethods(this);
-        Button btn_record = (Button) footer.findViewById(R.id.btn_record);
+        Button btn_record = (Button) findViewById(R.id.btn_record);
         if(apiMethods.getTimesFromJSON( saveParameter.getSelectDoctor().getId_doctor(),
                 saveParameter.getIdSpeciality()).size()==0){
             btn_record.setEnabled(false);
@@ -261,59 +276,15 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(DoctorActivity.this, RecordDoctorActivity.class);
-                setupSaveParameter();
-                intent.putExtra(RecordDoctorActivity.SAVEPARAMETER_PARSALABEL, saveParameter);
-
+                intent.putExtra(RecordDoctorActivity.SAVEPARAMETER_PARSALABEL,
+                        organizationsAdapter.getSaveParameter());
                 startActivity(intent);
             }
 
-            private void setupSaveParameter() {
-                SelectDoctor selectDoctor = saveParameter.getSelectDoctor();
-                selectDoctor.setId_organization(id_organization);
-                selectDoctor.setId_filter(id_filter);
-                saveParameter.setSelectDoctor(selectDoctor);
-            }
         });
-
-        listView.addFooterView(footer);
     }
-    private void setHeader(ListView listView,SaveParameter saveParameter){
-        View header=getLayoutInflater().inflate(R.layout.header_doctor_profile_main_content,null);
 
 
-
-        String img = getIMG();
-        ImageView img_profile = (ImageView) header.findViewById(R.id.img_profile);
-        Picasso.with(this)
-                .load(img)
-                .placeholder(R.drawable.ic_file_download_24dp)
-                .error(R.drawable.ic_error_24dp)
-                .into(img_profile);
-
-        String name = getName();
-        TextView fio_profile = (TextView) header.findViewById(R.id.fio_profile);
-        fio_profile.setText(name);
-
-        String speciality = getSpeciality();
-        TextView speciality_profile = (TextView) header.findViewById(R.id.speciality_profile);
-        speciality_profile.setText(speciality);
-
-        String experience = getExperience();
-        TextView expirience_profile = (TextView) header.findViewById(R.id.expirience_profile);
-        expirience_profile.setText(experience);
-
-        if (saveParameter.getSelectDoctor().getDoctorInfo().isMerto()) {
-            ImageView is_metro = (ImageView) header.findViewById(R.id.profile_ismetro);
-            is_metro.setImageResource(R.drawable.ic_directions_transit_24dp);
-        }
-
-        if (saveParameter.getSelectDoctor().getDoctorInfo().isBaby()) {
-            ImageView is_baby = (ImageView) header.findViewById(R.id.profile_isbaby);
-            is_baby.setImageResource(R.drawable.ic_child_friendly_24dp);
-        }
-
-        listView.addHeaderView(header);
-    }
     private String getIMG() {
         return saveParameter.getSelectDoctor().getDoctorInfo().getUrl_img();
     }
@@ -355,14 +326,14 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
         mapView.getMapAsync(this);
     }
 
-    public static String[] getOrganizationName(SaveParameter saveParameter) {
-        ArrayList<String> arrayList = new ArrayList<>();
+    public static List<String> getOrganizationName(SaveParameter saveParameter) {
+        List<String> arrayList = new ArrayList<>();
 
         for (int id : saveParameter.getSelectDoctor().getDoctorInfo().getId_organization()) {
             arrayList.add(saveParameter.getOrganizations().get(id).getName());
         }
 
-        return arrayList.toArray(new String[arrayList.size()]);
+        return arrayList;
     }
 
     public static int getPositionOrganization(SaveParameter saveParameter) {
@@ -408,19 +379,6 @@ public class DoctorActivity extends BaseMenuActivity implements OnMapReadyCallba
                 getDoctorInfo().getService_list().keySet();
         return set_id_filter.toArray(new Integer[set_id_filter.size()])[position];
     }
-
-    private void clickViewAboutDoctor() {
-        Intent intent = new Intent(DoctorActivity.this, AboutDoctorActivity.class);
-        int id_doctor_selected = saveParameter.getSelectDoctor().getId_doctor();
-        intent.putExtra(AboutDoctorActivity.ID_SELECTED_DOCTOR, id_doctor_selected);
-
-        startActivity(intent);
-    }
-
-
-
-
-
 
     private void setupViewPager(ViewPager viewPager) {
         PagerAdapterAboutDoctor adapter = new PagerAdapterAboutDoctor(getSupportFragmentManager());

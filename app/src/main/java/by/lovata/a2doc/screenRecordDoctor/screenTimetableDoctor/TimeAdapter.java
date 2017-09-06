@@ -179,6 +179,7 @@ class TimeAdapter extends RecyclerView.Adapter<TimeAdapter.ViewHolder>{
             rootView = ((ViewGroup) itemView.findViewById(R.id.root_timetable));
             border = (TextView) itemView.findViewById(R.id.timetable_border);
             viewGroup=(ViewGroup)itemView.findViewById(R.id.liner_layout_time_information);
+            itemView.setHasTransientState(true);
         }
     }
 }

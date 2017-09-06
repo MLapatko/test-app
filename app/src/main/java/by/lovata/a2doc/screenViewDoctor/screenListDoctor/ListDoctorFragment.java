@@ -2,10 +2,8 @@ package by.lovata.a2doc.screenViewDoctor.screenListDoctor;
 
 
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.widget.SlidingPaneLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -25,7 +23,6 @@ import android.widget.Spinner;
 import com.sothree.slidinguppanel.SlidingUpPanelLayout;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -84,8 +81,6 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
 
-//        inflater.inflate(R.menu.view_filter, menu);
-        //inflater.inflate(R.menu.view_sort, menu);
         inflater.inflate(R.menu.view_settings,menu);
         MenuItem view_change = menu.findItem(R.id.view_change);
         view_change.setTitle(getResources().getString(R.string.view_change_list));
@@ -98,12 +93,6 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
             case R.id.menu_settings:
                 slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.EXPANDED);
                 return true;
-         /*   case R.id.menu_filter:
-                showMenuFilter();
-                return true;
-            case R.id.menu_sort:
-                showMenuSort();
-                return true;*/
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -212,27 +201,6 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         ((DoctorsAdapter) recyclerView.getAdapter()).synchronizedAdapter();
     }
 
-  /*  private void showMenuFilter() {
-        MenuFilterFragment dialog_filter = new MenuFilterFragment();
-
-        Bundle bundle_filter = new Bundle();
-        bundle_filter.putInt(MenuFilterFragment.ID_FILTER_SELECTED, saveParameter.getId_filter());
-        bundle_filter.putBoolean(MenuFilterFragment.IS_METRO, saveParameter.isMetro());
-        bundle_filter.putBoolean(MenuFilterFragment.IS_BABY, saveParameter.isBaby());
-
-        dialog_filter.setArguments(bundle_filter);
-        dialog_filter.show(getChildFragmentManager(), "filter");
-    }*/
-
- /*   private void showMenuSort() {
-        MenuSortFragment dialog_sort = new MenuSortFragment();
-
-        Bundle bundle_sort = new Bundle();
-        bundle_sort.putInt(MenuSortFragment.ID_SORT_SELECTED, saveParameter.getId_sort());
-
-        dialog_sort.setArguments(bundle_sort);
-        dialog_sort.show(getChildFragmentManager(), "sort");
-    }*/
 
     private void initializeData() {
         saveParameter = getArguments().getParcelable(SAVEPARAMETER_PARSALABEL);
@@ -251,8 +219,7 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
         lst_sort.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                  setId_sort(position, false);
-
+                saveParameter.setId_sort(position);
             }
         });
     }
@@ -279,14 +246,16 @@ public class ListDoctorFragment extends Fragment implements MenuFilterFragment.A
             int position = getPosition(key_services, idFilter);
             spinner.setSelection(position);
 
-            Button button = (Button) viewRoot.findViewById(R.id.filterApplyButton);
-            button.setOnClickListener(new View.OnClickListener() {
+            Button applyFilters = (Button) viewRoot.findViewById(R.id.filterApplyButton);
+            applyFilters.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     idFilter = key_services[spinner.getSelectedItemPosition()];
                     metro = checkBoxMetro.isChecked();
                     baby = checkBoxBaby.isChecked();
                     setFilters(idFilter, metro, baby);
+                    setId_sort(saveParameter.getId_sort(),false);
+                    slidingUpPanelLayout.setPanelState(SlidingUpPanelLayout.PanelState.HIDDEN);
                 }
             });
         }
